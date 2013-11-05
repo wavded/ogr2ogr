@@ -1,0 +1,31 @@
+{
+  "name": "ogr2ogr",
+  "version": "0.0.0",
+  "description": "ogr2ogr",
+  "keywords": [
+    "ogr2ogr",
+    "stream",
+    "proj4"
+  ],
+  "author": "Marc Harter <wavded@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/wavded/ogr2ogr.git"
+  },
+  "homepage": "http://github.com/wavded/ogr2ogr",
+  "scripts": {
+    "test": "mocha test/*-test.js"
+  },
+  "main": "./index.js",
+  "dependencies": {
+    "when": "2.5.1",
+    "unzip": "0.1.9",
+    "rimraf": "2.2.2"
+  },
+  "devDependencies": {
+    "mocha": "1.14.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  }
+}

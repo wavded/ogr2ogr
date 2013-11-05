@@ -1,0 +1,36 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>sample</Name>
+    <ElementPath>sample</ElementPath>
+    <GeometryType>3</GeometryType>
+    <DatasetSpecificInfo>
+      <FeatureCount>1</FeatureCount>
+      <ExtentXMin>-107.48241</ExtentXMin>
+      <ExtentXMax>-106.47623</ExtentXMax>
+      <ExtentYMin>36.99243</ExtentYMin>
+      <ExtentYMax>37.42362</ExtentYMax>
+    </DatasetSpecificInfo>
+    <PropertyDefn>
+      <Name>ID</Name>
+      <ElementPath>ID</ElementPath>
+      <Type>Integer</Type>
+    </PropertyDefn>
+    <PropertyDefn>
+      <Name>FIPSSTCO</Name>
+      <ElementPath>FIPSSTCO</ElementPath>
+      <Type>Integer</Type>
+    </PropertyDefn>
+    <PropertyDefn>
+      <Name>STATE</Name>
+      <ElementPath>STATE</ElementPath>
+      <Type>String</Type>
+      <Width>8</Width>
+    </PropertyDefn>
+    <PropertyDefn>
+      <Name>COUNTY</Name>
+      <ElementPath>COUNTY</ElementPath>
+      <Type>String</Type>
+      <Width>9</Width>
+    </PropertyDefn>
+  </GMLFeatureClass>
+</GMLFeatureClassList>
