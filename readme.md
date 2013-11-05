@@ -1,32 +1,63 @@
 # ogr2ogr [![Build Status](https://secure.travis-ci.org/wavded/ogr2ogr.png)](http://travis-ci.org/wavded/ogr2ogr)
 
-The instructions below are only if you are interested in running the project locally.  For help on how to use the web service, visit the [Ogre Homepage](http://ogre.adc4gis.com).
+ogr2ogr is the guts of [Ogre](https://github.com/wavded/ogre) extracted out into a simple ogr2ogr module.
+It provides a streaming interface.  Its in progress.  Pull requests are welcome!
 
 ## Requirements
 
-Ogre requires the command line tool *ogr2ogr* to be installed: (for best support install the latest version)
-
-Ubuntu 9.04+
-
-    sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable && sudo apt-get update && sudo apt-get install gdal-bin
-
-Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
+ogr2ogr requires the command line tool *ogr2ogr* to be installed - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
+It is recommended to use the latest complete version.
 
 ## Installation
 
-    npm install -g ogr2ogr
+    npm install ogr2ogr
 
 [![NPM](https://nodei.co/npm/ogr2ogr.png?downloads=true)](https://nodei.co/npm/ogr2ogr)
 
-## Running
+## Usage
 
-To run the app:
+ogr2ogr returns a stream
 
-    ogre
+```js
+var ogr2ogr = require('ogr2ogr')
+var stream = ogr2ogr('/path/to/spatial/file')
+stream.pipe(process.stdout)
+```
 
-And visit the following url in a browser:
+Any errors/warning that are outputted from ogr2ogr are provided in a special 'ogrerror' event:
 
-    http://localhost:3000
+```js
+stream.on('ogrerror', console.log)
+```
+
+Any fatal errors use the streams 'error' event:
+
+```js
+stream.on('error', console.error)
+```
+
+## Formats
+
+ogr2ogr supports any format your underlying ogr2ogr supports.  It also will:
+
+1.  Extract zip files for formats that are typically bundled (i.e. shapefiles, kmz, s57, vrt, etc)
+2.  Will extract geometry from CSVs when a common geometry field can be determined.
+3.  Cleans up after its messes.
+
+## Options
+
+ogr2ogr takes a second options argument:
+
+```js
+var shapefile = ogr2ogr('/path/to/spatial/file.geojson', { output: 'ESRI Shapefile' })
+shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
+```
+
+Available options include:
+
+* sourceSrs - source of the original file (defaults to: "ESPG:4326")
+* targetSrs - reprojection of original (defaults to: "ESPG:4326")
+* format - output format of the transformation (defaults to: "GeoJSON")
 
 ## License
 
