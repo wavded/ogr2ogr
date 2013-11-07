@@ -1,11 +1,12 @@
 {
   "name": "ogr2ogr",
   "version": "0.0.1",
-  "description": "ogr2ogr",
+  "description": "ogr2ogr wrapper w/ multiple format support",
   "keywords": [
     "ogr2ogr",
     "stream",
-    "proj4"
+    "proj4",
+    "gdal"
   ],
   "author": "Marc Harter <wavded@gmail.com>",
   "repository": {
