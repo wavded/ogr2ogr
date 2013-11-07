@@ -30,7 +30,7 @@ test('convert to GeoJSON', function (t) {
   files.forEach(function (file) {
     ogr2ogr(dir+file).exec(function (er, data) {
       t.notOk(er, 'should not return an error for '+file, { error: er })
-      t.equal(data.type, 'FeatureCollection', file+' should have valid GeoJSON data')
+      t.equal(data && data.type, 'FeatureCollection', file+' should have valid GeoJSON data')
     })
   })
 })
@@ -46,7 +46,7 @@ test('convert to GeoJSON stream', function (t) {
     bufferStream(st, function (buf) {
       t.notOk(stErr, 'should not return an error for '+file, { error: stErr })
       var data = JSON.parse(buf)
-      t.equal(data.type, 'FeatureCollection', file+' should have valid GeoJSON data')
+      t.equal(data && data.type, 'FeatureCollection', file+' should have valid GeoJSON data')
     })
   })
 })

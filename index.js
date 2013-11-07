@@ -1,7 +1,6 @@
 "use strict"
 var path = require('path')
 var cp = require('child_process')
-var stream = require('stream')
 var when = require('when')
 var nodefn = require('when/node/function')
 var zip = require('./lib/zip')
@@ -9,8 +8,10 @@ var csv = require('./lib/csv')
 var formats = require('./lib/formats')
 var util = require('./lib/util')
 
-module.exports = function (fpath, opts) {
-  if (!fpath) throw new Error('Path is required')
+var PassThrough = require('stream').PassThrough || require('readable-stream').PassThrough
+
+function ogr2ogr (fpath, opts) {
+  if (!fpath) throw new Error('A file path is required')
   opts || (opts = {})
 
   opts.sourceSrs || (opts.sourceSrs = 'EPSG:4326')
@@ -31,10 +32,12 @@ module.exports = function (fpath, opts) {
   }
 
   function run () {
-    var ostream = new stream.PassThrough()
-    var getOgrInPath = isZipIn ? zip.extractZip(fpath) : isCsvIn ? csv.generateVrt(fpath) : fpath
+    var ostream = new PassThrough()
+    var getOgrInPath = isZipIn ? zip.extract(fpath).then(zip.findOgrFile)
+                     : isCsvIn ? csv.makeVrt(fpath)
+                     : when(fpath)
 
-    when(getOgrInPath)
+    getOgrInPath
       .then(function (ogrInPath) {
         var d = when.defer()
         var s = cp.spawn('ogr2ogr', logCommand([
@@ -60,7 +63,7 @@ module.exports = function (fpath, opts) {
           .then(function () {
             if (!isZipOut) return
             var sd = when.defer()
-            var zs = zip.makeZipStream(ogrOutPath)
+            var zs = zip.createZipStream(ogrOutPath)
             zs.pipe(ostream)
             zs.on('error', d.reject)
             zs.on('end', d.resolve)
@@ -68,13 +71,14 @@ module.exports = function (fpath, opts) {
           })
           .ensure(function () {
             return when.join(
-              isZipIn ? zip.cleanZip(ogrInPath) : '',
-              isCsvIn ? csv.cleanVrt(ogrInPath) : '',
-              isZipOut ? zip.cleanZipStream(ogrOutPath) : ''
+              isZipIn ? util.rmParentDir(ogrInPath) : '',
+              isCsvIn && /vrt/.test(ogrInPath) ? util.rmFile(ogrInPath) : '',
+              isZipOut ? util.rmDir(ogrOutPath) : ''
             )
           })
       })
       .otherwise(function (er) {
+        // console.error(er)
         ostream.emit('error', er)
       })
 
@@ -103,3 +107,5 @@ module.exports = function (fpath, opts) {
     }
   }
 }
+
+module.exports = ogr2ogr

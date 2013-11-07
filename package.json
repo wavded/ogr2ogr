@@ -1,6 +1,6 @@
 {
   "name": "ogr2ogr",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "ogr2ogr",
   "keywords": [
     "ogr2ogr",
@@ -18,15 +18,17 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "when": "2.5.1",
+    "when": "2.6.0",
     "unzip": "0.1.9",
     "rimraf": "2.2.2",
-    "archiver": "0.4.10"
+    "archiver": "0.4.10",
+    "csv": "0.3.6",
+    "readable-stream": "1.1.9"
   },
   "devDependencies": {
     "tap": "0.4.4"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 0.8.0"
   }
 }
