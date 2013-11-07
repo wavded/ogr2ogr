@@ -14,16 +14,17 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "mocha test/*-test.js"
+    "test": "tap -d ./test"
   },
   "main": "./index.js",
   "dependencies": {
     "when": "2.5.1",
     "unzip": "0.1.9",
-    "rimraf": "2.2.2"
+    "rimraf": "2.2.2",
+    "archiver": "0.4.10"
   },
   "devDependencies": {
-    "mocha": "1.14.0"
+    "tap": "0.4.4"
   },
   "engines": {
     "node": ">= 0.10.0"

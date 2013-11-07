@@ -16,24 +16,14 @@ It is recommended to use the latest complete version.
 
 ## Usage
 
-ogr2ogr returns a stream
+ogr2ogr takes a path to a file and returns the conversion via callback, stream or promise:
 
 ```js
 var ogr2ogr = require('ogr2ogr')
-var stream = ogr2ogr('/path/to/spatial/file')
-stream.pipe(process.stdout)
-```
-
-Any errors/warning that are outputted from ogr2ogr are provided in a special 'ogrerror' event:
-
-```js
-stream.on('ogrerror', console.log)
-```
-
-Any fatal errors use the streams 'error' event:
-
-```js
-stream.on('error', console.error)
+ogr2ogr('/path/to/spatial/file', function (er, data) {
+  if (er) console.error(er)
+  console.log(data)
+})
 ```
 
 ## Formats
@@ -43,13 +33,14 @@ ogr2ogr supports any format your underlying ogr2ogr supports.  It also will:
 1.  Extract zip files for formats that are typically bundled (i.e. shapefiles, kmz, s57, vrt, etc)
 2.  Will extract geometry from CSVs when a common geometry field can be determined.
 3.  Cleans up after its messes.
+4.  Bundles multi-file conversions as a zip
 
 ## Options
 
 ogr2ogr takes a second options argument:
 
 ```js
-var shapefile = ogr2ogr('/path/to/spatial/file.geojson', { output: 'ESRI Shapefile' })
+var shapefile = ogr2ogr('/path/to/spatial/file.geojson', { output: 'ESRI Shapefile' }).stream()
 shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
 ```
 
