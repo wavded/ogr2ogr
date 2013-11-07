@@ -20,7 +20,7 @@ ogr2ogr takes a path to a file and returns the conversion via callback, stream o
 
 ```js
 var ogr2ogr = require('ogr2ogr')
-ogr2ogr('/path/to/spatial/file', function (er, data) {
+ogr2ogr('/path/to/spatial/file').exec(function (er, data) {
   if (er) console.error(er)
   console.log(data)
 })
