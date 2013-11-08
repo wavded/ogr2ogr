@@ -1,12 +1,11 @@
 # ogr2ogr [![Build Status](https://secure.travis-ci.org/wavded/ogr2ogr.png)](http://travis-ci.org/wavded/ogr2ogr)
 
-ogr2ogr is the guts of [Ogre](https://github.com/wavded/ogre) extracted out into a simple ogr2ogr module.
-It provides a streaming interface.  Its in progress.  Pull requests are welcome!
+ogr2ogr enables spatial file conversion and reprojection of spatial data through the use of ogr2ogr (gdal) tool
 
 ## Requirements
 
-ogr2ogr requires the command line tool *ogr2ogr* to be installed - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
-It is recommended to use the latest complete version.
+ogr2ogr requires the command line tool *ogr2ogr* - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
+It is recommended to use the latest version.
 
 ## Installation
 
@@ -16,7 +15,7 @@ It is recommended to use the latest complete version.
 
 ## Usage
 
-ogr2ogr takes a path to a file and returns the conversion via callback, stream or promise:
+ogr2ogr takes either a file or url path, a stream, or a GeoJSON object.  The result of the transformation can be consumed via callback, stream or promise:
 
 ```js
 var ogr2ogr = require('ogr2ogr')
@@ -26,9 +25,13 @@ ogr2ogr('/path/to/spatial/file').exec(function (er, data) {
 })
 ```
 
+See `/examples` for more usage examples and see `/test/api.js`.
+
 ## Formats
 
-ogr2ogr supports any format your underlying ogr2ogr supports.  It also will:
+The goal is for ogr2ogr to support most (if not all) formats your underlying ogr2ogr supports.  You can see the progress of that in `/tests/drivers.js`.
+
+It also will:
 
 1.  Extract zip files for formats that are typically bundled (i.e. shapefiles, kmz, s57, vrt, etc)
 2.  Will extract geometry from CSVs when a common geometry field can be determined.
@@ -37,18 +40,17 @@ ogr2ogr supports any format your underlying ogr2ogr supports.  It also will:
 
 ## Options
 
-ogr2ogr takes a second options argument:
+ogr2ogr takes modifier functions:
 
 ```js
-var shapefile = ogr2ogr('/path/to/spatial/file.geojson', { output: 'ESRI Shapefile' }).stream()
+var shapefile = ogr2ogr('/path/to/spatial/file.geojson').format('ESRI Shapefile').stream()
 shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
 ```
 
 Available options include:
 
-* sourceSrs - source of the original file (defaults to: "ESPG:4326")
-* targetSrs - reprojection of original (defaults to: "ESPG:4326")
-* format - output format of the transformation (defaults to: "GeoJSON")
+* `.project(dest, src)` - reproject data (defaults to: "ESPG:4326")
+* `.format(fmt)` - set output format (defaults to: "GeoJSON")
 
 ## License
 
