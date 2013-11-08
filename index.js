@@ -8,7 +8,7 @@ var csv = require('./lib/csv')
 var formats = require('./lib/formats')
 var util = require('./lib/util')
 
-var PassThrough = require('stream').PassThrough || require('readable-stream').PassThrough
+var PassThrough = require('stream').PassThrough
 
 function ogr2ogr (fpath, opts) {
   if (!fpath) throw new Error('A file path is required')
