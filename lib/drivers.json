@@ -1,0 +1,30 @@
+[
+  {
+    "format": "ESRI Shapefile",
+    "aliases": [ "shp", "prj", "shx", "dbf" ],
+    "extension": "zip",
+    "useZipOutStream": true
+  },{
+    "format": "MapInfo File",
+    "aliases": [ "map", "tab", "dat", "id", "ind"],
+    "extension": "zip",
+    "useZipOutStream": true
+  },{
+    "format": "GeoJSON",
+    "aliases": [ "json", "geojson" ],
+    "extension": "geojson"
+  },{
+    "format": "CSV",
+    "aliases": [ "csv" ],
+    "extension": "csv"
+  },{
+    "format": "KML",
+    "aliases": ["kml", "kmz"],
+    "extension": "kml"
+  },{
+    "format": "TIGER",
+    "aliases": [ "rt1", "rt2", "rt3", "rt4", "rt5", "rt6", "rt7", "rt8", "rt9", "rta", "rtc", "rth", "rti", "rtp", "rtr", "rts", "rtz" ],
+    "extension": "zip",
+    "useZipOutStream": true
+  }
+]
