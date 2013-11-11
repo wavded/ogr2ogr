@@ -15,7 +15,7 @@ It is recommended to use the latest version.
 
 ## Usage
 
-ogr2ogr takes either a file or url path, a stream, or a GeoJSON object.  The result of the transformation can be consumed via callback or stream:
+ogr2ogr takes either a path, a stream, or a GeoJSON object.  The result of the transformation can be consumed via callback or stream:
 
 ```js
 var ogr2ogr = require('ogr2ogr')
@@ -25,7 +25,7 @@ ogr2ogr('/path/to/spatial/file').exec(function (er, data) {
 })
 ```
 
-See `/examples` for more usage examples and see `/test/api.js`.
+See `/examples` for usage examples and `/test/api.js`.
 
 ## Formats
 
@@ -37,6 +37,8 @@ It also will:
 2.  Will extract geometry from CSVs when a common geometry field can be determined.
 3.  Cleans up after its messes.
 4.  Bundles multi-file conversions as a zip
+5.  Support GeoJSON and GeoRSS urls as path inputs
+6.  Support raw GeoJSON objects as input
 
 ## Options
 
