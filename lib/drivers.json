@@ -1,32 +1,12 @@
 [
   {
-    "format": "ESRI Shapefile",
-    "aliases": [ "shp", "prj", "shx", "dbf" ],
-    "output": "zip"
-  },{
-    "format": "MapInfo File",
-    "aliases": [ "map", "tab", "dat", "id", "ind"],
-    "output": "zip"
-  },{
-    "format": "GeoJSON",
-    "aliases": [ "json", "geojson" ],
-    "output": "geojson"
+    "format": "BNA",
+    "aliases": [ "bna" ],
+    "output": "bna"
   },{
     "format": "CSV",
     "aliases": [ "csv" ],
     "output": "csv"
-  },{
-    "format": "KML",
-    "aliases": ["kml", "kmz"],
-    "output": "kml"
-  },{
-    "format": "TIGER",
-    "aliases": [ "rt1", "rt2", "rt3", "rt4", "rt5", "rt6", "rt7", "rt8", "rt9", "rta", "rtc", "rth", "rti", "rtp", "rtr", "rts", "rtz" ],
-    "output": "zip"
-  },{
-    "format": "BNA",
-    "aliases": [ "bna" ],
-    "output": "bna"
   },{
     "format": "DGN",
     "aliases": [ "dgn" ],
@@ -36,9 +16,17 @@
     "aliases": [ "dxf" ],
     "output": "dxf"
   },{
+    "format": "ESRI Shapefile",
+    "aliases": [ "shp", "prj", "shx", "dbf" ],
+    "output": "zip"
+  },{
     "format": "Geoconcept",
     "aliases": [ "gxt", "txt" ],
     "output": "gxt"
+  },{
+    "format": "GeoJSON",
+    "aliases": [ "json", "geojson" ],
+    "output": "geojson"
   },{
     "format": "GeoRSS",
     "aliases": [ "rss", "xml", "georss" ],
@@ -51,6 +39,22 @@
     "format": "GMT",
     "aliases": [ "gmt" ],
     "output": "gmt"
+  },{
+    "format": "GPX",
+    "aliases": [ "gpx" ],
+    "output": "gpx"
+  },{
+    "format": "KML",
+    "aliases": ["kml", "kmz"],
+    "output": "kml"
+  },{
+    "format": "MapInfo File",
+    "aliases": [ "map", "tab", "dat", "id", "ind"],
+    "output": "zip"
+  },{
+    "format": "TIGER",
+    "aliases": [ "rt1", "rt2", "rt3", "rt4", "rt5", "rt6", "rt7", "rt8", "rt9", "rta", "rtc", "rth", "rti", "rtp", "rtr", "rts", "rtz" ],
+    "output": "zip"
   },{
     "format": "VRT",
     "aliases": [ "vrt" ],
