@@ -27,5 +27,9 @@
     "format": "BNA",
     "aliases": [ "bna" ],
     "output": "bna"
+  },{
+    "format": "BNA",
+    "aliases": [ "bna" ],
+    "output": "bna"
   }
 ]

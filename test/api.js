@@ -91,7 +91,7 @@ test('api input formats', function (t) {
   })
 
   test('accepts a stream', function (t) {
-    t.plan(5)
+    t.plan(10)
 
     var stream = fs.createReadStream(sampleKml)
     var ogr = ogr2ogr(stream, 'kml')
@@ -102,6 +102,21 @@ test('api input formats', function (t) {
     })
 
     ogr._testClean = function (er, cleaned) {
+      t.notOk(er, 'no error', { error: er })
+      t.equal(cleaned, 1, 'one to clean up')
+      t.notOk(fs.existsSync(ogr._inPath), 'tmp file cleaned')
+    }
+
+    // can infer type depending on stream source
+    var stream2 = fs.createReadStream(sampleKml)
+    var ogr2 = ogr2ogr(stream)
+
+    ogr2.exec(function (er, data) {
+      t.notOk(er, 'no error', { error: er })
+      t.equal(data.type, 'FeatureCollection', 'is geojson')
+    })
+
+    ogr2._testClean = function (er, cleaned) {
       t.notOk(er, 'no error', { error: er })
       t.equal(cleaned, 1, 'one to clean up')
       t.notOk(fs.existsSync(ogr._inPath), 'tmp file cleaned')

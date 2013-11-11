@@ -20,7 +20,7 @@ function Ogr2ogr (mixed, fmt) {
     throw new Error('A file path, stream, or GeoJSON object is required')
 
   if (mixed instanceof stream) {
-    var driver = util.getDriver(fmt)
+    var driver = util.getDriver(fmt || path.extname(mixed.path).replace('.',''))
     if (!driver) throw new Error('Streams require a valid input format')
     this._inStream = mixed
     this._inDriver = driver
