@@ -110,3 +110,16 @@ test('CSV', function (t) {
     }
   })
 })
+
+test('BNA', function (t) {
+  t.plan(3)
+
+  ogr2ogr(dir+'sample.bna').format('BNA').exec(function (er, buf) {
+    t.notOk(er, 'no error', { error: er })
+
+    if (buf) {
+      t.ok(Buffer.isBuffer(buf), 'is buffer')
+      t.notEqual(buf[0], 80, 'not in zip format')
+    }
+  })
+})

@@ -19,7 +19,6 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "when": "2.6.0",
     "unzip": "0.1.9",
     "rimraf": "2.2.2",
     "archiver": "0.4.10",

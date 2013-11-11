@@ -15,7 +15,7 @@ It is recommended to use the latest version.
 
 ## Usage
 
-ogr2ogr takes either a file or url path, a stream, or a GeoJSON object.  The result of the transformation can be consumed via callback, stream or promise:
+ogr2ogr takes either a file or url path, a stream, or a GeoJSON object.  The result of the transformation can be consumed via callback or stream:
 
 ```js
 var ogr2ogr = require('ogr2ogr')

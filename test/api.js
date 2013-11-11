@@ -36,9 +36,9 @@ test('api input formats', function (t) {
       t.equal(data && data.type, 'FeatureCollection', 'is geojson')
     })
 
-    ogr._testClean = function (er, settled) {
+    ogr._testClean = function (er, cleaned) {
       t.notOk(er, 'no error', { error: er })
-      t.equal(settled.length, 0, 'nothing to clean up')
+      t.equal(cleaned, 0, 'nothing to clean up')
       t.ok(fs.existsSync(ogr._inPath), 'keeps input file')
     }
   })
@@ -69,9 +69,9 @@ test('api input formats', function (t) {
       t.equal(data.features[0].geometry.coordinates[0], 11354588.060913906, 'is reprojected')
     })
 
-    ogr._testClean = function (er, settled) {
+    ogr._testClean = function (er, cleaned) {
       t.notOk(er, 'no error', { error: er })
-      t.equal(settled.length, 1, 'one to clean up')
+      t.equal(cleaned, 1, 'one to clean up')
       t.notOk(fs.existsSync(ogr._inPath), 'tmp file cleaned')
     }
 
@@ -82,9 +82,9 @@ test('api input formats', function (t) {
       t.equal(buf[0], 80, 'should be zip format')
     })
 
-    ogr2._testClean = function (er, settled) {
+    ogr2._testClean = function (er, cleaned) {
       t.notOk(er, 'no error', { error: er })
-      t.equal(settled.length, 2, 'two to clean up')
+      t.equal(cleaned, 2, 'two to clean up')
       t.notOk(fs.existsSync(ogr2._inPath), 'tmp file cleaned')
       t.notOk(fs.existsSync(ogr2._ogrOutPath), 'tmp shp dir cleaned')
     }
@@ -101,9 +101,9 @@ test('api input formats', function (t) {
       t.equal(data.type, 'FeatureCollection', 'is geojson')
     })
 
-    ogr._testClean = function (er, settled) {
+    ogr._testClean = function (er, cleaned) {
       t.notOk(er, 'no error', { error: er })
-      t.equal(settled.length, 1, 'one to clean up')
+      t.equal(cleaned, 1, 'one to clean up')
       t.notOk(fs.existsSync(ogr._inPath), 'tmp file cleaned')
     }
   })
@@ -136,16 +136,6 @@ test('api output formats', function (t) {
       t.equal(data && data.type, 'FeatureCollection', 'is geojson')
     })
   })
-
-  test('returns a promise', function (t) {
-    t.plan(1)
-
-    ogr2ogr(sampleKml).exec()
-      .then(function (data) {
-        t.equal(data.type, 'FeatureCollection', 'is geojson')
-      })
-      .done()
-  })
   t.end()
 })
 
@@ -159,9 +149,9 @@ test('generates a vrt for csv files', function (t) {
     t.equal(data.type, 'FeatureCollection', 'is geojson')
   })
 
-  ogr._testClean = function (er, settled) {
+  ogr._testClean = function (er, cleaned) {
     t.notOk(er, 'no error', { error: er })
-    t.equal(settled.length, 1, 'one to clean up')
+    t.equal(cleaned, 1, 'one to clean up')
     t.notOk(fs.existsSync(ogr._ogrInPath), 'tmp vrt file cleaned')
   }
 })
