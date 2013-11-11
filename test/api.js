@@ -4,6 +4,7 @@ var fs = require('fs')
 var ogr2ogr = require('../')
 var sampleKml = __dirname+'/samples/sample.kml'
 var sampleCsv = __dirname+'/samples/sample.csv'
+var sampleJson = __dirname+'/samples/sample.json'
 var bufferStream = function (st, cb) {
   var data = []
   st.on('data', function (buf) { data.push(buf) })
@@ -169,4 +170,16 @@ test('generates a vrt for csv files', function (t) {
     t.equal(cleaned, 1, 'one to clean up')
     t.notOk(fs.existsSync(ogr._ogrInPath), 'tmp vrt file cleaned')
   }
+})
+
+test('errors when converting', function (t) {
+  t.plan(2)
+  ogr2ogr(sampleJson).format('shp').exec(function (er, buf) {
+    t.ok(er, 'expect error', { error: er })
+  })
+
+  var st = ogr2ogr(sampleJson).format('shp').stream()
+  st.on('error', function (er) {
+    t.ok(er, 'expect error', { error: er })
+  })
 })
