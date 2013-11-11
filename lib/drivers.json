@@ -43,5 +43,17 @@
     "format": "GeoRSS",
     "aliases": [ "rss", "xml", "georss" ],
     "output": "dxf"
+  },{
+    "format": "GML",
+    "aliases": [ "gml", "gfs" ],
+    "output": "gml"
+  },{
+    "format": "GMT",
+    "aliases": [ "gmt" ],
+    "output": "gmt"
+  },{
+    "format": "VRT",
+    "aliases": [ "vrt" ],
+    "output": "vrt"
   }
 ]

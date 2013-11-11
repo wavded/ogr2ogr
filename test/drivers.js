@@ -185,3 +185,30 @@ test('GeoRSS', function (t) {
     }
   })
 })
+
+test('GML', function (t) {
+  t.plan(5)
+  ogr2ogr(dir+'sample.gml').exec(function (er, data) {
+    t.notOk(er, 'no error', { error: er })
+    t.ok(data && data.features[0].geometry, 'spatial data')
+  })
+
+  // TODO: Add GML Url
+
+  ogr2ogr(dir+'sample.gml').format('GML').exec(function (er, buf) {
+    t.notOk(er, 'no error', { error: er })
+
+    if (buf) {
+      t.ok(Buffer.isBuffer(buf), 'is buffer')
+      t.notEqual(buf[0], 80, 'not in zip format')
+    }
+  })
+})
+
+test('VRT', function (t) {
+  t.plan(2)
+  ogr2ogr(dir+'sample.vrt.zip').exec(function (er, data) {
+    t.notOk(er, 'no error', { error: er })
+    t.ok(data && data.features[0].geometry, 'spatial data')
+  })
+})
