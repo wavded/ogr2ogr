@@ -17,5 +17,6 @@ var geojson = {
 var ogr = ogr2ogr(geojson).project("EPSG:3857")
 
 ogr.exec(function (er, data) {
-  // reprojected geojson data
+  if (er) console.error(er)
+  console.log(data) // reprojected geojson data
 })
