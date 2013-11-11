@@ -28,8 +28,20 @@
     "aliases": [ "bna" ],
     "output": "bna"
   },{
-    "format": "BNA",
-    "aliases": [ "bna" ],
-    "output": "bna"
+    "format": "DGN",
+    "aliases": [ "dgn" ],
+    "output": "dgn"
+  },{
+    "format": "DXF",
+    "aliases": [ "dxf" ],
+    "output": "dxf"
+  },{
+    "format": "Geoconcept",
+    "aliases": [ "gxt", "txt" ],
+    "output": "gxt"
+  },{
+    "format": "GeoRSS",
+    "aliases": [ "rss", "xml", "georss" ],
+    "output": "dxf"
   }
 ]
