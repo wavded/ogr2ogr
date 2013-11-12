@@ -5,6 +5,8 @@ var ogr2ogr = require('../')
 var sampleKml = __dirname+'/samples/sample.kml'
 var sampleCsv = __dirname+'/samples/sample.csv'
 var sampleJson = __dirname+'/samples/sample.json'
+var sampleNestedZip = __dirname+'/samples/sample.shp.nested.zip'
+
 var bufferStream = function (st, cb) {
   var data = []
   st.on('data', function (buf) { data.push(buf) })
@@ -181,5 +183,13 @@ test('errors when converting', function (t) {
   var st = ogr2ogr(sampleJson).format('shp').stream()
   st.on('error', function (er) {
     t.ok(er, 'expect error', { error: er })
+  })
+})
+
+test('traverses zips', function (t) {
+  t.plan(2)
+  ogr2ogr(sampleNestedZip).exec(function (er, data) {
+    t.notOk(er, 'no error', { error: er })
+    t.equal(data && data.type, 'FeatureCollection', 'is geojson')
   })
 })

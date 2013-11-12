@@ -22,7 +22,8 @@
     "unzip": "0.1.9",
     "rimraf": "2.2.2",
     "archiver": "0.4.10",
-    "csv": "0.3.6"
+    "csv": "0.3.6",
+    "findit": "1.1.0"
   },
   "devDependencies": {
     "tap": "0.4.4"
