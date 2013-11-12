@@ -1,5 +1,5 @@
 
-0.1.0 / 2013-11-11 
+0.1.1 / 2013-11-11 
 ==================
 
  * add; note about spatial urls as inputs
