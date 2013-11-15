@@ -53,6 +53,7 @@ Available options include:
 
 * `.project(dest, src)` - reproject data (defaults to: "ESPG:4326")
 * `.format(fmt)` - set output format (defaults to: "GeoJSON")
+* `.timeout(ms)` - milliseconds before ogr2ogr is killed (defaults to: 15000)
 
 ## License
 

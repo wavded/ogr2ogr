@@ -34,6 +34,7 @@ function Ogr2ogr (mixed, fmt) {
 
   this._driver = {}
   this._args = []
+  this._timeout = 15000
   this._format = "GeoJSON"
   this._targetSrs = "EPSG:4326"
   this._sourceSrs = "EPSG:4326"
@@ -45,6 +46,11 @@ Ogr2ogr.prototype.format = function (fmt) {
   var driver = util.getDriver(fmt)
   this._driver = driver
   this._format = driver.format || fmt || "GeoJSON"
+  return this
+}
+
+Ogr2ogr.prototype.timeout = function (ms) {
+  this._timeout = ms
   return this
 }
 
@@ -140,7 +146,19 @@ Ogr2ogr.prototype._run = function () {
       if (chunk.match(/(error|failure)/i)) ostream.emit('error', new Error(chunk))
     })
     s.on('error', one)
-    s.on('close', function () { one() })
+    s.on('close', function () {
+      clearTimeout(killTimeout)
+      one()
+    })
+
+    var killTimeout = setTimeout(function () {
+      if (s._handle) {
+        ostream.emit('error', new Error('ogr2ogr took longer than '+ogr2ogr._timeout+' to complete'))
+        s.stdout.destroy()
+        s.stderr.destroy()
+        s.kill('SIGKILL')
+      }
+    }, ogr2ogr._timeout)
   })
 
   function wrapUp (er) {

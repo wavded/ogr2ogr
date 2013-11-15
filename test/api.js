@@ -193,3 +193,11 @@ test('traverses zips', function (t) {
     t.equal(data && data.type, 'FeatureCollection', 'is geojson')
   })
 })
+
+test('kills ogr2ogr when timeout breached', function (t) {
+  t.plan(2)
+  ogr2ogr(sampleNestedZip).timeout(50).exec(function (er, data) {
+    t.ok(er, 'expect error', { error: er })
+    t.notOk(data, 'no data')
+  })
+})
