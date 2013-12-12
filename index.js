@@ -49,6 +49,11 @@ Ogr2ogr.prototype.format = function (fmt) {
   return this
 }
 
+Ogr2ogr.prototype.destination = function(str) {
+  this._destination = str;
+  return this
+};
+
 Ogr2ogr.prototype.timeout = function (ms) {
   this._timeout = ms
   return this
@@ -134,7 +139,7 @@ Ogr2ogr.prototype._run = function () {
       '-s_srs', ogr2ogr._sourceSrs,
       '-t_srs', ogr2ogr._targetSrs,
       '-a_srs', ogr2ogr._targetSrs,
-      ogr2ogr._ogrOutPath, ogrInPath
+      ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath
     ]))
 
     if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream)
