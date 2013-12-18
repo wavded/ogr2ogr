@@ -151,9 +151,9 @@ Ogr2ogr.prototype._run = function () {
       if (chunk.match(/(error|failure)/i)) ostream.emit('error', new Error(chunk))
     })
     s.on('error', one)
-    s.on('close', function () {
+    s.on('close', function (code) {
       clearTimeout(killTimeout)
-      one()
+      one(code ? new Error("Process exited with error " + code) : null)
     })
 
     var killTimeout = setTimeout(function () {
