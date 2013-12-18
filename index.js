@@ -61,7 +61,7 @@ Ogr2ogr.prototype.timeout = function (ms) {
 
 Ogr2ogr.prototype.project = function (dest, src) {
   this._targetSrs = dest
-  if (src) this._sourceSrs = src
+  if (src !== undefined) this._sourceSrs = src
   return this
 }
 
@@ -133,14 +133,15 @@ Ogr2ogr.prototype._run = function () {
 
   this._getOrgInPath(function (er, ogrInPath) {
     ogr2ogr._ogrInPath = ogrInPath
+    var args = ['-f', ogr2ogr._format, '-skipfailures']
+    if (ogr2ogr._sourceSrs) args.push('-s_srs', ogr2ogr._sourceSrs)
+    if (ogr2ogr._targetSrs) {
+      args.push('-t_srs', ogr2ogr._targetSrs)
+      args.push('-a_srs', ogr2ogr._targetSrs)
+    }
+    args.push(ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath);
 
-    var s = cp.spawn('ogr2ogr', logCommand([
-      '-f', ogr2ogr._format, '-skipfailures',
-      '-s_srs', ogr2ogr._sourceSrs,
-      '-t_srs', ogr2ogr._targetSrs,
-      '-a_srs', ogr2ogr._targetSrs,
-      ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath
-    ]))
+    var s = cp.spawn('ogr2ogr', logCommand(args))
 
     if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream)
 
