@@ -50,14 +50,14 @@ Ogr2ogr.prototype.format = function (fmt) {
 }
 
 Ogr2ogr.prototype.options = function(arr) {
-  this._options = arr;
+  this._options = arr
   return this
-};
+}
 
 Ogr2ogr.prototype.destination = function(str) {
-  this._destination = str;
+  this._destination = str
   return this
-};
+}
 
 Ogr2ogr.prototype.timeout = function (ms) {
   this._timeout = ms
