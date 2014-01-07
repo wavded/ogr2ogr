@@ -42,10 +42,13 @@ It also will:
 
 ## Options
 
-ogr2ogr takes modifier functions:
+ogr2ogr takes chainable modifier functions:
 
 ```js
-var shapefile = ogr2ogr('/path/to/spatial/file.geojson').format('ESRI Shapefile').stream()
+var shapefile = ogr2ogr('/path/to/spatial/file.geojson')
+					.format('ESRI Shapefile')
+					.skipfailures()
+					.stream()
 shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
 ```
 
@@ -54,6 +57,9 @@ Available options include:
 * `.project(dest, src)` - reproject data (defaults to: "ESPG:4326")
 * `.format(fmt)` - set output format (defaults to: "GeoJSON")
 * `.timeout(ms)` - milliseconds before ogr2ogr is killed (defaults to: 15000)
+* `.skipfailures()` - skip failures (continue after failure, skipping failed feature -- by default failures are not skipped)
+* `.options(arr)` - array of custom org2ogr arguments (e.g. `['-fieldmap', '2,-1,4']`)
+* `.destination(str)` -  ogr2ogr destination (directly tell ogr2ogr where the output should go, useful for writing to databases)
 
 ## License
 
