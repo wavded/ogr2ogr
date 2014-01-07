@@ -1,4 +1,12 @@
 
+0.2.0 / 2014-01-06 
+==================
+
+ * change; .project(dest, null) removes default sourceSrs [kapouer]
+ * add; destination() custom ogr2ogr destination [kapouer]
+ * add; .skipfailures() [kapouer] **BREAKING** No longer skipping failures by default
+ * add; .options([]) appends custom parameters [kapouer]
+
 0.1.2 / 2013-11-15 
 ==================
 
