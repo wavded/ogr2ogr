@@ -20,13 +20,13 @@
   "main": "./index.js",
   "dependencies": {
     "unzip": "0.1.9",
-    "rimraf": "2.2.2",
+    "rimraf": "2.2.5",
     "archiver": "0.4.10",
     "csv": "0.3.6",
     "findit": "1.1.0"
   },
   "devDependencies": {
-    "tap": "0.4.4"
+    "tap": "0.4.6"
   },
   "engines": {
     "node": ">= 0.8.0"
