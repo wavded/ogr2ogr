@@ -56,6 +56,9 @@
     "aliases": [ "rt1", "rt2", "rt3", "rt4", "rt5", "rt6", "rt7", "rt8", "rt9", "rta", "rtc", "rth", "rti", "rtp", "rtr", "rts", "rtz" ],
     "output": "zip"
   },{
+    "format": "PostgreSQL",
+    "output": "sql"
+  },{
     "format": "VRT",
     "aliases": [ "vrt" ],
     "output": "vrt"
