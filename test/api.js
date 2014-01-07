@@ -130,7 +130,7 @@ test('api input formats', function (t) {
 
 test('api output formats', function (t) {
   test('returns a stream', function (t) {
-    t.plan(3)
+    t.plan(4)
 
     var st = ogr2ogr(sampleKml).stream()
     bufferStream(st, function (buf) {
@@ -200,4 +200,10 @@ test('kills ogr2ogr when timeout breached', function (t) {
     t.ok(er, 'expect error', { error: er })
     t.notOk(data, 'no data')
   })
+})
+
+test('skipfailures option', function (t) {
+  var ogr = ogr2ogr(sampleNestedZip).skipfailures()
+  t.equal(ogr._skipfailures, true, 'sets skip failures to true')
+  t.end()
 })

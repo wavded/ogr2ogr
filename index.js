@@ -50,18 +50,19 @@ Ogr2ogr.prototype.format = function (fmt) {
   return this
 }
 
-Ogr2ogr.prototype.options = function(arr) {
+Ogr2ogr.prototype.options = function (arr) {
   this._options = arr
   return this
 }
 
-Ogr2ogr.prototype.destination = function(str) {
+Ogr2ogr.prototype.destination = function (str) {
   this._destination = str
   return this
 }
 
-Ogr2ogr.prototype.skipfailures = function(bool) {
-  this._skipfailures = bool !== undefined ? bool : true
+Ogr2ogr.prototype.skipfailures = function () {
+  this._skipfailures = true
+  return this
 }
 
 Ogr2ogr.prototype.timeout = function (ms) {
@@ -150,7 +151,7 @@ Ogr2ogr.prototype._run = function () {
       args.push('-t_srs', ogr2ogr._targetSrs)
       args.push('-a_srs', ogr2ogr._targetSrs)
     }
-    args.push(ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath);
+    args.push(ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath)
     if (ogr2ogr._options) args = args.concat(ogr2ogr._options)
 
     var s = cp.spawn('ogr2ogr', logCommand(args))
