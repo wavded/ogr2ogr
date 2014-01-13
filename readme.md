@@ -19,10 +19,15 @@ ogr2ogr takes either a path, a stream, or a GeoJSON object.  The result of the t
 
 ```js
 var ogr2ogr = require('ogr2ogr')
-ogr2ogr('/path/to/spatial/file').exec(function (er, data) {
+var ogr = ogr2ogr('/path/to/spatial/file')
+
+ogr.exec(function (er, data) {
   if (er) console.error(er)
   console.log(data)
 })
+
+var ogr2 = ogr2ogr('/path/to/another/spatial/file')
+ogr2.stream().pipe(writeStream)
 ```
 
 See `/examples` for usage examples and `/test/api.js`.
