@@ -5,9 +5,10 @@ var zip = require('./lib/zip')
 var csv = require('./lib/csv')
 var util = require('./lib/util')
 var stream = require('stream')
+var EE = require('events').EventEmitter
 
 function logCommand (args) {
-  // console.error.apply(null, ['ogr2ogr'].concat(args))
+  // console.log.apply(null, ['ogr2ogr'].concat(args))
   return args
 }
 
@@ -42,6 +43,8 @@ function Ogr2ogr (mixed, fmt) {
 
   this._testClean = function (){} // testing
 }
+
+Ogr2ogr.prototype = Object.create(EE.prototype)
 
 Ogr2ogr.prototype.format = function (fmt) {
   var driver = util.getDriver(fmt)
@@ -162,12 +165,12 @@ Ogr2ogr.prototype._run = function () {
 
     s.stderr.setEncoding('ascii')
     s.stderr.on('data', function (chunk) {
-      if (chunk.match(/(error|failure)/i)) ostream.emit('error', new Error(chunk))
+      ogr2ogr.emit('ogrinfo', chunk)
     })
     s.on('error', one)
     s.on('close', function (code) {
       clearTimeout(killTimeout)
-      one(code ? new Error("Process exited with error " + code) : null)
+      one(code ? new Error("ogr2ogr failed to do the conversion") : null)
     })
 
     var killTimeout = setTimeout(function () {

@@ -15,7 +15,7 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "tap -d ./test"
+    "test": "tap -d -t 3 ./test"
   },
   "main": "./index.js",
   "dependencies": {

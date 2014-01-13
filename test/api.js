@@ -130,7 +130,7 @@ test('api input formats', function (t) {
 
 test('api output formats', function (t) {
   test('returns a stream', function (t) {
-    t.plan(4)
+    t.plan(3)
 
     var st = ogr2ogr(sampleKml).stream()
     bufferStream(st, function (buf) {
