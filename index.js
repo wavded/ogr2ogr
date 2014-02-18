@@ -75,7 +75,7 @@ Ogr2ogr.prototype.timeout = function (ms) {
 
 Ogr2ogr.prototype.project = function (dest, src) {
   this._targetSrs = dest
-  if (src !== undefined) this._sourceSrs = src
+  if (src) this._sourceSrs = src
   return this
 }
 
