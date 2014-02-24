@@ -8,7 +8,7 @@ var stream = require('stream')
 var EE = require('events').EventEmitter
 
 function logCommand (args) {
-  // console.log.apply(null, ['ogr2ogr'].concat(args))
+  // console.error.apply(null, ['ogr2ogr'].concat(args))
   return args
 }
 
@@ -38,8 +38,6 @@ function Ogr2ogr (mixed, fmt) {
   this._timeout = 15000
   this._format = "GeoJSON"
   this._skipfailures = false
-  this._targetSrs = "EPSG:4326"
-  this._sourceSrs = "EPSG:4326"
 
   this._testClean = function (){} // testing
 }
@@ -146,6 +144,8 @@ Ogr2ogr.prototype._run = function () {
   var ostream = new stream.PassThrough()
 
   this._getOrgInPath(function (er, ogrInPath) {
+    if (er) return wrapUp(er)
+
     ogr2ogr._ogrInPath = ogrInPath
     var args = ['-f', ogr2ogr._format]
     if (ogr2ogr._skipfailures) args.push('-skipfailures')
