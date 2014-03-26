@@ -184,7 +184,10 @@ Ogr2ogr.prototype._run = function () {
   })
 
   function wrapUp (er) {
-    if (er) ostream.emit('error', er)
+    if (er) {
+        ostream.emit('error', er);
+        return ogr2ogr._clean();
+    }
     if (!ogr2ogr._isZipOut) return ogr2ogr._clean()
 
     var zs = zip.createZipStream(ogr2ogr._ogrOutPath)
