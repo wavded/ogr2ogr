@@ -166,9 +166,11 @@ Ogr2ogr.prototype._run = function () {
     s.stderr.setEncoding('ascii')
     s.stderr.on('data', function (chunk) {
       ogr2ogr.emit('ogrinfo', chunk)
+      console.log(chunk)
     })
     s.on('error', one)
     s.on('close', function (code) {
+      console.log(code)
       clearTimeout(killTimeout)
       one(code ? new Error("ogr2ogr failed to do the conversion") : null)
     })
