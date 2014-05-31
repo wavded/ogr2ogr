@@ -1,4 +1,11 @@
 
+0.3.1 / 2014-05-30
+==================
+
+ * add; PostgreSQL format [ChrisCarto]
+ * fix; prevent emitting two successive errors when outputting to a zip file [boreal-is]
+ * fix; do not unzip /vsizip/ input paths [kapouer]
+
 0.2.2 / 2014-02-18
 ==================
 
