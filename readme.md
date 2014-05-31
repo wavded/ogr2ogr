@@ -1,4 +1,4 @@
-# ogr2ogr [![Build Status](https://secure.travis-ci.org/wavded/ogr2ogr.png)](http://travis-ci.org/wavded/ogr2ogr)
+# ogr2ogr [![Build Status](https://secure.travis-ci.org/wavded/ogr2ogr.svg)](http://travis-ci.org/wavded/ogr2ogr)
 
 ogr2ogr enables spatial file conversion and reprojection of spatial data through the use of ogr2ogr (gdal) tool
 
