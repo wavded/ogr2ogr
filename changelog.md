@@ -1,4 +1,11 @@
 
+0.4.0 / 2014-10-14
+==================
+
+ * add; sample cryllic file
+ * mod; stderr on non-zero exit
+ * mod; use gdal 1.11.0 for tests
+
 0.3.1 / 2014-05-30
 ==================
 
