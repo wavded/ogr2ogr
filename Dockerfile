@@ -1,4 +1,4 @@
-FROM homme/gdal
+FROM homme/gdal:v1.11.0
 MAINTAINER Marc Harter <wavded@gmail.com
 
 ENV TMPDIR /tmp
