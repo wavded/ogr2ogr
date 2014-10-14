@@ -156,7 +156,7 @@ Ogr2ogr.prototype._run = function () {
     }
     args.push(ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath)
     if (ogr2ogr._options) args = args.concat(ogr2ogr._options)
-    
+
     var errbuf = "";
 
     var s = cp.spawn('ogr2ogr', logCommand(args))
@@ -191,14 +191,13 @@ Ogr2ogr.prototype._run = function () {
 
   function wrapUp (er) {
     if (er) {
-        ostream.emit('error', er);
-        return ogr2ogr._clean();
-    }
-    if (!ogr2ogr._isZipOut) {
-      ostream.emit('close');
+      ostream.emit('error', er)
       return ogr2ogr._clean()
     }
-    
+    if (!ogr2ogr._isZipOut) {
+      ostream.emit('close')
+      return ogr2ogr._clean()
+    }
 
     var zs = zip.createZipStream(ogr2ogr._ogrOutPath)
     zs.on('error', function (er) { ostream.emit('error', er) })
