@@ -85,7 +85,7 @@ Ogr2ogr.prototype.exec = function (cb) {
   this.stream()
     .on('data', function (chunk) { buf.push(chunk) })
     .on('error', one)
-    .on('end', function () {
+    .on('close', function () {
       var data = Buffer.concat(buf)
       if (ogr2ogr._format == 'GeoJSON') {
         try { data = JSON.parse(data) }
@@ -156,6 +156,8 @@ Ogr2ogr.prototype._run = function () {
     }
     args.push(ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath)
     if (ogr2ogr._options) args = args.concat(ogr2ogr._options)
+    
+    var errbuf = "";
 
     var s = cp.spawn('ogr2ogr', logCommand(args))
 
@@ -165,12 +167,16 @@ Ogr2ogr.prototype._run = function () {
 
     s.stderr.setEncoding('ascii')
     s.stderr.on('data', function (chunk) {
-      ogr2ogr.emit('ogrinfo', chunk)
+      errbuf += chunk;
     })
-    s.on('error', one)
+    s.on('error', function(err) {
+      if (errbuf) errbuf += '\n' + err;
+      else errbuf = err;
+    })
     s.on('close', function (code) {
+      if (errbuf) ogr2ogr.emit('ogrinfo', errbuf)
       clearTimeout(killTimeout)
-      one(code ? new Error("ogr2ogr failed to do the conversion") : null)
+      one(code ? new Error(errbuf || "ogr2ogr failed to do the conversion") : null)
     })
 
     var killTimeout = setTimeout(function () {
@@ -188,11 +194,15 @@ Ogr2ogr.prototype._run = function () {
         ostream.emit('error', er);
         return ogr2ogr._clean();
     }
-    if (!ogr2ogr._isZipOut) return ogr2ogr._clean()
+    if (!ogr2ogr._isZipOut) {
+      ostream.emit('close');
+      return ogr2ogr._clean()
+    }
+    
 
     var zs = zip.createZipStream(ogr2ogr._ogrOutPath)
     zs.on('error', function (er) { ostream.emit('error', er) })
-    zs.on('end', function () { ogr2ogr._clean() })
+    zs.on('end', function () { ostream.emit('close'); ogr2ogr._clean() })
     zs.pipe(ostream)
   }
 
