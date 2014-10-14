@@ -188,13 +188,13 @@ test('errors when converting', function (t) {
 })
 
 test('always get the error when ogr2ogr returns with error code', function(t) {
-  t.plan(1)
   ogr2ogr(sampleCsvNogeom)
   .format("PGDump")
-  .project("EPSG:4326")
+  .project("EPSG:232ASFD121") // bogus EPSG
   .exec(function(er, data) {
     t.ok(er, 'expect error', { error: er })
-  });
+    t.end()
+  })
 })
 
 test('traverses zips', function (t) {
