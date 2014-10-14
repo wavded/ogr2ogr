@@ -4,6 +4,7 @@ var fs = require('fs')
 var ogr2ogr = require('../')
 var sampleKml = __dirname+'/samples/sample.kml'
 var sampleCsv = __dirname+'/samples/sample.csv'
+var sampleCsvNogeom = __dirname+'/samples/sample-nogeom.csv'
 var sampleJson = __dirname+'/samples/sample.json'
 var sampleNestedZip = __dirname+'/samples/sample.shp.nested.zip'
 
@@ -184,6 +185,16 @@ test('errors when converting', function (t) {
   st.on('error', function (er) {
     t.ok(er, 'expect error', { error: er })
   })
+})
+
+test('always get the error when ogr2ogr returns with error code', function(t) {
+  t.plan(1)
+  ogr2ogr(sampleCsvNogeom)
+  .format("PGDump")
+  .project("EPSG:4326")
+  .exec(function(er, data) {
+    t.ok(er, 'expect error', { error: er })
+  });
 })
 
 test('traverses zips', function (t) {
