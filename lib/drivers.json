@@ -57,7 +57,11 @@
     "output": "zip"
   },{
     "format": "PGDump",
-    "aliases": ["PostgreSQL"],
+    "aliases": ["sql"],
+    "output": "sql"
+  },{
+    "format": "PostgreSQL",
+    "aliases": [],
     "output": "sql"
   },{
     "format": "VRT",

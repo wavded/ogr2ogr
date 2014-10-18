@@ -237,6 +237,25 @@ test('TIGER', function (t) {
   })
 })
 
+test('PGDump', function (t) {
+  ogr2ogr(dir+'sample.geojson').format('PGDump').exec(function (er, buf) {
+    t.notOk(er, 'no error', { error: er })
+    var sql = buf.toString()
+    t.ok(/CREATE TABLE/.test(sql), 'is sql')
+    t.end()
+  })
+})
+
+test('PostgreSQL', function (t) {
+  ogr2ogr(dir+'sample.geojson')
+    .format('PostgreSQL')
+    .destination('PG:host=localhost user=postgres dbname=sandbox password=postgres')
+    .exec(function (er, buf) {
+      t.ok(/Connection refused/.test(er.message), 'should try to connect to postgres')
+      t.end()
+    })
+})
+
 test('VRT', function (t) {
   t.plan(2)
   ogr2ogr(dir+'sample.vrt.zip').exec(function (er, data) {
