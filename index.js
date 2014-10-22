@@ -131,7 +131,16 @@ Ogr2ogr.prototype._getOrgInPath = function (cb) {
       })
     }
     else if (ogr2ogr._isCsvIn) {
-      csv.makeVrt(fpath, one)
+      csv.makeVrt(fpath, function(err, vrt) {
+        if (vrt && /\.vrt$/.test(vrt)) {
+          // always set a source srs
+          if (!ogr2ogr._sourceSrs) ogr2ogr._sourceSrs = ogr2ogr._targetSrs
+        } else {
+          // no geo data so no target srs
+          delete ogr2ogr._targetSrs
+        }
+        one(err, vrt)
+      })
     }
     else {
       one(null, fpath)
