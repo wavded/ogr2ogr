@@ -17,9 +17,9 @@
   "scripts": {
     "test": "tape \"test/*-test.js\"",
     "docker-build": "docker build --rm -t wavded/ogre .",
-    "docker-test": "docker run -i -t -v `pwd`:/src -w /src wavded/ogre npm test",
+    "docker-test": "docker run -t -v `pwd`:/src -w /src wavded/ogre npm test",
     "docker-dev": "docker run -i -t -v `pwd`:/src -w /src wavded/ogre /bin/bash",
-    "ci-test": "npm run docker-build && npm run docker-test"
+    "ci-test": "npm run docker-build && npm run docker-test > test.tap"
   },
   "main": "./index.js",
   "dependencies": {
