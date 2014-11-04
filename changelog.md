@@ -1,4 +1,14 @@
 
+0.5.0 / 2014-11-04
+==================
+
+  * fix; ensure extractHead always call us back [kapouer]
+  * fix; gdal 1.10.1 virtual driver requires geometryType [kapouer]
+  * mod; cast column names to string [kapouer]
+  * mod; faster comma-separated-values to parse csv header [kapouer]
+  * mod; toggle source/target srs when loading CSV [kapouer]
+  * deps; update all dependencies
+
 0.4.1 / 2014-10-17
 ==================
 
