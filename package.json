@@ -15,7 +15,7 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "tap -d -t 10 ./test",
+    "test": "tape \"test/*-test.js\"",
     "docker-build": "docker build --rm -t wavded/ogre .",
     "docker-test": "docker run -i -t -v `pwd`:/src -w /src wavded/ogre npm test",
     "docker-dev": "docker run -i -t -v `pwd`:/src -w /src wavded/ogre /bin/bash"
@@ -29,7 +29,7 @@
     "findit": "1.1.0"
   },
   "devDependencies": {
-    "tap": "0.4.6"
+    "tape": "^3.0.1"
   },
   "engines": {
     "node": ">= 0.8.0"

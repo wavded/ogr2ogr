@@ -1,5 +1,5 @@
 var util = require('../lib/util')
-var test = require('tap').test
+var test = require('tape')
 
 test('oneCallback', function (t) {
   t.plan(1)

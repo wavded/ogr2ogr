@@ -1,5 +1,4 @@
-"use strict"
-var test = require('tap').test
+var test = require('tape')
 var fs = require('fs')
 var ogr2ogr = require('../')
 var sampleKml = __dirname+'/samples/sample.kml'
@@ -189,8 +188,7 @@ test('errors when converting', function (t) {
 
 test('always get the error when ogr2ogr returns with error code', function(t) {
   ogr2ogr(sampleCsvNogeom)
-  .format("PGDump")
-  .project("EPSG:232ASFD121") // bogus EPSG
+  .format("BOGUS") // bogus format
   .exec(function(er, data) {
     t.ok(er, 'expect error', { error: er })
     t.end()

@@ -1,5 +1,4 @@
-"use strict"
-var test = require('tap').test
+var test = require('tape')
 var fs = require('fs')
 var ogr2ogr = require('../')
 var dir = __dirname+'/samples/'
