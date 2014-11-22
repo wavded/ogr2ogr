@@ -1,4 +1,10 @@
 
+0.5.1 / 2014-11-21
+==================
+
+  * fix; properly close pass through stream
+  * mod; switch to jenkins ci
+
 0.5.0 / 2014-11-04
 ==================
 
