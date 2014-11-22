@@ -170,7 +170,7 @@ Ogr2ogr.prototype._run = function () {
 
     var s = cp.spawn('ogr2ogr', logCommand(args))
 
-    if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream)
+    if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream, { end: false })
 
     var one = util.oneCallback(wrapUp)
 
@@ -183,7 +183,6 @@ Ogr2ogr.prototype._run = function () {
       else errbuf = err;
     })
     s.on('close', function (code) {
-      if (errbuf) ogr2ogr.emit('ogrinfo', errbuf)
       clearTimeout(killTimeout)
       one(code ? new Error(errbuf || "ogr2ogr failed to do the conversion") : null)
     })
@@ -204,6 +203,7 @@ Ogr2ogr.prototype._run = function () {
       return ogr2ogr._clean()
     }
     if (!ogr2ogr._isZipOut) {
+      ostream.emit('end')
       ostream.emit('close')
       return ogr2ogr._clean()
     }
