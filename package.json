@@ -27,7 +27,7 @@
     "comma-separated-values": "^3.6.0",
     "findit": "^2.0.0",
     "rimraf": "^2.2.8",
-    "unzip": "^0.1.11"
+    "decompress-zip": "^0.1.0"
   },
   "devDependencies": {
     "tape": "^3.0.1"
