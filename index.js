@@ -38,6 +38,8 @@ function Ogr2ogr (mixed, fmt) {
   this._timeout = 15000
   this._format = "GeoJSON"
   this._skipfailures = false
+  this._append = false
+  this._update = false
 
   this._testClean = function (){} // testing
 }
@@ -63,6 +65,16 @@ Ogr2ogr.prototype.destination = function (str) {
 
 Ogr2ogr.prototype.skipfailures = function () {
   this._skipfailures = true
+  return this
+}
+
+Ogr2ogr.prototype.append = function () {
+  this._append = true
+  return this
+}
+
+Ogr2ogr.prototype.update = function () {
+  this._update = true
   return this
 }
 
@@ -158,6 +170,8 @@ Ogr2ogr.prototype._run = function () {
     ogr2ogr._ogrInPath = ogrInPath
     var args = ['-f', ogr2ogr._format]
     if (ogr2ogr._skipfailures) args.push('-skipfailures')
+    if (ogr2ogr._append) args.push('-append')
+    if (ogr2ogr._update) args.push('-update')
     if (ogr2ogr._sourceSrs) args.push('-s_srs', ogr2ogr._sourceSrs)
     if (ogr2ogr._targetSrs) {
       args.push('-t_srs', ogr2ogr._targetSrs)
