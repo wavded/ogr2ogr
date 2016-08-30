@@ -4,3 +4,4 @@ ogr_*
 .DS_Store
 test.tap
 .tern-port
+coverage
