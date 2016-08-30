@@ -44,6 +44,10 @@
     "aliases": [ "gpx" ],
     "output": "gpx"
   },{
+    "format": "GPKG",
+    "aliases": [ "gpkg" ],
+    "output": "gpkg"
+  },{
     "format": "KML",
     "aliases": ["kml", "kmz"],
     "output": "kml"

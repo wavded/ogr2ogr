@@ -185,6 +185,25 @@ test('GPX', function(t) {
   // })
 })
 
+test('GPKG', function(t) {
+  t.plan(4)
+
+  ogr2ogr(dir + 'sample.gpkg').skipfailures().format('ESRI Shapefile').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
+
+    if (buf) {
+      t.ok(Buffer.isBuffer(buf), 'is buffer')
+      t.equal(buf[0], 80, 'in zip format')
+      t.ok(buf.length > 40, 'is not empty zip')
+    }
+  })
+
+  // TODO: Add GPKG Output
+  // ogr2ogr(dir + 'sample.geojson').format('GPKG').exec(function(er, buf) {
+  //   t.notOk(er, 'no error', {error: er})
+  // })
+})
+
 test('KML', function(t) {
   t.plan(6)
 
