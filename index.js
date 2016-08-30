@@ -1,4 +1,3 @@
-"use strict"
 var path = require('path')
 var cp = require('child_process')
 var zip = require('./lib/zip')
@@ -7,18 +6,19 @@ var util = require('./lib/util')
 var stream = require('stream')
 var EE = require('events').EventEmitter
 
-function logCommand (args) {
+function logCommand(args) {
   // console.error.apply(null, ['ogr2ogr'].concat(args))
   return args
 }
 
 module.exports = Ogr2ogr
 
-function Ogr2ogr (mixed, fmt) {
+function Ogr2ogr(mixed, fmt) {
   if (!(this instanceof Ogr2ogr)) return new Ogr2ogr(mixed, fmt)
 
-  if (!mixed)
+  if (!mixed) {
     throw new Error('A file path, stream, or GeoJSON object is required')
+  }
 
   if (mixed instanceof stream) {
     var driver = util.getDriver(fmt || path.extname(mixed.path).replace('.',''))
@@ -36,70 +36,70 @@ function Ogr2ogr (mixed, fmt) {
   this._driver = {}
   this._args = []
   this._timeout = 15000
-  this._format = "GeoJSON"
+  this._format = 'GeoJSON'
   this._skipfailures = false
 
-  this._testClean = function (){} // testing
+  this._testClean = function() {} // testing
 }
 
 Ogr2ogr.prototype = Object.create(EE.prototype)
 
-Ogr2ogr.prototype.format = function (fmt) {
+Ogr2ogr.prototype.format = function(fmt) {
   var driver = util.getDriver(fmt)
   this._driver = driver
-  this._format = driver.format || fmt || "GeoJSON"
+  this._format = driver.format || fmt || 'GeoJSON'
   return this
 }
 
-Ogr2ogr.prototype.options = function (arr) {
+Ogr2ogr.prototype.options = function(arr) {
   this._options = arr
   return this
 }
 
-Ogr2ogr.prototype.destination = function (str) {
+Ogr2ogr.prototype.destination = function(str) {
   this._destination = str
   return this
 }
 
-Ogr2ogr.prototype.skipfailures = function () {
+Ogr2ogr.prototype.skipfailures = function() {
   this._skipfailures = true
   return this
 }
 
-Ogr2ogr.prototype.timeout = function (ms) {
+Ogr2ogr.prototype.timeout = function(ms) {
   this._timeout = ms
   return this
 }
 
-Ogr2ogr.prototype.project = function (dest, src) {
+Ogr2ogr.prototype.project = function(dest, src) {
   this._targetSrs = dest
   if (src) this._sourceSrs = src
   return this
 }
 
-Ogr2ogr.prototype.exec = function (cb) {
+Ogr2ogr.prototype.exec = function(cb) {
   var ogr2ogr = this
   var buf = []
   var one = util.oneCallback(cb)
 
   this.stream()
-    .on('data', function (chunk) { buf.push(chunk) })
+    .on('data', function(chunk) { buf.push(chunk) })
     .on('error', one)
-    .on('close', function () {
+    .on('close', function() {
       var data = Buffer.concat(buf)
       if (ogr2ogr._format == 'GeoJSON') {
         try { data = JSON.parse(data) }
         catch (er) { return one(er) }
       }
       one(null, data)
-   })
+    })
 }
 
-Ogr2ogr.prototype.stream = function () {
+Ogr2ogr.prototype.stream = function() {
   return this._run()
 }
 
-Ogr2ogr.prototype._getOrgInPath = function (cb) {
+Ogr2ogr.prototype._getOrgInPath = function(cb) {
   var ogr2ogr = this
   var one = util.oneCallback(cb)
 
@@ -113,7 +113,7 @@ Ogr2ogr.prototype._getOrgInPath = function (cb) {
     getInFilePath(null, this._inPath)
   }
 
-  function getInFilePath (er, fpath) {
+  function getInFilePath(er, fpath) {
     if (er) return one(er)
 
     ogr2ogr._inPath = fpath
@@ -125,9 +125,9 @@ Ogr2ogr.prototype._getOrgInPath = function (cb) {
     ogr2ogr._ogrOutPath = ogr2ogr._isZipOut ? util.genTmpPath() : '/vsistdout/'
 
     if (ogr2ogr._isZipIn) {
-      zip.extract(fpath, function (er, fpath) {
-        if (er) return one(er)
-        zip.findOgrFile(fpath, one)
+      zip.extract(fpath, function(er2, fpath2) {
+        if (er2) return one(er2)
+        zip.findOgrFile(fpath2, one)
       })
     }
     else if (ogr2ogr._isCsvIn) {
@@ -148,11 +148,11 @@ Ogr2ogr.prototype._getOrgInPath = function (cb) {
   }
 }
 
-Ogr2ogr.prototype._run = function () {
+Ogr2ogr.prototype._run = function() {
   var ogr2ogr = this
   var ostream = new stream.PassThrough()
 
-  this._getOrgInPath(function (er, ogrInPath) {
+  this._getOrgInPath(function(er, ogrInPath) {
     if (er) return wrapUp(er)
 
     ogr2ogr._ogrInPath = ogrInPath
@@ -166,30 +166,30 @@ Ogr2ogr.prototype._run = function () {
     args.push(ogr2ogr._destination || ogr2ogr._ogrOutPath, ogrInPath)
     if (ogr2ogr._options) args = args.concat(ogr2ogr._options)
 
-    var errbuf = "";
+    var errbuf = ''
 
     var s = cp.spawn('ogr2ogr', logCommand(args))
 
-    if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream, { end: false })
+    if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream, {end: false})
 
     var one = util.oneCallback(wrapUp)
 
     s.stderr.setEncoding('ascii')
-    s.stderr.on('data', function (chunk) {
-      errbuf += chunk;
+    s.stderr.on('data', function(chunk) {
+      errbuf += chunk
     })
     s.on('error', function(err) {
-      if (errbuf) errbuf += '\n' + err;
-      else errbuf = err;
+      if (errbuf) errbuf += '\n' + err
+      else errbuf = err
     })
-    s.on('close', function (code) {
+    s.on('close', function(code) {
       clearTimeout(killTimeout)
-      one(code ? new Error(errbuf || "ogr2ogr failed to do the conversion") : null)
+      one(code ? new Error(errbuf || 'ogr2ogr failed to do the conversion') : null)
     })
 
-    var killTimeout = setTimeout(function () {
+    var killTimeout = setTimeout(function() {
       if (s._handle) {
-        ostream.emit('error', new Error('ogr2ogr took longer than '+ogr2ogr._timeout+' to complete'))
+        ostream.emit('error', new Error('ogr2ogr took longer than ' + ogr2ogr._timeout + ' to complete'))
         s.stdout.destroy()
         s.stderr.destroy()
         s.kill('SIGKILL')
@@ -197,7 +197,7 @@ Ogr2ogr.prototype._run = function () {
     }, ogr2ogr._timeout)
   })
 
-  function wrapUp (er) {
+  function wrapUp(er) {
     if (er) {
       ostream.emit('error', er)
       return ogr2ogr._clean()
@@ -209,15 +209,15 @@ Ogr2ogr.prototype._run = function () {
     }
 
     var zs = zip.createZipStream(ogr2ogr._ogrOutPath)
-    zs.on('error', function (er) { ostream.emit('error', er) })
-    zs.on('end', function () { ostream.emit('close'); ogr2ogr._clean() })
+    zs.on('error', function(er2) { ostream.emit('error', er2) })
+    zs.on('end', function() { ostream.emit('close'); ogr2ogr._clean() })
     zs.pipe(ostream)
   }
 
   return ostream
 }
 
-Ogr2ogr.prototype._clean = function () {
+Ogr2ogr.prototype._clean = function() {
   var all = util.allCallback(this._testClean)
 
   if (this._inStream && this._driver.output == 'zip') {

@@ -1,10 +1,10 @@
 var util = require('../lib/util')
 var test = require('tape')
 
-test('oneCallback', function (t) {
+test('oneCallback', function(t) {
   t.plan(1)
 
-  var cb = function (er, data) {
+  var cb = function(er, data) {
     t.ok(data)
   }
   var one = util.oneCallback(cb)
@@ -12,16 +12,16 @@ test('oneCallback', function (t) {
   one(new Error('should not be called'))
 })
 
-test('allCallback', function (t) {
+test('allCallback', function(t) {
   t.plan(1)
 
-  var cb = function (er, len) {
+  var cb = function(er, len) {
     t.equal(len, 4)
   }
   var all = util.allCallback(cb)
 
-  function doWork (cb) {
-    setTimeout(function () {
+  function doWork(cb) {
+    setTimeout(function() {
       cb()
     }, 100)
   }

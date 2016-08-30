@@ -1,15 +1,14 @@
 var test = require('tape')
-var fs = require('fs')
 var ogr2ogr = require('../')
-var dir = __dirname+'/samples/'
-var sampleGeoJSONUrl = "https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.geojson"
-var sampleGeoRSSUrl = "https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss"
+var dir = __dirname + '/samples/'
+var sampleGeoJSONUrl = 'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.geojson'
+var sampleGeoRSSUrl = 'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss'
 
-test('BNA', function (t) {
+test('BNA', function(t) {
   t.plan(3)
 
-  ogr2ogr(dir+'sample.bna').format('BNA').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.bna').format('BNA').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -18,26 +17,26 @@ test('BNA', function (t) {
   })
 })
 
-test('CSV', function (t) {
+test('CSV', function(t) {
   t.plan(9)
 
-  ogr2ogr(dir+'sample-nogeom.csv').format('GeoJSON').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample-nogeom.csv').format('GeoJSON').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.equal(data && data.features[0].geometry, null, 'no spatial data')
   })
 
-  ogr2ogr(dir+'sample.csv').format('GeoJSON').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.csv').format('GeoJSON').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
-  ogr2ogr(dir+'sample-geom.csv').format('GeoJSON').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample-geom.csv').format('GeoJSON').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
-  ogr2ogr(dir+'sample.csv').format('CSV').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.csv').format('CSV').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -46,10 +45,10 @@ test('CSV', function (t) {
   })
 })
 
-test('DGN', function (t) {
+test('DGN', function(t) {
   t.plan(2)
-  ogr2ogr(dir+'sample.dgn').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.dgn').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
@@ -59,10 +58,10 @@ test('DGN', function (t) {
   // })
 })
 
-test('DXF', function (t) {
+test('DXF', function(t) {
   t.plan(2)
-  ogr2ogr(dir+'sample.dgn').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.dgn').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
@@ -72,11 +71,11 @@ test('DXF', function (t) {
   // })
 })
 
-test('ESRI Shapefile', function (t) {
+test('ESRI Shapefile', function(t) {
   t.plan(4)
 
-  ogr2ogr(dir+'sample.shp.zip').format('ESRI Shapefile').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.shp.zip').format('ESRI Shapefile').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -86,10 +85,10 @@ test('ESRI Shapefile', function (t) {
   })
 })
 
-test('Geoconcept', function (t) {
+test('Geoconcept', function(t) {
   t.plan(2)
-  ogr2ogr(dir+'sample.gxt').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.gxt').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
@@ -99,34 +98,34 @@ test('Geoconcept', function (t) {
   // })
 })
 
-test('GeoJSON', function (t) {
+test('GeoJSON', function(t) {
   t.plan(4)
 
-  ogr2ogr(dir+'sample.geojson').format('GeoJSON').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.geojson').format('GeoJSON').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.equal(data && data.type, 'FeatureCollection', 'is GeoJSON data')
   })
 
-  ogr2ogr(sampleGeoJSONUrl).format('GeoJSON').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(sampleGeoJSONUrl).format('GeoJSON').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.equal(data && data.type, 'FeatureCollection', 'is GeoJSON data')
   })
 })
 
-test('GeoRSS', function (t) {
+test('GeoRSS', function(t) {
   t.plan(7)
-  ogr2ogr(dir+'sample.rss').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.rss').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
-  ogr2ogr(sampleGeoRSSUrl).exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(sampleGeoRSSUrl).exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
-  ogr2ogr(dir+'sample.rss').format('GeoRSS').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.rss').format('GeoRSS').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -135,17 +134,17 @@ test('GeoRSS', function (t) {
   })
 })
 
-test('GML', function (t) {
+test('GML', function(t) {
   t.plan(5)
-  ogr2ogr(dir+'sample.gml').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.gml').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
   // TODO: Add GML Url
 
-  ogr2ogr(dir+'sample.gml').format('GML').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.gml').format('GML').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -154,10 +153,10 @@ test('GML', function (t) {
   })
 })
 
-test('GMT', function (t) {
+test('GMT', function(t) {
   t.plan(2)
-  ogr2ogr(dir+'sample.gmt').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.gmt').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
@@ -167,11 +166,11 @@ test('GMT', function (t) {
   // })
 })
 
-test('GPX', function (t) {
+test('GPX', function(t) {
   t.plan(4)
 
-  ogr2ogr(dir+'sample.gpx').format('ESRI Shapefile').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.gpx').format('ESRI Shapefile').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -186,11 +185,11 @@ test('GPX', function (t) {
   // })
 })
 
-test('KML', function (t) {
+test('KML', function(t) {
   t.plan(6)
 
-  ogr2ogr(dir+'sample.kml').format('KML').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.kml').format('KML').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -198,8 +197,8 @@ test('KML', function (t) {
     }
   })
 
-  ogr2ogr(dir+'sample.kmz').format('KML').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.kmz').format('KML').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -208,11 +207,11 @@ test('KML', function (t) {
   })
 })
 
-test('MapInfo File', function (t) {
+test('MapInfo File', function(t) {
   t.plan(4)
 
-  ogr2ogr(dir+'sample.map.zip').format('MapInfo File').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.map.zip').format('MapInfo File').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -222,11 +221,11 @@ test('MapInfo File', function (t) {
   })
 })
 
-test('TIGER', function (t) {
+test('TIGER', function(t) {
   t.plan(4)
 
-  ogr2ogr(dir+'sample.rti.zip').format('TIGER').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.rti.zip').format('TIGER').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
 
     if (buf) {
       t.ok(Buffer.isBuffer(buf), 'is buffer')
@@ -236,29 +235,29 @@ test('TIGER', function (t) {
   })
 })
 
-test('PGDump', function (t) {
-  ogr2ogr(dir+'sample.geojson').format('PGDump').exec(function (er, buf) {
-    t.notOk(er, 'no error', { error: er })
+test('PGDump', function(t) {
+  ogr2ogr(dir + 'sample.geojson').format('PGDump').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
     var sql = buf.toString()
     t.ok(/CREATE TABLE/.test(sql), 'is sql')
     t.end()
   })
 })
 
-test('PostgreSQL', function (t) {
-  ogr2ogr(dir+'sample.geojson')
+test('PostgreSQL', function(t) {
+  ogr2ogr(dir + 'sample.geojson')
     .format('PostgreSQL')
     .destination('PG:host=localhost user=postgres dbname=sandbox password=postgres')
-    .exec(function (er, buf) {
+    .exec(function(er) {
       t.ok(/Connection refused/.test(er.message), 'should try to connect to postgres')
       t.end()
     })
 })
 
-test('VRT', function (t) {
+test('VRT', function(t) {
   t.plan(2)
-  ogr2ogr(dir+'sample.vrt.zip').exec(function (er, data) {
-    t.notOk(er, 'no error', { error: er })
+  ogr2ogr(dir + 'sample.vrt.zip').exec(function(er, data) {
+    t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 })
