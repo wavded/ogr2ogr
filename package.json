@@ -16,7 +16,7 @@
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
     "test": "istanbul cover tape \"test/*-test.js\"",
-    "test-report": "istanbul cover --report cobertura tape \"test/*-test.js\" > test.tap",
+    "test-report": "istanbul cover --report cobertura tape \"test/*-test.js\" > test.tap && chmod -R 755 coverage",
     "ci-test": "npm run dbuild && npm run dtest",
 
     "dbuild": "docker build --rm -t wavded/ogre .",

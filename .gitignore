@@ -5,3 +5,4 @@ ogr_*
 test.tap
 .tern-port
 coverage
+test.tap
