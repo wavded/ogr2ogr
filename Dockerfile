@@ -1,7 +1,13 @@
-FROM homme/gdal:v1.11.0
+FROM geodata/gdal:1.11.5
 MAINTAINER Marc Harter <wavded@gmail.com
-
 ENV TMPDIR /tmp
-RUN add-apt-repository -y ppa:chris-lea/node.js
-RUN apt-get -y update
-RUN apt-get -y install nodejs
+
+# Switch from nobody to root for install
+USER root
+RUN apt-get update
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN apt-get install -y nodejs
+
+# Switch back to nobody
+USER nobody
