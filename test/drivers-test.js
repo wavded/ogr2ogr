@@ -4,6 +4,13 @@ var dir = __dirname + '/samples/'
 var sampleGeoJSONUrl = 'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.geojson'
 var sampleGeoRSSUrl = 'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss'
 
+test('Empty ZIP', function(t) {
+  ogr2ogr(dir + 'sample-empty.zip').exec(function(er, buf) {
+    t.ok(er, 'error', {error: er})
+    t.end()
+  })
+})
+
 test('BNA', function(t) {
   t.plan(3)
 

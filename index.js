@@ -227,7 +227,7 @@ Ogr2ogr.prototype._clean = function() {
     util.rmFile(this._inPath, all())
   }
 
-  if (this._isZipIn) {
+  if (this._isZipIn && this._ogrInPath) {
     util.rmParentDir(this._ogrInPath, all())
   }
   if (this._isCsvIn && /vrt/.test(this._ogrInPath)) {
