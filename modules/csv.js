@@ -39,7 +39,7 @@ exports.makeVrt = function(fpath, cb) {
 
     var geo = {}
     headers.forEach(function(header) {
-      var ht = (header + '').trim()
+      var ht = (String(header)).trim()
       switch (true) {
       case /\b(lon|longitude|lng|x)\b/i.test(ht):
         geo.x = header
@@ -61,13 +61,13 @@ exports.makeVrt = function(fpath, cb) {
       name: path.basename(fpath, '.csv'),
       enc: geo.geom ? 'WKT' : 'PointFromColumns',
       encopt: geo.geom
-                ? 'field="' + geo.geom + '"'
-                : 'x="' + geo.x + '" y="' + geo.y + '"',
+        ? 'field="' + geo.geom + '"'
+        : 'x="' + geo.x + '" y="' + geo.y + '"',
     })
 
     var vrtPath = util.genTmpPath() + '.vrt'
-    return fs.writeFile(vrtPath, vrtData, function(er) {
-      cb(er, vrtPath)
+    return fs.writeFile(vrtPath, vrtData, function(er2) {
+      cb(er2, vrtPath)
     })
   })
 }

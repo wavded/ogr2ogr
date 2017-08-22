@@ -1,11 +1,12 @@
 var test = require('tape')
 var fs = require('fs')
 var ogr2ogr = require('../')
-var sampleKml = __dirname + '/samples/sample.kml'
-var sampleCsv = __dirname + '/samples/sample.csv'
-var sampleCsvNogeom = __dirname + '/samples/sample-nogeom.csv'
-var sampleJson = __dirname + '/samples/sample.json'
-var sampleNestedZip = __dirname + '/samples/sample.shp.nested.zip'
+var join = require('path').join
+var sampleKml = join(__dirname, '/samples/sample.kml')
+var sampleCsv = join(__dirname, '/samples/sample.csv')
+var sampleCsvNogeom = join(__dirname, '/samples/sample-nogeom.csv')
+var sampleJson = join(__dirname, '/samples/sample.json')
+var sampleNestedZip = join(__dirname, '/samples/sample.shp.nested.zip')
 
 var bufferStream = function(st, cb) {
   var data = []
@@ -23,14 +24,14 @@ test('fails when no path, stream, or GeoJSON object', function(t) {
 
 test('fails on unsupported input format', function(t) {
   t.plan(2)
-  ogr2ogr(__dirname + '/samples/sample.bad').exec(function(er, data) {
+  ogr2ogr(join(__dirname, '/samples/sample.bad')).exec(function(er, data) {
     t.ok(er, 'expect error', {error: er})
     t.notOk(data, 'no data')
   })
 })
 
-test('api input formats', function(t) {
-  test('accepts a path', function(t) {
+test('api input formats', function(tp) {
+  tp.test('accepts a path', function(t) {
     t.plan(5)
 
     var ogr = ogr2ogr(sampleKml)
@@ -46,18 +47,18 @@ test('api input formats', function(t) {
     }
   })
 
-  test('accepts a GeoJSON object', function(t) {
+  tp.test('accepts a GeoJSON object', function(t) {
     t.plan(12)
 
     var geojson = {
-      'type': 'FeatureCollection',
-      'features': [{
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [102.0, 0.5],
+      type: 'FeatureCollection',
+      features: [{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [102.0, 0.5],
         },
-        'properties': {'area': '51'},
+        properties: {area: '51'},
       }],
     }
 
@@ -91,7 +92,7 @@ test('api input formats', function(t) {
     }
   })
 
-  test('accepts a stream', function(t) {
+  tp.test('accepts a stream', function(t) {
     t.plan(10)
 
     var stream = fs.createReadStream(sampleKml)
@@ -109,7 +110,7 @@ test('api input formats', function(t) {
     }
 
     // can infer type depending on stream source
-    var stream2 = fs.createReadStream(sampleKml)
+    // var stream2 = fs.createReadStream(sampleKml)
     var ogr2 = ogr2ogr(stream)
 
     ogr2.exec(function(er, data) {
@@ -123,11 +124,11 @@ test('api input formats', function(t) {
       t.notOk(fs.existsSync(ogr._inPath), 'tmp file cleaned')
     }
   })
-  t.end()
+  tp.end()
 })
 
-test('api output formats', function(t) {
-  test('returns a stream', function(t) {
+test('api output formats', function(tp) {
+  tp.test('returns a stream', function(t) {
     t.plan(3)
 
     var st = ogr2ogr(sampleKml).stream()
@@ -137,14 +138,14 @@ test('api output formats', function(t) {
       t.equal(data && data.type, 'FeatureCollection', 'is geojson')
     })
 
-    var st = ogr2ogr(__dirname + '/samples/sample.bad').stream()
+    st = ogr2ogr(join(__dirname, '/samples/sample.bad')).stream()
     st.resume()
     st.on('error', function(er) {
       t.ok(er, 'streams emit errors', {error: er})
     })
   })
 
-  test('takes a callback', function(t) {
+  tp.test('takes a callback', function(t) {
     t.plan(2)
 
     ogr2ogr(sampleKml).exec(function(er, data) {
@@ -152,7 +153,7 @@ test('api output formats', function(t) {
       t.equal(data && data.type, 'FeatureCollection', 'is geojson')
     })
   })
-  t.end()
+  tp.end()
 })
 
 test('generates a vrt for csv files', function(t) {
@@ -174,7 +175,7 @@ test('generates a vrt for csv files', function(t) {
 
 test('errors when converting', function(t) {
   t.plan(2)
-  ogr2ogr(sampleJson).format('shp').exec(function(er, buf) {
+  ogr2ogr(sampleJson).format('shp').exec(function(er) {
     t.ok(er, 'expect error', {error: er})
   })
 
@@ -186,11 +187,11 @@ test('errors when converting', function(t) {
 
 test('always get the error when ogr2ogr returns with error code', function(t) {
   ogr2ogr(sampleCsvNogeom)
-  .format('BOGUS') // bogus format
-  .exec(function(er, data) {
-    t.ok(er, 'expect error', {error: er})
-    t.end()
-  })
+    .format('BOGUS') // bogus format
+    .exec(function(er) {
+      t.ok(er, 'expect error', {error: er})
+      t.end()
+    })
 })
 
 test('traverses zips', function(t) {

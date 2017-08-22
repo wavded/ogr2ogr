@@ -1,14 +1,14 @@
 var ogr2ogr = require('../')
 
 var geojson = {
-  'type': 'FeatureCollection',
-  'features': [{
-    'type': 'Feature',
-    'geometry': {
-      'type': 'Point',
-      'coordinates': [102.0, 0.5],
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [102.0, 0.5],
     },
-    'properties': {'area': '51'},
+    properties: {area: '51'},
   }],
 }
 

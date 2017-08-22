@@ -23,7 +23,7 @@ exports.findOgrFile = function(dpath, cb) {
   var finder = findit(dpath)
   var found
 
-  finder.on('file', function(file, stat) {
+  finder.on('file', function(file) {
     if (validOgrRe.test(path.extname(file))) found = file
   })
   finder.on('error', function(er) {
@@ -46,8 +46,8 @@ exports.createZipStream = function(dpath) {
       var f = fs.createReadStream(path.join(dpath, file))
       zs.append(f, {name: file})
     })
-    zs.finalize(function(er) {
-      if (er) zs.emit('error', er)
+    zs.finalize(function(er2) {
+      if (er2) zs.emit('error', er2)
     })
   })
 

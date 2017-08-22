@@ -1,8 +1,8 @@
 var path = require('path')
 var cp = require('child_process')
-var zip = require('./lib/zip')
-var csv = require('./lib/csv')
-var util = require('./lib/util')
+var zip = require('./modules/zip')
+var csv = require('./modules/csv')
+var util = require('./modules/util')
 var stream = require('stream')
 var EE = require('events').EventEmitter
 

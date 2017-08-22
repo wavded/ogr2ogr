@@ -1,4 +1,4 @@
-var util = require('../lib/util')
+var util = require('../modules/util')
 var test = require('tape')
 
 test('oneCallback', function(t) {
@@ -20,9 +20,9 @@ test('allCallback', function(t) {
   }
   var all = util.allCallback(cb)
 
-  function doWork(cb) {
+  function doWork(cb2) {
     setTimeout(function() {
-      cb()
+      cb2()
     }, 100)
   }
 
