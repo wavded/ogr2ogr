@@ -15,10 +15,7 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "istanbul cover tape \"test/*-test.js\"",
-    "docker-build": "docker build --rm -t wavded/ogre .",
-    "docker-test": "docker run -t -v `pwd`:/src -w /src wavded/ogre npm test",
-    "docker-dev": "docker run -i -t -v `pwd`:/src -w /src wavded/ogre /bin/bash"
+    "test": "istanbul cover tape \"test/*-test.js\""
   },
   "main": "./index.js",
   "dependencies": {
