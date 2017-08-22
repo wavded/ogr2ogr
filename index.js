@@ -21,7 +21,7 @@ function Ogr2ogr(mixed, fmt) {
   }
 
   if (mixed instanceof stream) {
-    var driver = util.getDriver(fmt || path.extname(mixed.path).replace('.',''))
+    var driver = util.getDriver(fmt || path.extname(mixed.path).replace('.', ''))
     if (!driver) throw new Error('Streams require a valid input format')
     this._inStream = mixed
     this._inDriver = driver
