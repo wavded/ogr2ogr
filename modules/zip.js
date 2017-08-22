@@ -19,12 +19,13 @@ exports.extract = function(fpath, cb) {
 }
 
 var validOgrRe = /^\.(shp|kml|tab|itf|000|rt1|gml|vrt)$/i
+var macosxRe = /__MACOSX/
 exports.findOgrFile = function(dpath, cb) {
   var finder = findit(dpath)
   var found
 
   finder.on('file', function(file) {
-    if (validOgrRe.test(path.extname(file))) found = file
+    if (!macosxRe.test(file) && validOgrRe.test(path.extname(file))) found = file
   })
   finder.on('error', function(er) {
     cb(er)
