@@ -1,3 +1,7 @@
+# 1.2.0 / 2017-03-06
+
+- Update dependencies, some cleanup.
+
 # 1.0.1 / 2017-03-06
 
 - Fix empty zip failure.
