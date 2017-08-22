@@ -1,3 +1,7 @@
+# 1.2.1 / 2017-03-06
+
+- Ignore MACOSX archive folder.
+
 # 1.2.0 / 2017-03-06
 
 - Update dependencies, some cleanup.
