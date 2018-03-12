@@ -15,7 +15,7 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "istanbul cover tape \"test/*-test.js\""
+    "test": "nyc tape \"test/*-test.js\""
   },
   "main": "./index.js",
   "dependencies": {
@@ -26,7 +26,6 @@
     "rimraf": "^2.2.8"
   },
   "devDependencies": {
-    "istanbul": "^0.4.5",
     "tape": "^4.6.0"
   },
   "engines": {
