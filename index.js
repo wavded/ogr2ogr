@@ -118,7 +118,7 @@ Ogr2ogr.prototype._getOrgInPath = function(cb) {
 
     ogr2ogr._inPath = fpath
 
-    ogr2ogr._isZipIn = /zip|kmz/.test(path.extname(fpath)) && !/^\/vsizip\//.test(fpath)
+    ogr2ogr._isZipIn = /zip|kmz/.test(path.extname(fpath)) && !/^\/vsizip\//.test(fpath) && !/gdb.zip/i.test(fpath)
     ogr2ogr._isCsvIn = /csv/.test(path.extname(fpath))
     ogr2ogr._isZipOut = ogr2ogr._driver.output == 'zip'
 
