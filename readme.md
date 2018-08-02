@@ -64,6 +64,66 @@ Available options include:
 - `.skipfailures()` - skip failures (continue after failure, skipping failed feature -- by default failures are not skipped)
 - `.options(arr)` - array of custom org2ogr arguments (e.g. `['-fieldmap', '2,-1,4']`)
 - `.destination(str)` - ogr2ogr destination (directly tell ogr2ogr where the output should go, useful for writing to databases)
+- `.onStderr(callback)` - execute a callback function whose parameter is the debug output of ogr2ogr to stderr
+
+## Example of onStderr usage
+
+If you want to debug what is the ogr2ogr binary doing internally, you can attach a callback to the output, 
+provided you have passed the option [CPL_DEBUG](https://trac.osgeo.org/gdal/wiki/ConfigOptions#CPL_DEBUG)
+
+```javascript
+var shapefile = ogr2ogr('/path/to/spatial/file.geojson')
+                    .format('ESRI Shapefile')
+                    .skipfailures()
+                    .options(["--config", "CPL_DEBUG", "ON"])
+			        .onStderr(function(data) {
+			            console.log(data);
+			        })
+                    .stream()
+shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
+```
+
+You will see in the console someting in the likes of
+
+```sh
+GDAL: GDALOpen(/tmp/ogr_542cb61092c/sample.shp, this=0x15ca370) succeeds as ESRI Shapefile.
+
+GDAL: GDALDriver::Create(PGDUMP,/vsistdout/,0,0,0,Unknown,(nil))
+PGDump: LaunderName('ID') -> 'id'
+PGDump: LaunderName('FIPSSTCO') -> 'fipsstco'
+PGDump: LaunderName('STATE') -> 'state'
+PGDump: LaunderName('COUNTY') -> 'county'
+GDALVectorTranslate: 1 features written in layer 'sample'
+Shape: 1 features read on layer 'sample'.
+GDAL: GDALClose(/tmp/ogr_542cb61092c/sample.shp, this=0x15ca370)
+GDAL: GDALClose(/vsistdout/, this=0x157ded0)
+```
+
+This can be useful when something goes wrong and the error provided by this library doesn't provide enough information.
+
+## Conversion of `shp` files
+
+It is trivial to handle the conversion of ESRI Shapefiles when they are packed in a zipfile that contains (at least) the `shp` and `shx` files.
+This library is also capable of converting uncompresses ESRI Shapefiles if you use the `shp` file as the input file 
+**and the shx file is in the same folder**.
+
+However, it is also possible to convert single `shp` files that lack an `shx` file by forcing its creation 
+using ogr2ogr option [SHAPE_RESTORE_SHX](https://trac.osgeo.org/gdal/wiki/ConfigOptions#SHAPE_RESTORE_SHX) provided you have installed
+GDAL/OGR version 2.1.0 or newer.
+
+```javascript
+var geojson = ogr2ogr('/path/to/spatial/lonely.shp')
+    .options(["--config", "SHAPE_RESTORE_SHX", "TRUE"])
+    .stream()
+
+geojson.pipe(fs.createWriteStream('/lonely.json'))
+
+```
+
+**Caveat**: ogr2ogr will do its best to infer the corresponding `shx`. However, there's no guarantee it will success.
+
+
+
 
 # License
 
