@@ -183,7 +183,11 @@ Ogr2ogr.prototype._run = function() {
     s.stderr.setEncoding('ascii')
     s.stderr.on('data', function(chunk) {
       ogr2ogr._onStderr(chunk);
-      errbuf += chunk
+      if(/Error/i.test(chunk)) {
+        s.emit('error', chunk);
+      } else {
+        errbuf += chunk
+      }
     })
     s.on('error', function(err) {
       if (errbuf) errbuf += '\n' + err

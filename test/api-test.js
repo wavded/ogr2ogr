@@ -30,6 +30,17 @@ test('fails on unsupported input format', function(t) {
     })
 })
 
+test('fails when input is invalid and no --skipfailures was not set', function(t) {
+    t.plan(2)
+    ogr2ogr(sampleJson)
+    .format('ESRI Shapefile')
+    .exec(function(er, data) {
+        t.ok(er, 'expect error', { error: er })
+        t.notOk(data, 'no data')
+    })
+})
+
+
 test('api input formats', function(tp) {
     tp.test('accepts a path', function(t) {
         t.plan(5)
@@ -121,11 +132,14 @@ test('api input formats', function(tp) {
         ogr2._testClean = function(er, cleaned) {
             t.notOk(er, 'no error', { error: er })
             t.equal(cleaned, 1, 'one to clean up')
-            t.notOk(fs.existsSync(ogr._inPath), 'tmp file cleaned')
+            t.notOk(fs.existsSync(ogr2._inPath), 'tmp file cleaned')
         }
     })
     tp.end()
 })
+
+  
+
 
 test('api output formats', function(tp) {
     tp.test('returns a stream', function(t) {
