@@ -127,6 +127,41 @@ test('uncompressed ESRI Shapefile without shx', function(t) {
         })
 });
 
+//The default ESRI File Geodatabase driver, OpenFileGDB, provides only read access.
+//Outputting to ESRI Shapefile instead.
+test('ESRI Geodatabase', function(t) {
+  t.plan(4)
+
+  ogr2ogr(dir + 'sample.gdb').format('ESRI Shapefile').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
+
+    if (buf) {
+      t.ok(Buffer.isBuffer(buf), 'is buffer')
+	  //console.log("buf = " +  buf);
+      t.equal(buf[0], 80, 'in zip format')
+      t.ok(buf.length > 40, 'is not empty zip')
+    }
+  })
+})
+
+//The default ESRI File Geodatabase driver, OpenFileGDB, provides only read access.
+//Outputting to ESRI Shapefile instead.
+test('ESRI Geodatabase - zipped', function(t) {
+  t.plan(4)
+
+  ogr2ogr(dir + 'sample.gdb.zip').format('ESRI Shapefile').exec(function(er, buf) {
+    t.notOk(er, 'no error', {error: er})
+
+    if (buf) {
+      t.ok(Buffer.isBuffer(buf), 'is buffer')
+	  //console.log("buf = " +  buf);
+      t.equal(buf[0], 80, 'in zip format')
+      t.ok(buf.length > 40, 'is not empty zip')
+    }
+  })
+})
+
+
 test('Geoconcept', function(t) {
     t.plan(2)
     ogr2ogr(dir + 'sample.gxt').exec(function(er, data) {
