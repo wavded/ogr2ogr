@@ -32,7 +32,8 @@ function Ogr2ogr(mixed, fmt) {
   else {
     this._inPath = mixed
   }
-
+  
+  this._onStderr=function() {};
   this._driver = {}
   this._args = []
   this._timeout = 15000
@@ -74,6 +75,11 @@ Ogr2ogr.prototype.timeout = function(ms) {
 Ogr2ogr.prototype.project = function(dest, src) {
   this._targetSrs = dest
   if (src) this._sourceSrs = src
+  return this
+}
+
+Ogr2ogr.prototype.onStderr = function(fn) {
+  this._onStderr=fn;
   return this
 }
 
@@ -176,7 +182,12 @@ Ogr2ogr.prototype._run = function() {
 
     s.stderr.setEncoding('ascii')
     s.stderr.on('data', function(chunk) {
-      errbuf += chunk
+      ogr2ogr._onStderr(chunk);
+      if(/Error/i.test(chunk)) {
+        s.emit('error', chunk);
+      } else {
+        errbuf += chunk
+      }
     })
     s.on('error', function(err) {
       if (errbuf) errbuf += '\n' + err
