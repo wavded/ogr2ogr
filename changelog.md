@@ -1,3 +1,9 @@
+# 1.3.0 / 2018-09-21
+
+- Add test for ESRI File Geodatase, zipped and unzipped [NoisyFlowers]
+- Add onStdErr method and documentation [amenadiel]
+- Do not decompress zipped GBD files [NoisyFlowers]
+
 # 1.2.1 / 2017-03-06
 
 - Ignore MACOSX archive folder.
