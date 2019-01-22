@@ -170,14 +170,11 @@ test('api output formats', function(tp) {
     tp.end()
 })
 
-test('promises return data', async (tp) =>{
-    tp.plan(3);
-    const prom = ogr2ogr(sampleKml).promise();     
-    tp.equal(typeof prom, 'object'); //not the best, we could always use other ways of checking if it's a Promise...
-    const data =  await prom;        
-    tp.equal(data && data.type, 'FeatureCollection', 'is geojson')                       
-
-    tp.end();
+test('promises return data', function(t) {
+    return ogr2ogr(sampleKml).promise()
+        .then(function(data) {
+            tp.equal(data && data.type, 'FeatureCollection', 'is geojson')
+        })
 });
 
 test('generates a vrt for csv files', function(t) {
