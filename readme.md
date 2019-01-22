@@ -29,6 +29,14 @@ var ogr2 = ogr2ogr('/path/to/another/spatial/file')
 ogr2.stream().pipe(writeStream)
 ```
 
+or awaited as a promise
+
+```javascript
+var data = await ogr2ogr('/path/to/another/spatial/file').promise();
+console.log(data);   
+```
+
+
 See `/examples` for usage examples and `/test/api.js`.
 
 # Formats

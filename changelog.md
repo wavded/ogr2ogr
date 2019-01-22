@@ -1,3 +1,7 @@
+# 1.4.0 / 2019-01-22
+
+- Add promise support [jomel]
+
 # 1.3.0 / 2018-09-21
 
 - Add test for ESRI File Geodatase, zipped and unzipped [NoisyFlowers]

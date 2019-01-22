@@ -105,6 +105,30 @@ Ogr2ogr.prototype.stream = function() {
   return this._run()
 }
 
+Ogr2ogr.prototype.promise = function(cb) {
+   var ogr2ogr = this
+   var buf = []
+
+   return new Promise((resolve, reject) => {
+      this.stream()
+         .on('data', function(chunk) {
+            buf.push(chunk)
+         })
+         .on('error', er => reject(er))
+         .on('close', function() {
+            var data = Buffer.concat(buf)
+            if (ogr2ogr._format == 'GeoJSON') {
+               try {
+                  data = JSON.parse(data);
+               } catch (er) {
+                  reject(er)
+               }
+            }
+            resolve(data)
+         })
+   })
+}
+
 Ogr2ogr.prototype._getOrgInPath = function(cb) {
   var ogr2ogr = this
   var one = util.oneCallback(cb)

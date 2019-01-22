@@ -170,6 +170,13 @@ test('api output formats', function(tp) {
     tp.end()
 })
 
+test('promises return data', function(t) {
+    return ogr2ogr(sampleKml).promise()
+        .then(function(data) {
+            tp.equal(data && data.type, 'FeatureCollection', 'is geojson')
+        })
+});
+
 test('generates a vrt for csv files', function(t) {
     t.plan(5)
 
