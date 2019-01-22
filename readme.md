@@ -30,8 +30,9 @@ ogr2.stream().pipe(writeStream)
 ```
 
 or awaited as a promise
+
 ```javascript
-let data = await ogr2ogr('/path/to/another/spatial/file').promise();
+var data = await ogr2ogr('/path/to/another/spatial/file').promise();
 console.log(data);   
 ```
 
