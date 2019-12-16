@@ -70,7 +70,8 @@ Available options include:
 - `.format(fmt)` - set output format (defaults to: "GeoJSON")
 - `.timeout(ms)` - milliseconds before ogr2ogr is killed (defaults to: 15000)
 - `.skipfailures()` - skip failures (continue after failure, skipping failed feature -- by default failures are not skipped)
-- `.options(arr)` - array of custom org2ogr arguments (e.g. `['-fieldmap', '2,-1,4']`)
+- `.env(obj)` - object of custom ogr2ogr ENV configuration parameters (e.g. `{ RFC7946: 'YES' }`)
+- `.options(arr)` - array of custom ogr2ogr arguments (e.g. `['-fieldmap', '2,-1,4']`)
 - `.destination(str)` - ogr2ogr destination (directly tell ogr2ogr where the output should go, useful for writing to databases)
 - `.onStderr(callback)` - execute a callback function whose parameter is the debug output of ogr2ogr to stderr
 
