@@ -57,7 +57,7 @@ Ogr2ogr.prototype.options = function(arr) {
   return this
 }
 
-Ogr2ogr.prototype.options = function(obj) {
+Ogr2ogr.prototype.env = function(obj) {
   this._env = obj
   return this
 }
