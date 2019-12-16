@@ -57,6 +57,11 @@ Ogr2ogr.prototype.options = function(arr) {
   return this
 }
 
+Ogr2ogr.prototype.env = function(obj) {
+  this._env = obj
+  return this
+}
+
 Ogr2ogr.prototype.destination = function(str) {
   this._destination = str
   return this
@@ -197,8 +202,9 @@ Ogr2ogr.prototype._run = function() {
     if (ogr2ogr._options) args = args.concat(ogr2ogr._options)
 
     var errbuf = ''
-
-    var s = cp.spawn('ogr2ogr', logCommand(args))
+    
+    var commandOptions = this._env ? { env: this._env } : undefined
+    var s = cp.spawn('ogr2ogr', logCommand(args), commandOptions)
 
     if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream, {end: false})
 
