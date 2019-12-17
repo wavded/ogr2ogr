@@ -1,3 +1,8 @@
+# 1.5.0 / 2019-12-17
+
+- Bump lodash from 4.17.4 to 4.17.15
+- Add support for setting command env [contra]
+
 # 1.4.0 / 2019-01-22
 
 - Add promise support [jomel]
