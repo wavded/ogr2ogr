@@ -49,8 +49,12 @@
     "output": "gpkg"
   },{
     "format": "KML",
-    "aliases": ["kml", "kmz"],
+    "aliases": ["kml"],
     "output": "kml"
+  },{
+    "format": "KMZ",
+    "aliases": ["kmz"],
+    "output": "zip"
   },{
     "format": "MapInfo File",
     "aliases": [ "map", "tab", "dat", "id", "ind"],
