@@ -95,17 +95,14 @@ test('outputs debug messages when converting from KML when CPL_DEBUG is ON', fun
   let ogr = ogr2ogr(sampleKml)
     .options(['--config', 'CPL_DEBUG', 'ON'])
     .onStderr(function(data) {
-      let matches_success = /(succeeds as KML)/.exec(data)
+      let matches_success = /(succeeds as (LIB)?KML)/.exec(data)
       if (matches_success) {
         matches.push(matches_success[1])
       }
     })
 
   ogr.exec(function() {
-    t.ok(
-      matches.indexOf('succeeds as KML') !== -1,
-      '"succeeds as KML" has been printed to stderr'
-    )
+    t.ok(matches.length)
   })
 })
 
