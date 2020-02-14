@@ -1,6 +1,6 @@
 {
   "name": "ogr2ogr",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "ogr2ogr wrapper w/ multiple format support",
   "keywords": [
     "ogr2ogr",
@@ -35,6 +35,6 @@
     "tape": "^4.13.0"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   }
 }

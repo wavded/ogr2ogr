@@ -1,3 +1,7 @@
+# 2.0.0 / 2020-02-14
+
+- Breaking change: Support Node >= 10
+
 # 1.5.0 / 2019-12-17
 
 - Bump lodash from 4.17.4 to 4.17.15
