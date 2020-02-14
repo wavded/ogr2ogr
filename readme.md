@@ -20,7 +20,7 @@ ogr2ogr takes either a path, a stream, or a GeoJSON object. The result of the tr
 var ogr2ogr = require('ogr2ogr')
 var ogr = ogr2ogr('/path/to/spatial/file')
 
-ogr.exec(function (er, data) {
+ogr.exec(function(er, data) {
   if (er) console.error(er)
   console.log(data)
 })
@@ -32,10 +32,9 @@ ogr2.stream().pipe(writeStream)
 or awaited as a promise
 
 ```javascript
-var data = await ogr2ogr('/path/to/another/spatial/file').promise();
-console.log(data);   
+var data = await ogr2ogr('/path/to/another/spatial/file').promise()
+console.log(data)
 ```
-
 
 See `/examples` for usage examples and `/test/api.js`.
 
@@ -58,9 +57,9 @@ ogr2ogr takes chainable modifier functions:
 
 ```javascript
 var shapefile = ogr2ogr('/path/to/spatial/file.geojson')
-                    .format('ESRI Shapefile')
-                    .skipfailures()
-                    .stream()
+  .format('ESRI Shapefile')
+  .skipfailures()
+  .stream()
 shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
 ```
 
@@ -77,18 +76,18 @@ Available options include:
 
 ## Example of onStderr usage
 
-If you want to debug what is the ogr2ogr binary doing internally, you can attach a callback to the output, 
+If you want to debug what is the ogr2ogr binary doing internally, you can attach a callback to the output,
 provided you have passed the option [CPL_DEBUG](https://trac.osgeo.org/gdal/wiki/ConfigOptions#CPL_DEBUG)
 
 ```javascript
 var shapefile = ogr2ogr('/path/to/spatial/file.geojson')
-                    .format('ESRI Shapefile')
-                    .skipfailures()
-                    .options(["--config", "CPL_DEBUG", "ON"])
-			        .onStderr(function(data) {
-			            console.log(data);
-			        })
-                    .stream()
+  .format('ESRI Shapefile')
+  .skipfailures()
+  .options(['--config', 'CPL_DEBUG', 'ON'])
+  .onStderr(function(data) {
+    console.log(data)
+  })
+  .stream()
 shapefile.pipe(fs.createWriteStream('/shapefile.zip'))
 ```
 
@@ -113,32 +112,28 @@ This can be useful when something goes wrong and the error provided by this libr
 ## Conversion of `shp` files
 
 It is trivial to handle the conversion of ESRI Shapefiles when they are packed in a zipfile that contains (at least) the `shp` and `shx` files.
-This library is also capable of converting uncompresses ESRI Shapefiles if you use the `shp` file as the input file 
+This library is also capable of converting uncompresses ESRI Shapefiles if you use the `shp` file as the input file
 **and the shx file is in the same folder**.
 
-However, it is also possible to convert single `shp` files that lack an `shx` file by forcing its creation 
+However, it is also possible to convert single `shp` files that lack an `shx` file by forcing its creation
 using ogr2ogr option [SHAPE_RESTORE_SHX](https://trac.osgeo.org/gdal/wiki/ConfigOptions#SHAPE_RESTORE_SHX) provided you have installed
 GDAL/OGR version 2.1.0 or newer.
 
 ```javascript
 var geojson = ogr2ogr('/path/to/spatial/lonely.shp')
-    .options(["--config", "SHAPE_RESTORE_SHX", "TRUE"])
-    .stream()
+  .options(['--config', 'SHAPE_RESTORE_SHX', 'TRUE'])
+  .stream()
 
 geojson.pipe(fs.createWriteStream('/lonely.json'))
-
 ```
 
 **Caveat**: ogr2ogr will do its best to infer the corresponding `shx`. However, there's no guarantee it will success.
-
-
-
 
 # License
 
 (The MIT License)
 
-Copyright (c) 2017 Marc Harter <wavded@gmail.com>
+Copyright (c) 2020 Marc Harter <wavded@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

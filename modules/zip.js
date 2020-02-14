@@ -1,14 +1,14 @@
-var path = require('path')
-var fs = require('fs')
-var findit = require('findit')
-var DecompressZip = require('decompress-zip')
-var archiver = require('archiver')
-var util = require('./util')
+const path = require('path')
+const fs = require('fs')
+const findit = require('findit')
+const DecompressZip = require('decompress-zip')
+const archiver = require('archiver')
+const util = require('./util')
 
 exports.extract = function(fpath, cb) {
-  var zip = new DecompressZip(fpath)
-  var zipPath = util.genTmpPath()
-  var one = util.oneCallback(cb)
+  let zip = new DecompressZip(fpath)
+  let zipPath = util.genTmpPath()
+  let one = util.oneCallback(cb)
 
   zip
     .on('extract', function() {
@@ -18,14 +18,15 @@ exports.extract = function(fpath, cb) {
     .extract({path: zipPath})
 }
 
-var validOgrRe = /^\.(shp|kml|tab|itf|000|rt1|gml|vrt)$/i
-var macosxRe = /__MACOSX/
+let validOgrRe = /^\.(shp|kml|tab|itf|000|rt1|gml|vrt)$/i
+let macosxRe = /__MACOSX/
 exports.findOgrFile = function(dpath, cb) {
-  var finder = findit(dpath)
-  var found
+  let finder = findit(dpath)
+  let found
 
   finder.on('file', function(file) {
-    if (!macosxRe.test(file) && validOgrRe.test(path.extname(file))) found = file
+    if (!macosxRe.test(file) && validOgrRe.test(path.extname(file)))
+      found = file
   })
   finder.on('error', function(er) {
     cb(er)
@@ -38,13 +39,13 @@ exports.findOgrFile = function(dpath, cb) {
 }
 
 exports.createZipStream = function(dpath) {
-  var zs = archiver('zip')
+  let zs = archiver('zip')
 
   fs.readdir(dpath, function(er, files) {
     if (er) return zs.emit('error', er)
 
     files.forEach(function(file) {
-      var f = fs.createReadStream(path.join(dpath, file))
+      let f = fs.createReadStream(path.join(dpath, file))
       zs.append(f, {name: file})
     })
     zs.finalize(function(er2) {

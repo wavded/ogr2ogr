@@ -15,18 +15,24 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "nyc tape \"test/*-test.js\""
+    "test": "nyc tape \"test/*-test.js\"",
+    "lint": "eslint --max-warnings 0 modules examples test *.js",
+    "fmt": "prettier --write \"**/*.{html,js,json,md}\""
   },
   "main": "./index.js",
   "dependencies": {
-    "archiver": "^1.1.0",
+    "archiver": "^3.1.1",
     "comma-separated-values": "^3.6.0",
-    "decompress-zip": "^0.3.0",
+    "decompress-zip": "^0.2.2",
     "findit": "^2.0.0",
-    "rimraf": "^2.2.8"
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
-    "tape": "^4.6.0"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "tape": "^4.13.0"
   },
   "engines": {
     "node": ">=6"

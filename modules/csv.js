@@ -1,20 +1,20 @@
-var fs = require('fs')
-var path = require('path')
-var CSV = require('comma-separated-values')
-var util = require('./util')
+const fs = require('fs')
+const path = require('path')
+const CSV = require('comma-separated-values')
+const util = require('./util')
 
-var BASE_VRT = '<OGRVRTDataSource>\n\
-                  <OGRVRTLayer name="{{name}}">\n\
-                    <SrcDataSource>{{file}}</SrcDataSource>\n\
-                    <GeometryType>wkbUnknown</GeometryType>\n\
-                    <GeometryField encoding="{{enc}}" {{encopt}} />\n\
-                  </OGRVRTLayer>\n\
-                </OGRVRTDataSource>'
+let BASE_VRT = `<OGRVRTDataSource>
+  <OGRVRTLayer name="{{name}}">
+    <SrcDataSource>{{file}}</SrcDataSource>
+    <GeometryType>wkbUnknown</GeometryType>
+    <GeometryField encoding="{{enc}}" {{encopt}} />
+  </OGRVRTLayer>
+</OGRVRTDataSource>`
 
-var extractHead = function(fpath, cb) {
-  var sf = fs.createReadStream(fpath)
-  var one = util.oneCallback(cb)
-  var data = ''
+let extractHead = function(fpath, cb) {
+  let sf = fs.createReadStream(fpath)
+  let one = util.oneCallback(cb)
+  let data = ''
   sf.on('data', function(chunk) {
     data += chunk
     if (data) {
@@ -24,39 +24,43 @@ var extractHead = function(fpath, cb) {
     }
   })
   sf.on('error', one)
-  sf.on('end', util.oneCallback(function() {
-    CSV.forEach(data.split(/(?:\n|\r\n|\r)/g).shift(), function(head) {
-      one(null, head)
+  sf.on(
+    'end',
+    util.oneCallback(function() {
+      CSV.forEach(data.split(/(?:\n|\r\n|\r)/g).shift(), function(head) {
+        one(null, head)
+      })
+      // if there is nothing to parse
+      one()
     })
-    // if there is nothing to parse
-    one()
-  }))
+  )
 }
 
 exports.makeVrt = function(fpath, cb) {
   extractHead(fpath, function(er, headers) {
     if (er) return cb(er)
 
-    var geo = {}
+    let geo = {}
     headers.forEach(function(header) {
-      var ht = (String(header)).trim()
+      let ht = String(header).trim()
       switch (true) {
-      case /\b(lon|longitude|lng|x)\b/i.test(ht):
-        geo.x = header
-        break
-      case /\b(lat|latitude|y)\b/i.test(ht):
-        geo.y = header
-        break
-      case /\b(the_geom|geom)\b/i.test(ht):
-        geo.geom = header
-        break
-      default:
+        case /\b(lon|longitude|lng|x)\b/i.test(ht):
+          geo.x = header
+          break
+        case /\b(lat|latitude|y)\b/i.test(ht):
+          geo.y = header
+          break
+        case /\b(the_geom|geom)\b/i.test(ht):
+          geo.geom = header
+          break
+        default:
       }
     })
 
-    if (!geo.geom && !geo.x) return cb(null, fpath) // no geometry fields, parse attributes
+    // no geometry fields, parse attributes
+    if (!geo.geom && !geo.x) return cb(null, fpath)
 
-    var vrtData = util.tmpl(BASE_VRT, {
+    let vrtData = util.tmpl(BASE_VRT, {
       file: fpath,
       name: path.basename(fpath, '.csv'),
       enc: geo.geom ? 'WKT' : 'PointFromColumns',
@@ -65,7 +69,7 @@ exports.makeVrt = function(fpath, cb) {
         : 'x="' + geo.x + '" y="' + geo.y + '"',
     })
 
-    var vrtPath = util.genTmpPath() + '.vrt'
+    let vrtPath = util.genTmpPath() + '.vrt'
     return fs.writeFile(vrtPath, vrtData, function(er2) {
       cb(er2, vrtPath)
     })

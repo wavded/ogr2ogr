@@ -1,75 +1,110 @@
 [
   {
     "format": "BNA",
-    "aliases": [ "bna" ],
+    "aliases": ["bna"],
     "output": "bna"
-  },{
+  },
+  {
     "format": "CSV",
-    "aliases": [ "csv" ],
+    "aliases": ["csv"],
     "output": "csv"
-  },{
+  },
+  {
     "format": "DGN",
-    "aliases": [ "dgn" ],
+    "aliases": ["dgn"],
     "output": "dgn"
-  },{
+  },
+  {
     "format": "DXF",
-    "aliases": [ "dxf" ],
+    "aliases": ["dxf"],
     "output": "dxf"
-  },{
+  },
+  {
     "format": "ESRI Shapefile",
-    "aliases": [ "shp", "prj", "shx", "dbf" ],
+    "aliases": ["shp", "prj", "shx", "dbf"],
     "output": "zip"
-  },{
+  },
+  {
     "format": "Geoconcept",
-    "aliases": [ "gxt", "txt" ],
+    "aliases": ["gxt", "txt"],
     "output": "gxt"
-  },{
+  },
+  {
     "format": "GeoJSON",
-    "aliases": [ "json", "geojson" ],
+    "aliases": ["json", "geojson"],
     "output": "geojson"
-  },{
+  },
+  {
     "format": "GeoRSS",
-    "aliases": [ "rss", "xml", "georss" ],
+    "aliases": ["rss", "xml", "georss"],
     "output": "dxf"
-  },{
+  },
+  {
     "format": "GML",
-    "aliases": [ "gml", "gfs" ],
+    "aliases": ["gml", "gfs"],
     "output": "gml"
-  },{
+  },
+  {
     "format": "GMT",
-    "aliases": [ "gmt" ],
+    "aliases": ["gmt"],
     "output": "gmt"
-  },{
+  },
+  {
     "format": "GPX",
-    "aliases": [ "gpx" ],
+    "aliases": ["gpx"],
     "output": "gpx"
-  },{
+  },
+  {
     "format": "GPKG",
-    "aliases": [ "gpkg" ],
+    "aliases": ["gpkg"],
     "output": "gpkg"
-  },{
+  },
+  {
     "format": "KML",
     "aliases": ["kml", "kmz"],
     "output": "kml"
-  },{
+  },
+  {
     "format": "MapInfo File",
-    "aliases": [ "map", "tab", "dat", "id", "ind"],
+    "aliases": ["map", "tab", "dat", "id", "ind"],
     "output": "zip"
-  },{
+  },
+  {
     "format": "TIGER",
-    "aliases": [ "rt1", "rt2", "rt3", "rt4", "rt5", "rt6", "rt7", "rt8", "rt9", "rta", "rtc", "rth", "rti", "rtp", "rtr", "rts", "rtz" ],
+    "aliases": [
+      "rt1",
+      "rt2",
+      "rt3",
+      "rt4",
+      "rt5",
+      "rt6",
+      "rt7",
+      "rt8",
+      "rt9",
+      "rta",
+      "rtc",
+      "rth",
+      "rti",
+      "rtp",
+      "rtr",
+      "rts",
+      "rtz"
+    ],
     "output": "zip"
-  },{
+  },
+  {
     "format": "PGDump",
     "aliases": ["sql"],
     "output": "sql"
-  },{
+  },
+  {
     "format": "PostgreSQL",
     "aliases": [],
     "output": "sql"
-  },{
+  },
+  {
     "format": "VRT",
-    "aliases": [ "vrt" ],
+    "aliases": ["vrt"],
     "output": "vrt"
   }
 ]

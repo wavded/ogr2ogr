@@ -1,13 +1,13 @@
-var util = require('../modules/util')
-var test = require('tape')
+const util = require('../modules/util')
+const test = require('tape')
 
 test('oneCallback', function(t) {
   t.plan(1)
 
-  var cb = function(er, data) {
+  let cb = function(er, data) {
     t.ok(data)
   }
-  var one = util.oneCallback(cb)
+  let one = util.oneCallback(cb)
   one(null, 'test')
   one(new Error('should not be called'))
 })
@@ -15,10 +15,10 @@ test('oneCallback', function(t) {
 test('allCallback', function(t) {
   t.plan(1)
 
-  var cb = function(er, len) {
+  let cb = function(er, len) {
     t.equal(len, 4)
   }
-  var all = util.allCallback(cb)
+  let all = util.allCallback(cb)
 
   function doWork(cb2) {
     setTimeout(function() {
