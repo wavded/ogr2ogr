@@ -253,6 +253,7 @@ Ogr2ogr.prototype._run = function() {
   function wrapUp(er) {
     if (er) {
       ostream.emit('error', er)
+      ostream.emit('close')
       return ogr2ogr._clean()
     }
     if (!ogr2ogr._isZipOut) {
@@ -264,6 +265,7 @@ Ogr2ogr.prototype._run = function() {
     let zs = zip.createZipStream(ogr2ogr._ogrOutPath)
     zs.on('error', function(er2) {
       ostream.emit('error', er2)
+      ostream.emit('close')
     })
     zs.on('end', function() {
       ostream.emit('close')
