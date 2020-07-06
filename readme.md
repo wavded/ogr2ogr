@@ -20,7 +20,7 @@ ogr2ogr takes either a path, a stream, or a GeoJSON object. The result of the tr
 var ogr2ogr = require('ogr2ogr')
 var ogr = ogr2ogr('/path/to/spatial/file')
 
-ogr.exec(function(er, data) {
+ogr.exec(function (er, data) {
   if (er) console.error(er)
   console.log(data)
 })
@@ -84,7 +84,7 @@ var shapefile = ogr2ogr('/path/to/spatial/file.geojson')
   .format('ESRI Shapefile')
   .skipfailures()
   .options(['--config', 'CPL_DEBUG', 'ON'])
-  .onStderr(function(data) {
+  .onStderr(function (data) {
     console.log(data)
   })
   .stream()

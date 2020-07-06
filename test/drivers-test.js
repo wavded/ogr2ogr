@@ -11,19 +11,19 @@ let sampleGeoJSONUrl =
 let sampleGeoRSSUrl =
   'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss'
 
-test('Empty ZIP', function(t) {
-  ogr2ogr(dir + 'sample-empty.zip').exec(function(er) {
+test('Empty ZIP', function (t) {
+  ogr2ogr(dir + 'sample-empty.zip').exec(function (er) {
     t.ok(er, 'error', {error: er})
     t.end()
   })
 })
 
-test('BNA', function(t) {
+test('BNA', function (t) {
   t.plan(3)
 
   ogr2ogr(dir + 'sample.bna')
     .format('BNA')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -33,33 +33,33 @@ test('BNA', function(t) {
     })
 })
 
-test('CSV', function(t) {
+test('CSV', function (t) {
   t.plan(9)
 
   ogr2ogr(dir + 'sample-nogeom.csv')
     .format('GeoJSON')
-    .exec(function(er, data) {
+    .exec(function (er, data) {
       t.notOk(er, 'no error', {error: er})
       t.equal(data && data.features[0].geometry, null, 'no spatial data')
     })
 
   ogr2ogr(dir + 'sample.csv')
     .format('GeoJSON')
-    .exec(function(er, data) {
+    .exec(function (er, data) {
       t.notOk(er, 'no error', {error: er})
       t.ok(data && data.features[0].geometry, 'spatial data')
     })
 
   ogr2ogr(dir + 'sample-geom.csv')
     .format('GeoJSON')
-    .exec(function(er, data) {
+    .exec(function (er, data) {
       t.notOk(er, 'no error', {error: er})
       t.ok(data && data.features[0].geometry, 'spatial data')
     })
 
   ogr2ogr(dir + 'sample.csv')
     .format('CSV')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -69,9 +69,9 @@ test('CSV', function(t) {
     })
 })
 
-test('DGN', function(t) {
+test('DGN', function (t) {
   t.plan(2)
-  ogr2ogr(dir + 'sample.dgn').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.dgn').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
@@ -82,9 +82,9 @@ test('DGN', function(t) {
   // })
 })
 
-test('DXF', function(t) {
+test('DXF', function (t) {
   t.plan(2)
-  ogr2ogr(dir + 'sample.dgn').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.dgn').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
@@ -95,13 +95,13 @@ test('DXF', function(t) {
   // })
 })
 
-test('ESRI Shapefile', function(t) {
+test('ESRI Shapefile', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.shp.zip')
     .format('ESRI Shapefile')
     .options(['--config', 'SHAPE_RESTORE_SHX', 'TRUE'])
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -112,12 +112,12 @@ test('ESRI Shapefile', function(t) {
     })
 })
 
-test('uncompressed ESRI Shapefile', function(t) {
+test('uncompressed ESRI Shapefile', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.shp')
     .format('ESRI Shapefile')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -128,13 +128,13 @@ test('uncompressed ESRI Shapefile', function(t) {
     })
 })
 
-test('uncompressed ESRI Shapefile without shx', function(t) {
+test('uncompressed ESRI Shapefile without shx', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.lonely.shp')
     .format('ESRI Shapefile')
     .options(['--config', 'SHAPE_RESTORE_SHX', 'TRUE'])
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
       fs.unlinkSync(dir + 'sample.lonely.shx')
       if (buf) {
@@ -147,12 +147,12 @@ test('uncompressed ESRI Shapefile without shx', function(t) {
 
 //The default ESRI File Geodatabase driver, OpenFileGDB, provides only read access.
 //Outputting to ESRI Shapefile instead.
-test('ESRI Geodatabase', function(t) {
+test('ESRI Geodatabase', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.gdb')
     .format('ESRI Shapefile')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -166,12 +166,12 @@ test('ESRI Geodatabase', function(t) {
 
 //The default ESRI File Geodatabase driver, OpenFileGDB, provides only read access.
 //Outputting to ESRI Shapefile instead.
-test('ESRI Geodatabase - zipped', function(t) {
+test('ESRI Geodatabase - zipped', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.gdb.zip')
     .format('ESRI Shapefile')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -183,9 +183,9 @@ test('ESRI Geodatabase - zipped', function(t) {
     })
 })
 
-test('Geoconcept', function(t) {
+test('Geoconcept', function (t) {
   t.plan(2)
-  ogr2ogr(dir + 'sample.gxt').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.gxt').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
@@ -196,39 +196,39 @@ test('Geoconcept', function(t) {
   // })
 })
 
-test('GeoJSON', function(t) {
+test('GeoJSON', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.geojson')
     .format('GeoJSON')
-    .exec(function(er, data) {
+    .exec(function (er, data) {
       t.notOk(er, 'no error', {error: er})
       t.equal(data && data.type, 'FeatureCollection', 'is GeoJSON data')
     })
 
   ogr2ogr(sampleGeoJSONUrl)
     .format('GeoJSON')
-    .exec(function(er, data) {
+    .exec(function (er, data) {
       t.notOk(er, 'no error', {error: er})
       t.equal(data && data.type, 'FeatureCollection', 'is GeoJSON data')
     })
 })
 
-test('GeoRSS', function(t) {
+test('GeoRSS', function (t) {
   t.plan(7)
-  ogr2ogr(dir + 'sample.rss').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.rss').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
-  ogr2ogr(sampleGeoRSSUrl).exec(function(er, data) {
+  ogr2ogr(sampleGeoRSSUrl).exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
 
   ogr2ogr(dir + 'sample.rss')
     .format('GeoRSS')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -238,9 +238,9 @@ test('GeoRSS', function(t) {
     })
 })
 
-test('GML', function(t) {
+test('GML', function (t) {
   t.plan(5)
-  ogr2ogr(dir + 'sample.gml').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.gml').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
@@ -249,7 +249,7 @@ test('GML', function(t) {
 
   ogr2ogr(dir + 'sample.gml')
     .format('GML')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -259,9 +259,9 @@ test('GML', function(t) {
     })
 })
 
-test('GMT', function(t) {
+test('GMT', function (t) {
   t.plan(2)
-  ogr2ogr(dir + 'sample.gmt').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.gmt').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
@@ -272,12 +272,12 @@ test('GMT', function(t) {
   // })
 })
 
-test('GPX', function(t) {
+test('GPX', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.gpx')
     .format('ESRI Shapefile')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -293,13 +293,13 @@ test('GPX', function(t) {
   // })
 })
 
-test('GPKG', function(t) {
+test('GPKG', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.gpkg')
     .skipfailures()
     .format('ESRI Shapefile')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -315,12 +315,12 @@ test('GPKG', function(t) {
   // })
 })
 
-test('KML', function(t) {
+test('KML', function (t) {
   t.plan(6)
 
   ogr2ogr(dir + 'sample.kml')
     .format('KML')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -331,7 +331,7 @@ test('KML', function(t) {
 
   ogr2ogr(dir + 'sample.kmz')
     .format('KML')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -341,12 +341,12 @@ test('KML', function(t) {
     })
 })
 
-test('MapInfo File', function(t) {
+test('MapInfo File', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.map.zip')
     .format('MapInfo File')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -357,12 +357,12 @@ test('MapInfo File', function(t) {
     })
 })
 
-test('TIGER', function(t) {
+test('TIGER', function (t) {
   t.plan(4)
 
   ogr2ogr(dir + 'sample.rti.zip')
     .format('TIGER')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
 
       if (buf) {
@@ -373,10 +373,10 @@ test('TIGER', function(t) {
     })
 })
 
-test('PGDump', function(t) {
+test('PGDump', function (t) {
   ogr2ogr(dir + 'sample.geojson')
     .format('PGDump')
-    .exec(function(er, buf) {
+    .exec(function (er, buf) {
       t.notOk(er, 'no error', {error: er})
       let sql = buf.toString()
       t.ok(/CREATE TABLE/.test(sql), 'is sql')
@@ -384,13 +384,13 @@ test('PGDump', function(t) {
     })
 })
 
-test('PostgreSQL', function(t) {
+test('PostgreSQL', function (t) {
   ogr2ogr(dir + 'sample.geojson')
     .format('PostgreSQL')
     .destination(
       'PG:host=localhost user=postgres dbname=sandbox password=postgres'
     )
-    .exec(function(er) {
+    .exec(function (er) {
       t.ok(
         /Connection refused/.test(er.message) ||
           /password authentication failed/.test(er.message),
@@ -400,9 +400,9 @@ test('PostgreSQL', function(t) {
     })
 })
 
-test('VRT', function(t) {
+test('VRT', function (t) {
   t.plan(2)
-  ogr2ogr(dir + 'sample.vrt.zip').exec(function(er, data) {
+  ogr2ogr(dir + 'sample.vrt.zip').exec(function (er, data) {
     t.notOk(er, 'no error', {error: er})
     t.ok(data && data.features[0].geometry, 'spatial data')
   })
