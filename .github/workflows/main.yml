@@ -6,14 +6,13 @@ jobs:
     strategy:
       matrix:
         node: ['10', '12']
-    name: Node ${{ matrix.node }} sample
+    name: Node v${{ matrix.node }}
     steps:
       - uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: apt install gdal-bin
+      - run: sudo apt-get install gdal-bin
       - run: yarn install
       - run: yarn lint
       - run: yarn test
