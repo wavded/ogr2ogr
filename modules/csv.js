@@ -11,11 +11,11 @@ let BASE_VRT = `<OGRVRTDataSource>
   </OGRVRTLayer>
 </OGRVRTDataSource>`
 
-let extractHead = function(fpath, cb) {
+let extractHead = function (fpath, cb) {
   let sf = fs.createReadStream(fpath)
   let one = util.oneCallback(cb)
   let data = ''
-  sf.on('data', function(chunk) {
+  sf.on('data', function (chunk) {
     data += chunk
     if (data) {
       sf.pause()
@@ -26,8 +26,8 @@ let extractHead = function(fpath, cb) {
   sf.on('error', one)
   sf.on(
     'end',
-    util.oneCallback(function() {
-      CSV.forEach(data.split(/(?:\n|\r\n|\r)/g).shift(), function(head) {
+    util.oneCallback(function () {
+      CSV.forEach(data.split(/(?:\n|\r\n|\r)/g).shift(), function (head) {
         one(null, head)
       })
       // if there is nothing to parse
@@ -36,12 +36,12 @@ let extractHead = function(fpath, cb) {
   )
 }
 
-exports.makeVrt = function(fpath, cb) {
-  extractHead(fpath, function(er, headers) {
+exports.makeVrt = function (fpath, cb) {
+  extractHead(fpath, function (er, headers) {
     if (er) return cb(er)
 
     let geo = {}
-    headers.forEach(function(header) {
+    headers.forEach(function (header) {
       let ht = String(header).trim()
       switch (true) {
         case /\b(lon|longitude|lng|x)\b/i.test(ht):
@@ -70,7 +70,7 @@ exports.makeVrt = function(fpath, cb) {
     })
 
     let vrtPath = util.genTmpPath() + '.vrt'
-    return fs.writeFile(vrtPath, vrtData, function(er2) {
+    return fs.writeFile(vrtPath, vrtData, function (er2) {
       cb(er2, vrtPath)
     })
   })

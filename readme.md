@@ -1,10 +1,10 @@
-[![Build Status](https://jenkins.adc4gis.com/buildStatus/icon?job=ogr2ogr)](https://jenkins.adc4gis.com/job/ogr2ogr/) [![NPM](https://img.shields.io/npm/v/ogr2ogr.svg)](https://npmjs.com/package/ogr2ogr) ![NPM Downloads](https://img.shields.io/npm/dt/ogr2ogr.svg)
+![Build Status](https://github.com/wavded/ogr2ogr/workflows/build/badge.svg?branch=master) [![NPM](https://img.shields.io/npm/v/ogr2ogr.svg)](https://npmjs.com/package/ogr2ogr) ![NPM Downloads](https://img.shields.io/npm/dt/ogr2ogr.svg)
 
-ogr2ogr enables spatial file conversion and reprojection of spatial data through the use of ogr2ogr (gdal) tool
+ogr2ogr enables file conversion and re-projection of spatial data through the use of ogr2ogr (gdal) tool
 
 # Requirements
 
-ogr2ogr requires the command line tool _ogr2ogr_ - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries). It is recommended to use the latest version.
+ogr2ogr requires the command line tool _ogr2ogr_ - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries). We recommended using the latest stable version.
 
 # Installation
 
@@ -20,7 +20,7 @@ ogr2ogr takes either a path, a stream, or a GeoJSON object. The result of the tr
 var ogr2ogr = require('ogr2ogr')
 var ogr = ogr2ogr('/path/to/spatial/file')
 
-ogr.exec(function(er, data) {
+ogr.exec(function (er, data) {
   if (er) console.error(er)
   console.log(data)
 })
@@ -84,7 +84,7 @@ var shapefile = ogr2ogr('/path/to/spatial/file.geojson')
   .format('ESRI Shapefile')
   .skipfailures()
   .options(['--config', 'CPL_DEBUG', 'ON'])
-  .onStderr(function(data) {
+  .onStderr(function (data) {
     console.log(data)
   })
   .stream()

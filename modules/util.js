@@ -6,7 +6,7 @@ const fs = require('fs')
 const rimraf = require('rimraf')
 const drivers = require('./drivers.json')
 
-exports.tmpl = function(tmpl, data) {
+exports.tmpl = function (tmpl, data) {
   for (let label in data) {
     tmpl = tmpl.replace('{{' + label + '}}', data[label])
   }
@@ -14,21 +14,21 @@ exports.tmpl = function(tmpl, data) {
 }
 
 let genInc = Date.now()
-let genTmpPath = (exports.genTmpPath = function() {
+let genTmpPath = (exports.genTmpPath = function () {
   return path.join(tmpdir, 'ogr_' + (genInc++).toString(14))
 })
 
-exports.rmParentDir = function(fpath, cb) {
+exports.rmParentDir = function (fpath, cb) {
   rimraf(path.dirname(fpath), cb)
 }
-exports.rmDir = function(dpath, cb) {
+exports.rmDir = function (dpath, cb) {
   rimraf(dpath, cb)
 }
-exports.rmFile = function(fpath, cb) {
+exports.rmFile = function (fpath, cb) {
   fs.unlink(fpath, cb)
 }
 
-exports.getDriver = function(fmt) {
+exports.getDriver = function (fmt) {
   for (let i = 0; i < drivers.length; i++) {
     if (drivers[i].format == fmt || drivers[i].aliases.indexOf(fmt) > -1)
       return drivers[i]
@@ -36,7 +36,7 @@ exports.getDriver = function(fmt) {
   return {}
 }
 
-exports.writeStream = function(ins, ext, cb) {
+exports.writeStream = function (ins, ext, cb) {
   let fpath = genTmpPath() + '.' + ext
   let ws = fs.createWriteStream(fpath)
   let one = exports.oneCallback(cb)
@@ -44,39 +44,39 @@ exports.writeStream = function(ins, ext, cb) {
   ins
     .pipe(ws)
     .on('error', one)
-    .on('finish', function() {
+    .on('finish', function () {
       one(null, fpath)
     })
 }
 
-exports.writeGeoJSON = function(obj, cb) {
+exports.writeGeoJSON = function (obj, cb) {
   let fpath = genTmpPath() + '.json'
-  fs.writeFile(fpath, JSON.stringify(obj), function(er) {
+  fs.writeFile(fpath, JSON.stringify(obj), function (er) {
     cb(er, fpath)
   })
 }
 
-exports.oneCallback = function(cb) {
+exports.oneCallback = function (cb) {
   let called = false
-  return function(er, data) {
+  return function (er, data) {
     if (called) return
     called = true
     cb(er, data)
   }
 }
 
-exports.allCallback = function(cb) {
+exports.allCallback = function (cb) {
   let one = exports.oneCallback(cb)
   let expect = 0
   let total = 0
 
-  setImmediate(function() {
+  setImmediate(function () {
     if (expect == 0) one(null, total)
   })
 
-  return function() {
+  return function () {
     expect++, total++
-    return function(er) {
+    return function (er) {
       if (er) return one(er)
       if (--expect == 0) one(null, total)
     }
