@@ -88,6 +88,11 @@ Ogr2ogr.prototype.onStderr = function (fn) {
   return this
 }
 
+Ogr2ogr.prototype.command = function (str) {
+  this._command = str
+  return this
+}
+
 Ogr2ogr.prototype.exec = function (cb) {
   let ogr2ogr = this
   let buf = []
@@ -207,8 +212,9 @@ Ogr2ogr.prototype._run = function () {
 
     let errbuf = ''
 
+    let command = ogr2ogr._command || 'ogr2ogr'
     let commandOptions = this._env ? {env: this._env} : undefined
-    let s = cp.spawn('ogr2ogr', logCommand(args), commandOptions)
+    let s = cp.spawn(command, logCommand(args), commandOptions)
 
     if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream, {end: false})
 
