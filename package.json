@@ -21,7 +21,7 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "archiver": "^4.0.1",
+    "archiver": "^5.0.2",
     "comma-separated-values": "^3.6.0",
     "decompress-zip": "^0.2.2",
     "findit": "^2.0.0",
