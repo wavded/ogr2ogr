@@ -38,6 +38,20 @@ console.log(data)
 
 See `/examples` for usage examples and `/test/api.js`.
 
+# Configuring the base ogr2ogr command
+An alternative to installing GDAL, you can invoke ogr2ogr via a [GDAL Docker image](https://hub.docker.com/r/osgeo/gdal) instead. Do this by configuring the base command that is executed to invoke the ogr2ogr CLI.
+
+```javascript
+var ogr2ogr = require('ogr2ogr')
+
+ogr2ogr('/home/.../path/to/spatial/file')
+  .command('docker run -v /home/:/home --rm osgeo/gdal:alpine-small-latest ogr2ogr')
+  .exec(function (er, data) {
+    if (er) console.error(er)
+    console.log(data)
+  })
+```
+
 # Formats
 
 The goal is for ogr2ogr to support most (if not all) formats your underlying ogr2ogr supports. You can see the progress of that in `/tests/drivers.js`.
