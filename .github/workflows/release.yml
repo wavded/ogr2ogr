@@ -1,8 +1,8 @@
 name: release-draft
 on:
   push:
-    # branches:
-    #   - master
+    branches:
+      - master
   pull_request:
 jobs:
   update_release_draft:
