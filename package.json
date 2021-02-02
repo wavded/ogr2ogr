@@ -1,6 +1,6 @@
 {
   "name": "ogr2ogr",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "ogr2ogr wrapper w/ multiple format support",
   "keywords": [
     "ogr2ogr",
