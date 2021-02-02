@@ -1,8 +1,9 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
-  # What's Changed
   $CHANGES
+category-template: '#### $TITLE'
+change-template: '* #$NUMBER - $TITLE (@$AUTHOR)'
 categories:
   - title: 'Breaking changes'
     label: 'breaking'
