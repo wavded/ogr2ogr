@@ -85,7 +85,7 @@ test('api input formats', function (tp) {
       t.equal(data.features[0].properties.area, '51', 'maintains attributes')
       t.equal(
         data.features[0].geometry.coordinates[0],
-        11354588.060913906,
+        11354588.060913904,
         'is reprojected'
       )
     })

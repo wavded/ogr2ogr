@@ -39,13 +39,16 @@ console.log(data)
 See `/examples` for usage examples and `/test/api.js`.
 
 # Configuring the base ogr2ogr command
+
 An alternative to installing GDAL, you can invoke ogr2ogr via a [GDAL Docker image](https://hub.docker.com/r/osgeo/gdal) instead. Do this by configuring the base command that is executed to invoke the ogr2ogr CLI.
 
 ```javascript
 var ogr2ogr = require('ogr2ogr')
 
 ogr2ogr('/home/.../path/to/spatial/file')
-  .command('docker run -v /home/:/home --rm osgeo/gdal:alpine-small-latest ogr2ogr')
+  .command(
+    'docker run -v /home/:/home --rm osgeo/gdal:alpine-small-latest ogr2ogr'
+  )
   .exec(function (er, data) {
     if (er) console.error(er)
     console.log(data)
@@ -147,7 +150,7 @@ geojson.pipe(fs.createWriteStream('/lonely.json'))
 
 (The MIT License)
 
-Copyright (c) 2020 Marc Harter <wavded@gmail.com>
+Copyright (c) 2021 Marc Harter <wavded@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
