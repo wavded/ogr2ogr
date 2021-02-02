@@ -17,19 +17,20 @@
   "scripts": {
     "test": "nyc tape \"test/*-test.js\"",
     "lint": "eslint --max-warnings 0 modules examples test *.js",
-    "fmt": "prettier --write \"**/*.{html,js,json,md}\""
+    "fmt": "prettier --write \"**/*.{html,js,json,md}\"",
+    "fmt-check": "prettier --check \"**/*.{html,js,json,md}\""
   },
   "main": "./index.js",
   "dependencies": {
     "archiver": "^5.0.2",
     "comma-separated-values": "^3.6.0",
-    "decompress-zip": "^0.2.2",
+    "decompress-zip": "^0.3.3",
     "findit": "^2.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "eslint": "^7.4.0",
-    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.1.2",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
