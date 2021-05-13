@@ -213,9 +213,8 @@ Ogr2ogr.prototype._run = function () {
     let errbuf = ''
 
     let command = ogr2ogr._command || 'ogr2ogr'
-    let commandOptions = this._env ? {env: this._env} : undefined
+    let commandOptions = ogr2ogr._env ? {env: ogr2ogr._env} : undefined
     let s = cp.spawn(command, logCommand(args), commandOptions)
-
     if (!ogr2ogr._isZipOut) s.stdout.pipe(ostream, {end: false})
 
     let one = util.oneCallback(wrapUp)
