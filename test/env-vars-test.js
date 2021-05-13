@@ -15,18 +15,22 @@ test('env vars can be used', function (t) {
   t.plan(2)
 
   ogr2ogr(sampleGeojson)
-  .env({
-    ATTRIBUTES_SKIP: 'NO'
-  })
-  .exec(function (er, data) {
-    t.isEquivalent(data.features[0].properties, sampleGeojson.features[0].properties, 'has atrributes')
-  })
+    .env({
+      ATTRIBUTES_SKIP: 'NO',
+    })
+    .exec(function (er, data) {
+      t.isEquivalent(
+        data.features[0].properties,
+        sampleGeojson.features[0].properties,
+        'has atrributes'
+      )
+    })
 
   ogr2ogr(sampleGeojson)
-  .env({
-    ATTRIBUTES_SKIP: 'YES'
-  })
-  .exec(function (er, data) {
-    t.isEquivalent(data.features[0].properties, {}, 'has no atrributes')
-  })  
+    .env({
+      ATTRIBUTES_SKIP: 'YES',
+    })
+    .exec(function (er, data) {
+      t.isEquivalent(data.features[0].properties, {}, 'has no atrributes')
+    })
 })
