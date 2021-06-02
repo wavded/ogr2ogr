@@ -7,3 +7,4 @@ test.tap
 coverage
 test.tap
 .nyc_output
+yarn.lock
