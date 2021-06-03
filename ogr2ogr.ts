@@ -1,14 +1,14 @@
 import {Stream, Readable} from 'stream'
 import {extname} from 'path'
 import drivers from './drivers.json'
-import {spawn} from 'child_process'
+import {execFile} from 'child_process'
 import type {GeoJSON} from 'geojson'
 import {Buffer} from 'buffer'
 // import {tmpdir} from 'os'
 // import {join} from 'path'
 
 type Input = string | GeoJSON | Stream
-type Output = [Buffer | GeoJSON, string]
+type Output = [GeoJSON, string]
 type Callback = (
   err: Error | null,
   stdout: Buffer | GeoJSON,
@@ -65,26 +65,18 @@ class Ogr2ogr implements PromiseLike<Output> {
   }
 
   async buffer(): Promise<Output> {
-    let [stdout, stderr] = this.run()
-    let [bufout, buferr] = await Promise.all([
-      this.streamToBuffer(stdout),
-      this.streamToBuffer(stderr),
-    ])
-
-    if (this.outputDriver.format === 'GeoJSON' && bufout.length > 0) {
-      let data: GeoJSON = JSON.parse(bufout.toString())
-      return [data, buferr.toString()]
-    }
-    return [bufout, buferr.toString()]
+    let {stdout, stderr} = await this.run()
+    let data: GeoJSON = JSON.parse(stdout)
+    return [data, stderr]
   }
 
-  private async streamToBuffer(s: Readable): Promise<Buffer> {
-    let chunks = []
-    for await (let chunk of s) {
-      chunks.push(chunk)
-    }
-    return Buffer.concat(chunks)
-  }
+  // private async streamToBuffer(s: Readable): Promise<Buffer> {
+  //   let chunks = []
+  //   for await (let chunk of s) {
+  //     chunks.push(chunk)
+  //   }
+  //   return Buffer.concat(chunks)
+  // }
 
   private parsePath(p: string): string {
     let path = ''
@@ -120,17 +112,30 @@ class Ogr2ogr implements PromiseLike<Output> {
   }
 
   private run() {
-    let proc = spawn('ogr2ogr', [
-      '-f',
-      this.outputDriver.format,
-      '-skipfailures',
-      this.outputPath,
-      this.inputPath,
-    ])
+    type RunOutput = {stdout: string; stderr: string}
 
-    console.log(...proc.spawnargs)
-    if (this.inputStream) this.inputStream.pipe(proc.stdin)
-    return [proc.stdout, proc.stderr]
+    let p = new Promise<RunOutput>((res, rej) => {
+      let proc = execFile(
+        'ogr2ogr',
+        [
+          '-f',
+          this.outputDriver.format,
+          '-skipfailures',
+          this.outputPath,
+          this.inputPath,
+        ],
+        (err, stdout, stderr) => {
+          console.log(...proc.spawnargs, proc.exitCode)
+
+          if (err) rej(err)
+          res({stdout, stderr})
+        }
+      )
+
+      if (this.inputStream && proc.stdin) this.inputStream.pipe(proc.stdin)
+    })
+
+    return p
   }
 }
 

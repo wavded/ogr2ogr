@@ -49,7 +49,7 @@
   },
   {
     "format": "GML",
-    "aliases": ["gml", "gfs"],
+    "aliases": ["gml"],
     "output": "gml",
     "streamable": true
   },
