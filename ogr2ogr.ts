@@ -4,6 +4,8 @@ import drivers from './drivers.json'
 import {spawn} from 'child_process'
 import type {GeoJSON} from 'geojson'
 import {Buffer} from 'buffer'
+// import {tmpdir} from 'os'
+// import {join} from 'path'
 
 type Input = string | GeoJSON | Stream
 type Output = [Buffer | GeoJSON, string]
@@ -28,11 +30,13 @@ class Ogr2ogr implements PromiseLike<Output> {
   private inputStream?: Readable
   private inputPath: string
   private outputDriver: Driver
+  private outputPath: string
 
   constructor(input: Input, opts: Options = {}) {
     let inputDriver = this.parseDriver(opts.inputFormat)
     this.inputPath = inputDriver.format + ':/vsistdin/'
     this.outputDriver = this.parseDriver(opts.format)
+    this.outputPath = '/vsistdout/'
 
     if (input instanceof Readable) {
       this.inputStream = input
@@ -42,6 +46,7 @@ class Ogr2ogr implements PromiseLike<Output> {
       this.inputStream = Readable.from([JSON.stringify(input)])
     }
   }
+
   stream() {
     return this.run()
   }
@@ -98,7 +103,7 @@ class Ogr2ogr implements PromiseLike<Output> {
         break
     }
 
-    if (/http|ftp/.test(p)) {
+    if (/^(http|ftp)/.test(p)) {
       path += '/vsicurl/'
     }
 
@@ -119,7 +124,7 @@ class Ogr2ogr implements PromiseLike<Output> {
       '-f',
       this.outputDriver.format,
       '-skipfailures',
-      '/vsistdout/',
+      this.outputPath,
       this.inputPath,
     ])
 
