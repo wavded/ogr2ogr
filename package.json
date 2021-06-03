@@ -21,13 +21,6 @@
     "fmt-check": "prettier --check \"**/*.{html,js,json,ts,md}\""
   },
   "main": "./index.js",
-  "dependencies": {
-    "archiver": "^5.0.2",
-    "comma-separated-values": "^3.6.0",
-    "decompress-zip": "^0.3.3",
-    "findit": "^2.0.0",
-    "rimraf": "^3.0.2"
-  },
   "devDependencies": {
     "@types/blue-tape": "^0.1.33",
     "@types/geojson": "^7946.0.7",
