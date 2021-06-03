@@ -1,6 +1,5 @@
-import {Stream, Readable, PassThrough} from 'stream'
+import {Stream, Readable} from 'stream'
 import {extname} from 'path'
-import {createReadStream} from 'fs'
 import drivers from './drivers.json'
 import {spawn} from 'child_process'
 import type {GeoJSON} from 'geojson'
@@ -26,56 +25,23 @@ interface Driver {
 }
 
 class Ogr2ogr implements PromiseLike<Output> {
-  inputFormat: string
-  inputStream: Readable
-  format: string
+  private inputStream?: Readable
+  private inputPath: string
+  private outputDriver: Driver
 
   constructor(input: Input, opts: Options = {}) {
-    this.format = opts.format ?? 'GeoJSON'
-    this.inputFormat = opts.inputFormat ?? 'GeoJSON'
+    let inputDriver = this.parseDriver(opts.inputFormat)
+    this.inputPath = inputDriver.format + ':/vsistdin/'
+    this.outputDriver = this.parseDriver(opts.format)
 
     if (input instanceof Readable) {
-      if (!opts.inputFormat) {
-        throw new Error('Streams require the inputFormat option')
-      }
       this.inputStream = input
     } else if (typeof input === 'string') {
-      if (!opts.inputFormat) {
-        let driver = this.driver(extname(input))
-        this.inputFormat = driver ? driver.format : this.inputFormat
-      }
-      this.inputStream = createReadStream(input)
+      this.inputPath = this.parsePath(input)
     } else {
       this.inputStream = Readable.from([JSON.stringify(input)])
     }
   }
-
-  private driver(nameOrAlias: string): Driver | void {
-    let search = nameOrAlias.replace('.', '')
-    return drivers.find(
-      (d) => d.format === search || d.aliases.indexOf(search) > -1
-    )
-  }
-
-  private run() {
-    let stdout = new PassThrough()
-    let stderr = new PassThrough()
-
-    let proc = spawn('ogr2ogr', [
-      '-f',
-      this.format,
-      '/vsistdout/',
-      this.inputFormat + ':/vsistdin/',
-    ])
-
-    console.log(...proc.spawnargs)
-    this.inputStream.pipe(proc.stdin)
-    proc.stdout.pipe(stdout)
-    proc.stderr.pipe(stderr)
-
-    return [stdout, stderr]
-  }
-
   stream() {
     return this.run()
   }
@@ -93,6 +59,20 @@ class Ogr2ogr implements PromiseLike<Output> {
     return this.buffer().then(onfulfilled, onrejected)
   }
 
+  async buffer(): Promise<Output> {
+    let [stdout, stderr] = this.run()
+    let [bufout, buferr] = await Promise.all([
+      this.streamToBuffer(stdout),
+      this.streamToBuffer(stderr),
+    ])
+
+    if (this.outputDriver.format === 'GeoJSON' && bufout.length > 0) {
+      let data: GeoJSON = JSON.parse(bufout.toString())
+      return [data, buferr.toString()]
+    }
+    return [bufout, buferr.toString()]
+  }
+
   private async streamToBuffer(s: Readable): Promise<Buffer> {
     let chunks = []
     for await (let chunk of s) {
@@ -101,18 +81,51 @@ class Ogr2ogr implements PromiseLike<Output> {
     return Buffer.concat(chunks)
   }
 
-  async buffer(): Promise<Output> {
-    let [stdout, stderr] = this.run()
-    let [bufout, buferr] = await Promise.all([
-      this.streamToBuffer(stdout),
-      this.streamToBuffer(stderr),
+  private parsePath(p: string): string {
+    let path = ''
+    let ext = extname(p)
+
+    switch (ext) {
+      case '.zip':
+      case '.kmz':
+        path = '/vsizip/'
+        break
+      case '.gz':
+        path = '/vsigzip/'
+        break
+      case '.tar':
+        path = '/vsitar/'
+        break
+    }
+
+    if (/http|ftp/.test(p)) {
+      path += '/vsicurl/'
+    }
+
+    path += p
+    return path
+  }
+
+  private parseDriver(nameOrAlias = ''): Driver {
+    let s = nameOrAlias.replace('.', '')
+    return (
+      drivers.find((d) => d.format === s || d.aliases.indexOf(s) > -1) ||
+      drivers[0]
+    )
+  }
+
+  private run() {
+    let proc = spawn('ogr2ogr', [
+      '-f',
+      this.outputDriver.format,
+      '-skipfailures',
+      '/vsistdout/',
+      this.inputPath,
     ])
 
-    if (this.format === 'GeoJSON' && bufout.length > 0) {
-      let data: GeoJSON = JSON.parse(bufout.toString())
-      return [data, buferr.toString()]
-    }
-    return [bufout, buferr.toString()]
+    console.log(...proc.spawnargs)
+    if (this.inputStream) this.inputStream.pipe(proc.stdin)
+    return [proc.stdout, proc.stderr]
   }
 }
 

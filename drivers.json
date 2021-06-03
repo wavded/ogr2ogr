@@ -1,73 +1,87 @@
 [
   {
+    "format": "GeoJSON",
+    "aliases": ["json", "geojson"],
+    "output": "geojson",
+    "streamable": true
+  },
+  {
     "format": "BNA",
     "aliases": ["bna"],
-    "output": "bna"
+    "output": "bna",
+    "streamable": true
   },
   {
     "format": "CSV",
     "aliases": ["csv"],
-    "output": "csv"
+    "output": "csv",
+    "streamable": true
   },
   {
     "format": "DGN",
     "aliases": ["dgn"],
-    "output": "dgn"
+    "output": "dgn",
+    "streamable": true
   },
   {
     "format": "DXF",
     "aliases": ["dxf"],
-    "output": "dxf"
+    "output": "dxf",
+    "streamable": true
   },
   {
     "format": "ESRI Shapefile",
     "aliases": ["shp", "prj", "shx", "dbf"],
-    "output": "zip"
+    "output": "zip",
+    "streamable": true
   },
   {
     "format": "Geoconcept",
     "aliases": ["gxt", "txt"],
-    "output": "gxt"
-  },
-  {
-    "format": "GeoJSON",
-    "aliases": ["json", "geojson"],
-    "output": "geojson"
+    "output": "gxt",
+    "streamable": true
   },
   {
     "format": "GeoRSS",
     "aliases": ["rss", "xml", "georss"],
-    "output": "dxf"
+    "output": "dxf",
+    "streamable": true
   },
   {
     "format": "GML",
     "aliases": ["gml", "gfs"],
-    "output": "gml"
+    "output": "gml",
+    "streamable": true
   },
   {
-    "format": "GMT",
+    "format": "OGR_GMT",
     "aliases": ["gmt"],
-    "output": "gmt"
+    "output": "gmt",
+    "streamable": true
   },
   {
     "format": "GPX",
     "aliases": ["gpx"],
-    "output": "gpx"
+    "output": "gpx",
+    "streamable": true
   },
   {
     "format": "GPKG",
     "aliases": ["gpkg"],
-    "output": "gpkg"
+    "output": "gpkg",
+    "streamable": true
   },
   {
     "format": "KML",
     "aliases": ["kml", "kmz"],
-    "output": "kml"
+    "output": "kml",
+    "streamable": true
   },
   {
     "format": "MapInfo File",
     "aliases": ["map", "tab", "dat", "id", "ind"],
-    "output": "zip"
+    "output": "zip",
+    "streamable": true
   },
   {
     "format": "TIGER",
@@ -90,21 +104,25 @@
       "rts",
       "rtz"
     ],
-    "output": "zip"
+    "output": "zip",
+    "streamable": true
   },
   {
-    "format": "PGDump",
+    "format": "PGDUMP",
     "aliases": ["sql"],
-    "output": "sql"
+    "output": "sql",
+    "streamable": true
   },
   {
     "format": "PostgreSQL",
     "aliases": [],
-    "output": "sql"
+    "output": "sql",
+    "streamable": false
   },
   {
-    "format": "VRT",
+    "format": "OGR_VRT",
     "aliases": ["vrt"],
-    "output": "vrt"
+    "output": "vrt",
+    "streamable": true
   }
 ]
