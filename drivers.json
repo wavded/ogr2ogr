@@ -6,12 +6,6 @@
     "streamable": true
   },
   {
-    "format": "BNA",
-    "aliases": ["bna"],
-    "output": "bna",
-    "streamable": true
-  },
-  {
     "format": "CSV",
     "aliases": ["csv"],
     "output": "csv",

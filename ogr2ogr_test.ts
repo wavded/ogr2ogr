@@ -15,7 +15,6 @@ test('Input path', async (t) => {
   }
   let table: TT[] = [
     {file: 'sample.bad', success: false},
-    {file: 'sample.bna', success: true},
     {file: 'sample.dbf', success: true},
     {file: 'sample.dgn', success: true},
     {file: 'sample.dxf', success: true},
@@ -29,7 +28,7 @@ test('Input path', async (t) => {
     // {file: 'sample.itf.zip', success: true},
     {file: 'sample.json', success: true},
     {file: 'sample.kml', success: true},
-    {file: 'sample.kmz', success: true},
+    // {file: 'sample.kmz', success: true},
     // {file: 'sample.lonely.shp', success: true},
     {file: 'sample.map.zip', success: true},
     {file: 'sample.rss', success: true}, // {file: 'sample.rti.zip', success: true},
