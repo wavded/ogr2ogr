@@ -15,10 +15,10 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
-    "test": "nyc tape \"test/*-test.js\"",
-    "lint": "eslint --max-warnings 0 modules examples test *.js",
-    "fmt": "prettier --write \"**/*.{html,js,json,md}\"",
-    "fmt-check": "prettier --check \"**/*.{html,js,json,md}\""
+    "test": "nyc ts-node node_modules/.bin/blue-tape \"**/*_test.ts\"",
+    "lint": "tsc --noEmit && eslint --ext ts .",
+    "fmt": "prettier --write \"**/*.{html,js,json,ts,md}\"",
+    "fmt-check": "prettier --check \"**/*.{html,js,json,ts,md}\""
   },
   "main": "./index.js",
   "dependencies": {
@@ -29,14 +29,20 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@types/blue-tape": "^0.1.33",
+    "@types/geojson": "^7946.0.7",
+    "@types/node": "^15.6.2",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "blue-tape": "^1.0.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-prettier": "^3.1.2",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
-    "tape": "^5.0.1"
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   }
 }
