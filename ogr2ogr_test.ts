@@ -9,11 +9,21 @@ let dir = __dirname + '/testdata/'
 
 test('Input path', async (t) => {
   interface TT {
-    file: string
+    file?: string
+    url?: string
     out?: string
     success: boolean
   }
   let table: TT[] = [
+    {
+      url: 'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.geojson',
+      success: true,
+    },
+    {
+      url: 'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss',
+      success: true,
+    },
+
     {file: 'sample.bad', success: false},
     {file: 'sample.dbf', success: true},
     {file: 'sample.dgn', success: true},
@@ -40,7 +50,8 @@ test('Input path', async (t) => {
 
   for (let tt of table) {
     try {
-      let [data] = await ogr2ogr(dir + tt.file, {format: tt.out})
+      let path = tt.url ? tt.url : dir + tt.file
+      let [data] = await ogr2ogr(path, {format: tt.out})
       if (!tt.out) {
         t.equal(data.type, 'FeatureCollection')
       } else {

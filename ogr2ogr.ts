@@ -103,7 +103,8 @@ class Ogr2ogr implements PromiseLike<Output> {
     }
 
     if (/^(http|ftp)/.test(p)) {
-      path += '/vsicurl/'
+      path += '/vsicurl/' + p
+      return path
     }
 
     path += p
