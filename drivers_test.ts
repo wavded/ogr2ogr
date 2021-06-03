@@ -6,7 +6,7 @@ import {execSync} from 'child_process'
 
 let dir = __dirname + '/testdata/'
 
-console.log(execSync('ogrinfo --formats'))
+console.log(execSync('ogrinfo --formats').toString())
 
 // test('Empty ZIP', async (t) => {
 //   let [stdout, stderr] = await ogr2ogr(dir + 'sample-empty.zip')
