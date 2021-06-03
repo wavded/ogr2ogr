@@ -66,7 +66,14 @@ class Ogr2ogr implements PromiseLike<Output> {
 
   async buffer(): Promise<Output> {
     let {stdout, stderr} = await this.run()
-    let data: GeoJSON = JSON.parse(stdout)
+    let data: GeoJSON = {} as GeoJSON
+    try {
+      data = JSON.parse(stdout)
+    } catch (err) {
+      console.log('err', err)
+      console.log('stdout', stdout)
+      console.log('stderr', stderr)
+    }
     return [data, stderr]
   }
 

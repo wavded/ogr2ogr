@@ -1,7 +1,6 @@
 import test from 'blue-tape'
 import ogr2ogr from './ogr2ogr'
 import {Buffer} from 'buffer'
-import type {GeoJSON} from 'geojson'
 // import {execSync} from 'child_process'
 
 let dir = __dirname + '/testdata/'
@@ -30,7 +29,7 @@ test('Input path', async (t) => {
     // {file: 'sample.itf.zip', success: true},
     {file: 'sample.json', success: true},
     {file: 'sample.kml', success: true},
-    {file: 'sample.kmz', success: true},
+    {file: 'sample2.kmz', success: true},
     // {file: 'sample.lonely.shp', success: true},
     {file: 'sample.map.zip', success: true},
     {file: 'sample.rss', success: true}, // {file: 'sample.rti.zip', success: true},
@@ -42,15 +41,17 @@ test('Input path', async (t) => {
 
   for (let tt of table) {
     try {
-      let [out] = await ogr2ogr(dir + tt.file, {format: tt.out})
+      let [data] = await ogr2ogr(dir + tt.file, {format: tt.out})
       if (!tt.out) {
-        t.equal((out as GeoJSON).type, 'FeatureCollection')
+        t.equal(data.type, 'FeatureCollection')
       } else {
-        t.ok(Buffer.isBuffer(out))
+        t.ok(Buffer.isBuffer(data))
       }
       t.ok(tt.success)
+      // console.log(stderr)
     } catch (err) {
       t.notOk(tt.success)
+      // console.log(err)
     }
   }
 })
