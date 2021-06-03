@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: osgeo/gdal:apline-ultrasmall-latest
+      image: osgeo/gdal:alpine-small-latest
     strategy:
       matrix:
         node: ['14']
