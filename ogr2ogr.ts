@@ -1,42 +1,37 @@
 import {Stream, Readable} from 'stream'
 import {extname} from 'path'
-import drivers from './drivers.json'
 import {execFile} from 'child_process'
-import type {GeoJSON} from 'geojson'
-import {Buffer} from 'buffer'
 // import {tmpdir} from 'os'
 // import {join} from 'path'
+//
+type JSONLike = Record<string, unknown>
+type RunOutput = {stdout: string; stderr: string}
 
-type Input = string | GeoJSON | Stream
-type Output = [GeoJSON, string]
-type Callback = (
-  err: Error | null,
-  stdout: Buffer | GeoJSON,
-  stderr: string
-) => void
-
+type Input = string | JSONLike | Stream
+interface Result {
+  command: string
+  text: string
+  data?: JSONLike
+  stream?: Readable
+  details: string
+}
+type Callback = (err: Error | null, res?: Result) => void
 interface Options {
-  inputFormat?: string
   format?: string
 }
 
-interface Driver {
-  format: string
-  aliases: string[]
-  output: string
-}
+// const stdoutRe = /csv|gmt|gpx|geojson|esrijson|vdv|georss|kml|gml|mapml|pdf|wasp/i
 
-class Ogr2ogr implements PromiseLike<Output> {
+class Ogr2ogr implements PromiseLike<Result> {
   private inputStream?: Readable
   private inputPath: string
-  private outputDriver: Driver
   private outputPath: string
+  private outputFormat: string
 
   constructor(input: Input, opts: Options = {}) {
-    let inputDriver = this.parseDriver(opts.inputFormat)
-    this.inputPath = inputDriver.format + ':/vsistdin/'
-    this.outputDriver = this.parseDriver(opts.format)
+    this.inputPath = '/vsistdin/'
     this.outputPath = '/vsistdout/'
+    this.outputFormat = opts.format || 'GeoJSON'
 
     if (input instanceof Readable) {
       this.inputStream = input
@@ -47,43 +42,18 @@ class Ogr2ogr implements PromiseLike<Output> {
     }
   }
 
-  stream() {
-    return this.run()
-  }
-
   exec(cb: Callback) {
-    this.buffer()
-      .then(([stdout, stderr]) => cb(null, stdout, stderr))
-      .catch((err) => cb(err, Buffer.from(''), ''))
+    this.run()
+      .then((res) => cb(null, res))
+      .catch((err) => cb(err))
   }
 
-  then<TResult1 = Output, TResult2 = never>(
-    onfulfilled?: (value: Output) => TResult1 | PromiseLike<TResult1>,
+  then<TResult1 = Result, TResult2 = never>(
+    onfulfilled?: (value: Result) => TResult1 | PromiseLike<TResult1>,
     onrejected?: (reason: string) => TResult2 | PromiseLike<TResult2>
   ): PromiseLike<TResult1 | TResult2> {
-    return this.buffer().then(onfulfilled, onrejected)
+    return this.run().then(onfulfilled, onrejected)
   }
-
-  async buffer(): Promise<Output> {
-    let {stdout, stderr} = await this.run()
-    let data: GeoJSON = {} as GeoJSON
-    try {
-      data = JSON.parse(stdout)
-    } catch (err) {
-      console.log('err', err)
-      console.log('stdout', stdout)
-      console.log('stderr', stderr)
-    }
-    return [data, stderr]
-  }
-
-  // private async streamToBuffer(s: Readable): Promise<Buffer> {
-  //   let chunks = []
-  //   for await (let chunk of s) {
-  //     chunks.push(chunk)
-  //   }
-  //   return Buffer.concat(chunks)
-  // }
 
   private parsePath(p: string): string {
     let path = ''
@@ -111,39 +81,40 @@ class Ogr2ogr implements PromiseLike<Output> {
     return path
   }
 
-  private parseDriver(nameOrAlias = ''): Driver {
-    let s = nameOrAlias.replace('.', '')
-    return (
-      drivers.find((d) => d.format === s || d.aliases.indexOf(s) > -1) ||
-      drivers[0]
-    )
-  }
+  private async run() {
+    let command = 'ogr2ogr'
+    let args = [
+      '-f',
+      this.outputFormat,
+      '-skipfailures',
+      this.outputPath,
+      this.inputPath,
+    ]
 
-  private run() {
-    type RunOutput = {stdout: string; stderr: string}
-
-    let p = new Promise<RunOutput>((res, rej) => {
-      let proc = execFile(
-        'ogr2ogr',
-        [
-          '-f',
-          this.outputDriver.format,
-          '-skipfailures',
-          this.outputPath,
-          this.inputPath,
-        ],
-        (err, stdout, stderr) => {
-          console.log(...proc.spawnargs, proc.exitCode)
-
-          if (err) rej(err)
-          res({stdout, stderr})
-        }
-      )
-
+    let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
+      let proc = execFile(command, args, (err, stdout, stderr) => {
+        console.log(...proc.spawnargs, proc.exitCode)
+        if (err) rej(err)
+        res({stdout, stderr})
+      })
       if (this.inputStream && proc.stdin) this.inputStream.pipe(proc.stdin)
     })
 
-    return p
+    let res: Result = {
+      command: command + args.join(' '),
+      text: stdout,
+      details: stderr,
+    }
+
+    if (/^geojson$/i.test(this.outputFormat)) {
+      try {
+        res.data = JSON.parse(stdout)
+      } catch (err) {
+        // ignore error
+      }
+    }
+
+    return res
   }
 }
 
