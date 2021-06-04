@@ -22,6 +22,7 @@ type Callback = (err: Error | null, res?: Result) => void
 interface Options {
   format?: string
   options?: string[]
+  destination?: string
 }
 
 // Known /vsistdout/ support.
@@ -38,11 +39,13 @@ class Ogr2ogr implements PromiseLike<Result> {
   private outputFormat: string
   private outputExt: string
   private customOptions?: string[]
+  private customDestination?: string
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
     this.outputFormat = opts.format || 'GeoJSON'
     this.customOptions = opts.options
+    this.customDestination = opts.destination
 
     let {path, ext} = this.newOutputPath(this.outputFormat)
     this.outputPath = path
@@ -133,7 +136,7 @@ class Ogr2ogr implements PromiseLike<Result> {
       '-f',
       this.outputFormat,
       '-skipfailures',
-      this.outputPath,
+      this.customDestination || this.outputPath,
       this.inputPath,
     ]
     if (this.customOptions) args.push(...this.customOptions)
@@ -161,7 +164,7 @@ class Ogr2ogr implements PromiseLike<Result> {
       }
     }
 
-    if (this.outputPath !== vsiStdOut) {
+    if (!this.customDestination && this.outputPath !== vsiStdOut) {
       if (this.outputExt === '.zip') {
         res.stream = this.createZipStream(this.outputPath)
       } else {

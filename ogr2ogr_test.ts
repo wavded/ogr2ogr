@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import ogr2ogr from './ogr2ogr'
-import {createWriteStream, writeFileSync} from 'fs'
+import {createWriteStream, writeFileSync, statSync} from 'fs'
 
 let dir = __dirname + '/testdata/'
 
@@ -10,6 +10,7 @@ test(async (t) => {
     url?: string
     out?: string
     opts?: string[]
+    dest?: string
     success: boolean
   }
   let table: TT[] = [
@@ -59,7 +60,7 @@ test(async (t) => {
       success: true,
     },
 
-    // // To format conversions.
+    // To format conversions.
     {file: 'sample.json', success: true, out: 'csv'},
     {file: 'sample.json', success: true, out: 'dgn'},
     {file: 'sample.json', success: true, out: 'dxf'},
@@ -81,13 +82,28 @@ test(async (t) => {
     {file: 'sample.json', success: true, out: 'pdf'},
     {file: 'sample.json', success: true, out: 'vdv'},
     {file: 'sample.json', success: true, out: 'xlsx'},
+
+    // Custom destinations. (e.g. database)
+    {
+      file: 'sample.json',
+      success: true,
+      dest: './testdata/output/custom.geojson',
+    },
   ]
 
   for (let tt of table) {
     try {
       let path = tt.url ? tt.url : dir + tt.file
-      let res = await ogr2ogr(path, {format: tt.out, options: tt.opts})
-      if (!tt.out) {
+      let res = await ogr2ogr(path, {
+        format: tt.out,
+        options: tt.opts,
+        destination: tt.dest,
+      })
+
+      if (tt.dest) {
+        statSync(tt.dest)
+        t.pass()
+      } else if (!tt.out) {
         t.equal(res.data && res.data.type, 'FeatureCollection', res.cmd)
       } else {
         t.ok(res.text || res.stream, res.cmd)
