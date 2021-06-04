@@ -22,6 +22,7 @@
   },
   "main": "./index.js",
   "devDependencies": {
+    "@types/archiver": "^5.1.0",
     "@types/blue-tape": "^0.1.33",
     "@types/geojson": "^7946.0.7",
     "@types/node": "^15.6.2",
@@ -37,5 +38,8 @@
   },
   "engines": {
     "node": ">=12"
+  },
+  "dependencies": {
+    "archiver": "^5.3.0"
   }
 }

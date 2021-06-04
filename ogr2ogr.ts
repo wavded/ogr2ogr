@@ -2,9 +2,10 @@ import {Stream, Readable} from 'stream'
 import {extname} from 'path'
 import {execFile} from 'child_process'
 import {createReadStream} from 'fs'
-// import {tmpdir} from 'os'
-// import {join} from 'path'
-//
+import archiver from 'archiver'
+import {tmpdir} from 'os'
+import {join} from 'path'
+
 type JSONLike = Record<string, unknown>
 type RunOutput = {stdout: string; stderr: string}
 
@@ -14,6 +15,7 @@ interface Result {
   text: string
   data?: JSONLike
   stream?: Readable
+  extname?: string
   details: string
 }
 type Callback = (err: Error | null, res?: Result) => void
@@ -23,24 +25,30 @@ interface Options {
 
 // Known /vsistdout/ support.
 const stdoutRe = /csv|geojson|georss|gml|gmt|gpx|jml|kml|mapml|pdf|vdv/i
+const vsiStdIn = '/vsistdin/'
+const vsiStdOut = '/vsistdout/'
+
+let uniq = Date.now()
 
 class Ogr2ogr implements PromiseLike<Result> {
   private inputStream?: Readable
   private inputPath: string
   private outputPath: string
   private outputFormat: string
+  private outputExt: string
 
   constructor(input: Input, opts: Options = {}) {
-    this.inputPath = '/vsistdin/'
+    this.inputPath = vsiStdIn
     this.outputFormat = opts.format || 'GeoJSON'
-    this.outputPath = stdoutRe.test(this.outputFormat)
-      ? '/vsistdout/'
-      : 'out.' + this.outputFormat.toLowerCase()
+
+    let {path, ext} = this.newOutputPath(this.outputFormat)
+    this.outputPath = path
+    this.outputExt = ext
 
     if (input instanceof Readable) {
       this.inputStream = input
     } else if (typeof input === 'string') {
-      this.inputPath = this.parsePath(input)
+      this.inputPath = this.newInputPath(input)
     } else {
       this.inputStream = Readable.from([JSON.stringify(input)])
     }
@@ -59,7 +67,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     return this.run().then(onfulfilled, onrejected)
   }
 
-  private parsePath(p: string): string {
+  private newInputPath(p: string): string {
     let path = ''
     let ext = extname(p)
 
@@ -85,6 +93,37 @@ class Ogr2ogr implements PromiseLike<Result> {
     return path
   }
 
+  private newOutputPath(f: string) {
+    let ext = '.' + f.toLowerCase()
+
+    if (stdoutRe.test(this.outputFormat)) {
+      return {path: vsiStdOut, ext}
+    }
+
+    let path = join(tmpdir(), '/ogr_' + uniq++)
+    // let path = './ogr_' + uniq++
+
+    switch (f.toLowerCase()) {
+      case 'esri shapefile':
+      case 'mapinfo file':
+      case 'flatgeobuf':
+        ext = '.zip'
+        break
+      default:
+        path += ext
+    }
+
+    return {path, ext}
+  }
+
+  private createZipStream(p: string) {
+    let archive = archiver('zip')
+    archive.directory(p, false)
+    archive.on('error', console.error)
+    archive.finalize()
+    return archive
+  }
+
   private async run() {
     let command = 'ogr2ogr'
     let args = [
@@ -107,6 +146,7 @@ class Ogr2ogr implements PromiseLike<Result> {
       cmd: command + args.join(' '),
       text: stdout,
       details: stderr,
+      extname: this.outputExt,
     }
 
     if (/^geojson$/i.test(this.outputFormat)) {
@@ -117,8 +157,12 @@ class Ogr2ogr implements PromiseLike<Result> {
       }
     }
 
-    if (this.outputPath !== '/vsistdout/') {
-      res.stream = createReadStream(this.outputPath)
+    if (this.outputPath !== vsiStdOut) {
+      if (this.outputExt === '.zip') {
+        res.stream = this.createZipStream(this.outputPath)
+      } else {
+        res.stream = createReadStream(this.outputPath)
+      }
     }
 
     return res

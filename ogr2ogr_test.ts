@@ -1,5 +1,6 @@
 import test from 'blue-tape'
 import ogr2ogr from './ogr2ogr'
+import {createWriteStream} from 'fs'
 // import {Buffer} from 'buffer'
 // import {execSync} from 'child_process'
 
@@ -30,7 +31,7 @@ test('Input path', async (t) => {
     {file: 'sample.dbf', success: true},
     {file: 'sample.dgn', success: true},
     {file: 'sample.dxf', success: true},
-    // {file: 'sample.gdb.zip', out: 'dxf', success: true},
+    {file: 'sample.gdb.zip', out: 'dxf', success: true},
     {file: 'sample.geojson', success: true},
     {file: 'sample.gml', success: true},
     // {file: 'sample.gml.zip', success: true},
@@ -50,12 +51,12 @@ test('Input path', async (t) => {
     // {file: 'sample.vrt.zip', success: true},
     {file: 'simple.shp.zip', success: true},
 
-    // To format conversions.
+    // // To format conversions.
     {file: 'sample.json', success: true, out: 'csv'},
     {file: 'sample.json', success: true, out: 'dgn'},
     {file: 'sample.json', success: true, out: 'dxf'},
-    // {file: 'sample.json', success: true, out: 'esri shapefile'},
-    // {file: 'sample.json', success: true, out: 'flatgeobuf'},
+    {file: 'sample.json', success: true, out: 'esri shapefile'},
+    {file: 'sample.json', success: true, out: 'flatgeobuf'},
     {file: 'sample.json', success: true, out: 'geoconcept'},
     {file: 'sample.json', success: true, out: 'geojson'},
     {file: 'sample.json', success: true, out: 'geojsonseq'},
@@ -67,6 +68,7 @@ test('Input path', async (t) => {
     {file: 'sample.json', success: true, out: 'jml'},
     {file: 'sample.json', success: true, out: 'kml'},
     {file: 'sample.json', success: true, out: 'mapml'},
+    {file: 'sample.json', success: true, out: 'mapinfo file'},
     {file: 'sample.json', success: true, out: 'ods'},
     {file: 'sample.json', success: true, out: 'pdf'},
     {file: 'sample.json', success: true, out: 'vdv'},
@@ -78,12 +80,17 @@ test('Input path', async (t) => {
       let path = tt.url ? tt.url : dir + tt.file
       let res = await ogr2ogr(path, {format: tt.out})
       if (!tt.out) {
-        t.equal(res.data && res.data.type, 'FeatureCollection')
+        t.equal(res.data && res.data.type, 'FeatureCollection', res.cmd)
       } else {
         t.ok(res.text || res.stream, res.cmd)
+        if (res.stream) {
+          let out = createWriteStream(dir + '/output/result' + res.extname)
+          res.stream.pipe(out)
+        }
       }
       t.ok(tt.success)
     } catch (err) {
+      console.log(err)
       t.notOk(tt.success)
     }
   }
