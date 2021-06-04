@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+  <name>Фонтаны Петергофа</name>
+  <description><![CDATA[Карта объектов исследования международного сетевого проекта "Парковый урок"]]></description>
+  <Style id="style23">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style10">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/yellow.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style5">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/yellow.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style29">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/yellow.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style13">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/yellow.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style9">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/yellow.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style24">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style8">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style27">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style18">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style33">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style25">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style26">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style16">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style4">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/red.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style12">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style19">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style22">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style11">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style21">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style2">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style1">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style34">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style15">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/yellow.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style32">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style3">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style7">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style17">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style28">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style6">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style14">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style30">
+    <IconStyle>
+      <Icon>
+        <href></href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style31">
+    <IconStyle>
+      <Icon>
+        <href>http://maps.gstatic.com/mapfiles/ms2/micons/flag.png</href>
+      </Icon>
+    </IconStyle>
+  </Style>
+  <Style id="style20">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+  </Style>
+  <Placemark>
+    <name>Музей &quot;Императорские яхты&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<br>]]></description>
+    <styleUrl>#style23</styleUrl>
+    <Point>
+      <coordinates>29.913197,59.890446,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Китовый&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<p style="margin:0.5em 0px;line-height:22px;color:rgb(37, 37, 37);font-family:sans-serif;font-size:14px;background-color:rgb(255, 255, 255)">Водоем, в котором находится фонтан, проектировал Микетти по замыслу Петра, желавшего повторить версальский фонтан «Нептун» и устроить на склоне искусственную гору «Парнас». Однако водоем, вырытый и окруженный дамбой в 1724—1727 годах под наблюдением В. Туволкова, простоял без декора шестнадцать лет. Только в 1739—1740 годах Песочный, или Стерляжий, пруд — так называли водоем — по проекту И. Бланка и И. Давыдова декорировали исполненными по модели К. Оснера большими скульптурами «с вододействием из рта и головы». В центре помещалась вырезанная из дерева семиметровая сказочная «Рыба-кит», по сторонам — свинцовые «морские быки», отлитые в Петербурге П. Луковниковым и прочеканенные А. Куломзиным. Лаковых дел мастер Г. Брумкорст расписал скульптуры, что придало оформлению фонтана еще более живописный характер.</p><p style="margin:0.5em 0px;line-height:22px;color:rgb(37, 37, 37);font-family:sans-serif;font-size:14px;background-color:rgb(255, 255, 255)">В 1800 году, после того как убрали обветшавшие деревянные фигуры, фонтан стал менажерного типа. В 1963 году после разрушения всего парка в&nbsp;<a href="http://ru.wikipedia.org/wiki/%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%B0%D1%8F_%D0%9E%D1%82%D0%B5%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0" title="Великая Отечественная война" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">Великую Отечественную войну</a>&nbsp;фонтан был воссоздан по чертежам XIX века. Сейчас на струе из фонтана держится и вращается металлический шар.</p><p style="margin:0.5em 0px;line-height:22px;color:rgb(37, 37, 37);font-family:sans-serif;font-size:14px;background-color:rgb(255, 255, 255)"><img src="http://upload.wikimedia.org/wikipedia/ru/2/23/Petergof-kitoviy.jpg" style="width:244px"></p>]]></description>
+    <styleUrl>#style10</styleUrl>
+    <Point>
+      <coordinates>29.897362,59.886051,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтаны Менажерные</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<span style="font-family:Times;font-size:medium;background-color:rgb(255, 255, 255)">Два одинаковых мощных фонтана оформляют подход к Марлинскому каскаду. Художественный эффект достигается силой, высотой и толщиной водяного столба, который вздымается посреди бассейна диаметром 25 метров. Впечатление небывалой мощности создается за счет использования выводного отверстия особой конструкции. В трубу вложен конус, и вода, проходя между ним и стенкой трубы, образует столб диаметром 30 сантиметров, полый внутри.</span><p style="font-family:Times;font-size:medium">1722-25 гг. арх. Н.Микетти; восст. 1949 г., 1970-80 гг.</p><p style="font-family:Times;font-size:medium"><br></p>]]></description>
+    <styleUrl>#style5</styleUrl>
+    <Point>
+      <coordinates>29.897448,59.887558,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Львиный Каскад</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<br>]]></description>
+    <styleUrl>#style29</styleUrl>
+    <Point>
+      <coordinates>29.902941,59.884113,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Золотая Гора</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcc.ru/codes/7c32e9fc425cb455cd21a68fdabf285e.png">]]></description>
+    <styleUrl>#style13</styleUrl>
+    <Point>
+      <coordinates>29.897060,59.887150,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан Ева</name>
+    <Snippet></Snippet>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style9</styleUrl>
+    <Point>
+      <coordinates>29.905815,59.884544,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Оранжерейный фонтан</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<a href="http://qrcc.ru" target="_blank"><img src="http://qrcc.ru/codes/d5612c0c01d42365079dee3616337e1e.png" border="0" title="QR "></a>]]></description>
+    <styleUrl>#style24</styleUrl>
+    <Point>
+      <coordinates>29.913626,59.884270,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Римские фонтаны</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcc.ru/codes/3ba1e357a68f04fc1c735cdd1764021f.png">]]></description>
+    <styleUrl>#style8</styleUrl>
+    <Point>
+      <coordinates>29.917145,59.884174,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Солнце&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<br>]]></description>
+    <styleUrl>#style27</styleUrl>
+    <Point>
+      <coordinates>29.919527,59.885612,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>&quot;Шахматная гора&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcode.kaywa.com/img.php?s=5&amp;d=http%3A%2F%2Fpark590.blogspot.com%2F2012%2F05%2Fblog-post_1788.html" alt="qrcode">]]></description>
+    <styleUrl>#style18</styleUrl>
+    <Point>
+      <coordinates>29.916544,59.883198,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Шутиха &quot;Елочки&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcode.kaywa.com/img.php?s=5&amp;d=http%3A%2F%2Fpark590.blogspot.com%2F2012%2F05%2Fblog-post_7215.html" alt="qrcode">]]></description>
+    <styleUrl>#style33</styleUrl>
+    <Point>
+      <coordinates>29.916050,59.884846,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Шутиха &quot;Дубок&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<br>]]></description>
+    <styleUrl>#style25</styleUrl>
+    <Point>
+      <coordinates>29.915085,59.884449,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Шутиха &quot;Зонтик&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcode.kaywa.com/img.php?s=5&amp;d=http%3A%2F%2Fpark590.blogspot.com%2F2012%2F05%2Fblog-post_7215.html" alt="qrcode">]]></description>
+    <styleUrl>#style26</styleUrl>
+    <Point>
+      <coordinates>29.915600,59.885406,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Сноп&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcode.kaywa.com/img.php?s=5&amp;d=http%3A%2F%2Fpark590.blogspot.com%2F2012%2F05%2F1714.html" alt="qrcode">]]></description>
+    <styleUrl>#style16</styleUrl>
+    <Point>
+      <coordinates>29.933109,59.889969,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Пирамида&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<br>]]></description>
+    <styleUrl>#style4</styleUrl>
+    <Point>
+      <coordinates>29.921978,59.884254,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Большой каскад</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcode.kaywa.com/img.php?s=5&amp;d=%D0%91%D0%BE%D0%BB%D1%8C%D1%88%D0%BE%D0%B9%20%D0%BA%D0%B0%D1%81%D0%BA%D0%B0%D0%B4%0D%0A">]]></description>
+    <styleUrl>#style12</styleUrl>
+    <Point>
+      <coordinates>29.908884,59.885025,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Самсон&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://qrcoder.ru/code/?%D1%E0%EC%F1%EE%ED&amp;4&amp;0"><div dir="ltr"></div>]]></description>
+    <styleUrl>#style19</styleUrl>
+    <Point>
+      <coordinates>29.909023,59.885265,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Террасные фонтаны</name>
+    <Snippet></Snippet>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style22</styleUrl>
+    <Point>
+      <coordinates>29.907745,59.885181,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Ева&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<br>]]></description>
+    <styleUrl>#style11</styleUrl>
+    <Point>
+      <coordinates>29.908443,59.886459,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан &quot;Адам&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style21</styleUrl>
+    <Point>
+      <coordinates>29.910805,59.886166,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Террасные фонтаны</name>
+    <Snippet></Snippet>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style2</styleUrl>
+    <Point>
+      <coordinates>29.910172,59.884846,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Морской канал</name>
+    <Snippet></Snippet>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style1</styleUrl>
+    <Point>
+      <coordinates>29.909891,59.886700,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Аллея фонтанов</name>
+    <Snippet></Snippet>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style34</styleUrl>
+    <Point>
+      <coordinates>29.909355,59.886574,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Фонтан&quot;Тритон&quot;</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="http://"><img src="http://qrcc.ru/codes/f1b30afd9450bddfa8cdcd06510fa639.png">]]></description>
+    <styleUrl>#style15</styleUrl>
+    <Point>
+      <coordinates>29.898043,59.887997,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Львиный каскад</name>
+    <Snippet>Львиный каскад — один из каскадов Дворцово-</Snippet>
+    <description><![CDATA[<div><span style="background-color:rgb(229, 227, 223);font-family:arial, sans-serif;font-size:10pt">Львиный каскад — один из каскадов Дворцово-паркового ансамбля Петергоф.</span></div>]]></description>
+    <styleUrl>#style32</styleUrl>
+    <Point>
+      <coordinates>29.902468,59.887474,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Марли</name>
+    <Snippet>&amp;nbsp;Марли&amp;nbsp;Марли́ — дворец, расположенный </Snippet>
+    <description><![CDATA[<div><br>&nbsp;</div><div><b dir="ltr" style="font-family:arial, sans-serif;background-color:rgb(229, 227, 223)">Марли</b><span style="font-family:arial, sans-serif;background-color:rgb(229, 227, 223)">&nbsp;</span><br style="font-family:arial, sans-serif;background-color:rgb(229, 227, 223)"><br style="font-family:arial, sans-serif;background-color:rgb(229, 227, 223)"><div dir="ltr" style="margin:0px;padding:0px;font-family:arial, sans-serif;background-color:rgb(229, 227, 223)">Марли́ — дворец, расположенный в западной части Нижнего парка дворцово-паркового ансамбля Петергоф. Дворец получил своё имя в память о посещении Петром I в 1717 резиденции французских королей в Марли-ле-Руа под Парижем (не сохранилась; разрушена во время Великой французской революции). Петергофский Марли и окружающие его пруды и сады не повторяют французский прототип; от него заимствованны общие композиционные решения и идея сочетания декоративного и хозяйственного предназначения парка. Сооружён одновременно с закладкой Марлинских прудов по проекту Иоганна Браунштейна в 1720—1723. Первоначально планировался одноэтажным. В процессе постройки по распоряжению Петра в проект внесли изменения, и дворец приобрёл второй этаж, что придало пропорциям дворца уравновешенность и законченность (в объёме дворец — чётко выявленный куб). В строительстве и декоре дворца Марли принимали участие скульптор Никола Пино, каменных дел мастера Я.</div></div>]]></description>
+    <styleUrl>#style3</styleUrl>
+    <Point>
+      <coordinates>29.896332,59.888744,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Нептун</name>
+    <Snippet>В&amp;nbsp;1736 году&amp;nbsp;в центральном бассейне&amp;nbsp;Ве</Snippet>
+    <description><![CDATA[<p style="margin:0.4em 0px 0.5em;line-height:19.1875px;font-family:sans-serif;background-color:rgb(255, 255, 255)">В&nbsp;<a href="http://ru.wikipedia.org/wiki/1736_%D0%B3%D0%BE%D0%B4" title="1736 год" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1736 году</a>&nbsp;в центральном бассейне&nbsp;<a href="http://ru.wikipedia.org/w/index.php?title=%D0%92%D0%B5%D1%80%D1%85%D0%BD%D0%B8%D0%B9_%D0%BF%D0%B0%D1%80%D0%BA_(%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B3%D0%BE%D1%84)&amp;action=edit&amp;redlink=1" title="Верхний парк (Петергоф) (страница отсутствует)" style="text-decoration:none;color:rgb(165, 88, 88)" target="_blank">Верхнего парка</a>&nbsp;поместили скульптурно-фонтанную композицию «Телега Нептунова». Скульптуры были отлиты из свинца и позолочены. Центром композиции являлась фигура&nbsp;<a href="http://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%BF%D1%82%D1%83%D0%BD_(%D0%BC%D0%B8%D1%84%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F)" title="Нептун (мифология)" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">Нептуна</a>&nbsp;«с коляскою», а также дельфины и «верховые» на лошадях. Центральная струя фонтана поднимала золоченый медный шар.</p><p style="margin:0.4em 0px 0.5em;line-height:19.1875px;font-family:sans-serif;background-color:rgb(255, 255, 255)">После неоднократных реставраций «Телегу Нептунову» в&nbsp;<a href="http://ru.wikipedia.org/wiki/1797_%D0%B3%D0%BE%D0%B4" title="1797 год" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1797 году</a>&nbsp;всё же пришлось снять. Вместо неё установили новую группу&nbsp;— «Нептун», сохраняющуюся и поныне.</p><p style="margin:0.4em 0px 0.5em;line-height:19.1875px;font-family:sans-serif;background-color:rgb(255, 255, 255)">Первоначально фигуры фонтана были созданы в&nbsp;<a href="http://ru.wikipedia.org/wiki/%D0%9D%D1%8E%D1%80%D0%BD%D0%B1%D0%B5%D1%80%D0%B3" title="Нюрнберг" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">Нюрнберге</a>&nbsp;(<a href="http://ru.wikipedia.org/wiki/%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D1%8F" title="Германия" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">Германия</a>). В&nbsp;<a href="http://ru.wikipedia.org/wiki/1660" title="1660" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1660</a>&nbsp;году Георг Швайгер (нем.Georg Schweigger) и золотокузнец Христоф Риттер (нем. Christoph Ritter)представили модель в виде её составных частей.Затем Швайгер и его ученик Иеремия Айслер (нем.Jeremias Eissler) работали над моделью до&nbsp;<a href="http://ru.wikipedia.org/wiki/1670" title="1670" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1670</a>&nbsp;года, но полный комплект фигур был выполнен только в&nbsp;<a href="http://ru.wikipedia.org/wiki/1688" title="1688" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1688</a>-<a href="http://ru.wikipedia.org/wiki/1694" title="1694" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1694</a>&nbsp;годах.Отливка была произведена Херольдтом (нем. W.H.Heroldt). Фонтан никогда не был выставлен в Нюрнберге, однако стал известен как своеобразная достопримечательность, даже находясь на складе.В&nbsp;<a href="http://ru.wikipedia.org/wiki/1796" title="1796" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1796</a>&nbsp;году основная часть фигур была куплена Россией и направлена в&nbsp;<a href="http://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B3%D0%BE%D1%84" title="Петергоф" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">Петергоф</a>. Установленная в настоящее время в городском парке Нюрнберга копия находится там с&nbsp;<a href="http://ru.wikipedia.org/wiki/1902" title="1902" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">1902</a>&nbsp;года.<sup style="line-height:1em"><a href="http://ru.wikipedia.org/wiki/%D0%9D%D0%B5%D0%BF%D1%82%D1%83%D0%BD_%28%D1%84%D0%BE%D0%BD%D1%82%D0%B0%D0%BD%29#cite_note-FK-1" style="text-decoration:none;color:rgb(11, 0, 128)" target="_blank">[1]</a></sup></p>]]></description>
+    <styleUrl>#style7</styleUrl>
+    <Point>
+      <coordinates>29.907703,59.882282,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Маршрутка</name>
+    <Snippet>Маршрутное такси № 224, № 300, №424, № 424-А;муниц</Snippet>
+    <description><![CDATA[<span style="color:rgb(51, 51, 51);font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(249, 249, 249)">Маршрутное такси № 224, № 300, №424, № 424-А;</span><br style="color:rgb(51, 51, 51);font-family:Arial, Helvetica, sans-serif;font-size:11px"><span style="color:rgb(51, 51, 51);font-family:Arial, Helvetica, sans-serif;font-size:11px;background-color:rgb(249, 249, 249)">муниципальный автобус №200, №210</span>]]></description>
+    <styleUrl>#style17</styleUrl>
+    <Point>
+      <coordinates>29.899271,59.885933,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Вход в Нижний парк</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=59.884997,29.906287&amp;thumb=0">]]></description>
+    <styleUrl>#style28</styleUrl>
+    <Point>
+      <coordinates>29.906286,59.884998,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Вход в Нижний парк</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=59.886052,29.901309&amp;thumb=0">]]></description>
+    <styleUrl>#style6</styleUrl>
+    <Point>
+      <coordinates>29.901308,59.886051,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Центральный вход в парк</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=59.884071,29.911952&amp;thumb=0">]]></description>
+    <styleUrl>#style14</styleUrl>
+    <Point>
+      <coordinates>29.909941,59.882496,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Вход в парк</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=59.880948,29.924655&amp;thumb=0">]]></description>
+    <styleUrl>#style30</styleUrl>
+    <Point>
+      <coordinates>29.924656,59.880947,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Вход в Верхний сад</name>
+    <Snippet></Snippet>
+    <description><![CDATA[<img src="https://cbks0.google.com/cbk?output=thumbnail&amp;w=90&amp;h=68&amp;ll=59.880561,29.906459&amp;thumb=0">]]></description>
+    <styleUrl>#style31</styleUrl>
+    <Point>
+      <coordinates>29.906460,59.880562,0.000000</coordinates>
+    </Point>
+  </Placemark>
+  <Placemark>
+    <name>Line 2</name>
+    <description><![CDATA[]]></description>
+    <styleUrl>#style20</styleUrl>
+    <LineString>
+      <tessellate>1</tessellate>
+      <coordinates>
+        29.925707,59.882530,0.000000
+        29.926672,59.884190,0.000000
+        29.921694,59.885029,0.000000
+        29.921457,59.885601,0.000000
+        29.920256,59.885902,0.000000
+        29.919613,59.886311,0.000000
+        29.917358,59.886654,0.000000
+        29.916780,59.887074,0.000000
+        29.914848,59.887203,0.000000
+        29.914034,59.886192,0.000000
+      </coordinates>
+    </LineString>
+  </Placemark>
+</Document>
+</kml>

@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 import ogr2ogr from './ogr2ogr'
-import {createWriteStream} from 'fs'
+import {createWriteStream, writeFileSync} from 'fs'
 // import {Buffer} from 'buffer'
 // import {execSync} from 'child_process'
 
@@ -28,24 +28,28 @@ test('Input path', async (t) => {
 
     // From format conversions.
     {file: 'sample.bad', success: false},
+    {file: 'sample.empty.zip', success: false},
+    {file: 'sample.000', success: true},
+    {file: 'sample.csv', success: true},
+    {file: 'sample.geom.csv', success: true},
+    {file: 'sample.no-geom.csv', success: true},
     {file: 'sample.dbf', success: true},
     {file: 'sample.dgn', success: true},
     {file: 'sample.dxf', success: true},
     {file: 'sample.gdb.zip', out: 'dxf', success: true},
     {file: 'sample.geojson', success: true},
     {file: 'sample.gml', success: true},
-    // {file: 'sample.gml.zip', success: true},
     {file: 'sample.gmt', success: true},
     {file: 'sample.gxt', success: true},
     {file: 'sample.itf', success: true},
-    // {file: 'sample.itf.zip', success: true},
     {file: 'sample.json', success: true},
     {file: 'sample.kml', success: true},
     {file: 'sample.kmz', success: true},
+    {file: 'sample.cryllic.kml', success: true},
     // {file: 'sample.lonely.shp', success: true},
     {file: 'sample.map.zip', success: true},
     {file: 'sample.rss', success: true},
-    // {file: 'sample.rti.zip', success: true},
+    {file: 'sample.rti.zip', out: 'dxf', success: true},
     {file: 'sample.shp', success: true},
     {file: 'sample.shp.zip', success: true},
     // {file: 'sample.vrt.zip', success: true},
@@ -83,9 +87,12 @@ test('Input path', async (t) => {
         t.equal(res.data && res.data.type, 'FeatureCollection', res.cmd)
       } else {
         t.ok(res.text || res.stream, res.cmd)
+        let fn = dir + '/output/r_' + tt.out + res.extname
+
         if (res.stream) {
-          let out = createWriteStream(dir + '/output/result' + res.extname)
-          res.stream.pipe(out)
+          res.stream.pipe(createWriteStream(fn))
+        } else {
+          writeFileSync(fn, res.text)
         }
       }
       t.ok(tt.success)
