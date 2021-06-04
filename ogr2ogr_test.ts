@@ -52,24 +52,25 @@ test('Input path', async (t) => {
 
     // To format conversions.
     {file: 'sample.json', success: true, out: 'csv'},
-    // {file: 'sample.json', success: true, out: 'dgn'},
-    // {file: 'sample.json', success: true, out: 'dxf'},
+    {file: 'sample.json', success: true, out: 'dgn'},
+    {file: 'sample.json', success: true, out: 'dxf'},
     // {file: 'sample.json', success: true, out: 'esri shapefile'},
     // {file: 'sample.json', success: true, out: 'flatgeobuf'},
-    // {file: 'sample.json', success: true, out: 'geoconcept'},
+    {file: 'sample.json', success: true, out: 'geoconcept'},
+    {file: 'sample.json', success: true, out: 'geojson'},
     {file: 'sample.json', success: true, out: 'geojsonseq'},
     {file: 'sample.json', success: true, out: 'georss'},
     {file: 'sample.json', success: true, out: 'gml'},
     {file: 'sample.json', success: true, out: 'gmt'},
-    // {file: 'sample.json', success: true, out: 'gpkg'},
+    {file: 'sample.json', success: true, out: 'gpkg'},
     {file: 'sample.json', success: true, out: 'gpx'},
     {file: 'sample.json', success: true, out: 'jml'},
     {file: 'sample.json', success: true, out: 'kml'},
     {file: 'sample.json', success: true, out: 'mapml'},
-    // {file: 'sample.json', success: true, out: 'ods'},
+    {file: 'sample.json', success: true, out: 'ods'},
     {file: 'sample.json', success: true, out: 'pdf'},
     {file: 'sample.json', success: true, out: 'vdv'},
-    // {file: 'sample.json', success: true, out: 'xlsx'},
+    {file: 'sample.json', success: true, out: 'xlsx'},
   ]
 
   for (let tt of table) {
@@ -79,11 +80,10 @@ test('Input path', async (t) => {
       if (!tt.out) {
         t.equal(res.data && res.data.type, 'FeatureCollection')
       } else {
-        console.log(res.text)
-        t.ok(res.text)
+        t.ok(res.text || res.stream, res.cmd)
       }
+      t.ok(tt.success)
     } catch (err) {
-      console.log(err)
       t.notOk(tt.success)
     }
   }

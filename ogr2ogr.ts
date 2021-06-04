@@ -1,6 +1,7 @@
 import {Stream, Readable} from 'stream'
 import {extname} from 'path'
 import {execFile} from 'child_process'
+import {createReadStream} from 'fs'
 // import {tmpdir} from 'os'
 // import {join} from 'path'
 //
@@ -9,7 +10,7 @@ type RunOutput = {stdout: string; stderr: string}
 
 type Input = string | JSONLike | Stream
 interface Result {
-  command: string
+  cmd: string
   text: string
   data?: JSONLike
   stream?: Readable
@@ -20,7 +21,8 @@ interface Options {
   format?: string
 }
 
-// const stdoutRe = /csv|gmt|gpx|geojson|esrijson|vdv|georss|kml|gml|mapml|pdf|wasp/i
+// Known /vsistdout/ support.
+const stdoutRe = /csv|geojson|georss|gml|gmt|gpx|jml|kml|mapml|pdf|vdv/i
 
 class Ogr2ogr implements PromiseLike<Result> {
   private inputStream?: Readable
@@ -30,8 +32,10 @@ class Ogr2ogr implements PromiseLike<Result> {
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = '/vsistdin/'
-    this.outputPath = '/vsistdout/'
     this.outputFormat = opts.format || 'GeoJSON'
+    this.outputPath = stdoutRe.test(this.outputFormat)
+      ? '/vsistdout/'
+      : 'out.' + this.outputFormat.toLowerCase()
 
     if (input instanceof Readable) {
       this.inputStream = input
@@ -93,7 +97,6 @@ class Ogr2ogr implements PromiseLike<Result> {
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
       let proc = execFile(command, args, (err, stdout, stderr) => {
-        console.log(...proc.spawnargs, proc.exitCode)
         if (err) rej(err)
         res({stdout, stderr})
       })
@@ -101,7 +104,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     })
 
     let res: Result = {
-      command: command + args.join(' '),
+      cmd: command + args.join(' '),
       text: stdout,
       details: stderr,
     }
@@ -112,6 +115,10 @@ class Ogr2ogr implements PromiseLike<Result> {
       } catch (err) {
         // ignore error
       }
+    }
+
+    if (this.outputPath !== '/vsistdout/') {
+      res.stream = createReadStream(this.outputPath)
     }
 
     return res
