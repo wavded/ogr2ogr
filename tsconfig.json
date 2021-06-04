@@ -9,9 +9,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "declaration": true,
     "outDir": "./dist",
+    "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "public", "dist"]
+  "exclude": ["node_modules", "dist"]
 }

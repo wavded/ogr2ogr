@@ -15,12 +15,15 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "scripts": {
+    "prepublish": "tsc",
+    "build": "tsc",
     "test": "nyc ts-node node_modules/.bin/blue-tape \"**/*_test.ts\"",
     "lint": "tsc --noEmit && eslint --ext ts .",
     "fmt": "prettier --write \"**/*.{html,js,json,ts,md}\"",
     "fmt-check": "prettier --check \"**/*.{html,js,json,ts,md}\""
   },
-  "main": "./index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/archiver": "^5.1.0",
     "@types/blue-tape": "^0.1.33",

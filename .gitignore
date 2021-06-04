@@ -2,11 +2,8 @@ node_modules
 npm_debug.log
 ogr_*
 .DS_Store
-test.tap
-.tern-port
 coverage
-test.tap
 .nyc_output
 yarn.lock
 testdata/sample.no-shx.shx
-testdata/output/**
+dist
