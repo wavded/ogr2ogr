@@ -1,18 +1,15 @@
 import test from 'blue-tape'
 import ogr2ogr from './ogr2ogr'
 import {createWriteStream, writeFileSync} from 'fs'
-// import {Buffer} from 'buffer'
-// import {execSync} from 'child_process'
 
 let dir = __dirname + '/testdata/'
 
-// console.log(execSync('ogrinfo --formats').toString())
-
-test('Input path', async (t) => {
+test(async (t) => {
   interface TT {
     file?: string
     url?: string
     out?: string
+    opts?: string[]
     success: boolean
   }
   let table: TT[] = [
@@ -31,8 +28,6 @@ test('Input path', async (t) => {
     {file: 'sample.empty.zip', success: false},
     {file: 'sample.000', success: true},
     {file: 'sample.csv', success: true},
-    {file: 'sample.geom.csv', success: true},
-    {file: 'sample.no-geom.csv', success: true},
     {file: 'sample.dbf', success: true},
     {file: 'sample.dgn', success: true},
     {file: 'sample.dxf', success: true},
@@ -46,14 +41,23 @@ test('Input path', async (t) => {
     {file: 'sample.kml', success: true},
     {file: 'sample.kmz', success: true},
     {file: 'sample.cryllic.kml', success: true},
-    // {file: 'sample.lonely.shp', success: true},
     {file: 'sample.map.zip', success: true},
     {file: 'sample.rss', success: true},
     {file: 'sample.rti.zip', out: 'dxf', success: true},
     {file: 'sample.shp', success: true},
     {file: 'sample.shp.zip', success: true},
-    // {file: 'sample.vrt.zip', success: true},
-    {file: 'simple.shp.zip', success: true},
+
+    // Using custom options.
+    {
+      file: 'sample.no-shx.shp',
+      opts: ['--config', 'SHAPE_RESTORE_SHX', 'TRUE'],
+      success: true,
+    },
+    {
+      file: 'sample.geom.csv',
+      opts: ['-oo', 'GEOM_POSSIBLE_NAMES=the_geom'],
+      success: true,
+    },
 
     // // To format conversions.
     {file: 'sample.json', success: true, out: 'csv'},
@@ -82,7 +86,7 @@ test('Input path', async (t) => {
   for (let tt of table) {
     try {
       let path = tt.url ? tt.url : dir + tt.file
-      let res = await ogr2ogr(path, {format: tt.out})
+      let res = await ogr2ogr(path, {format: tt.out, options: tt.opts})
       if (!tt.out) {
         t.equal(res.data && res.data.type, 'FeatureCollection', res.cmd)
       } else {

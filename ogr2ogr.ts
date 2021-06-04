@@ -21,6 +21,7 @@ interface Result {
 type Callback = (err: Error | null, res?: Result) => void
 interface Options {
   format?: string
+  options?: string[]
 }
 
 // Known /vsistdout/ support.
@@ -36,10 +37,12 @@ class Ogr2ogr implements PromiseLike<Result> {
   private outputPath: string
   private outputFormat: string
   private outputExt: string
+  private customOptions?: string[]
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
     this.outputFormat = opts.format || 'GeoJSON'
+    this.customOptions = opts.options
 
     let {path, ext} = this.newOutputPath(this.outputFormat)
     this.outputPath = path
@@ -133,6 +136,7 @@ class Ogr2ogr implements PromiseLike<Result> {
       this.outputPath,
       this.inputPath,
     ]
+    if (this.customOptions) args.push(...this.customOptions)
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
       let proc = execFile(command, args, (err, stdout, stderr) => {

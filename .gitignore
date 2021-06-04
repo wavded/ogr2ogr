@@ -8,4 +8,5 @@ coverage
 test.tap
 .nyc_output
 yarn.lock
+testdata/sample.no-shx.shx
 testdata/output/**
