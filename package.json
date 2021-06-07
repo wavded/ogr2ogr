@@ -14,6 +14,8 @@
     "url": "http://github.com/wavded/ogr2ogr.git"
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "tsc",
     "build": "tsc",
@@ -22,8 +24,9 @@
     "fmt": "prettier --write \"**/*.{html,js,json,ts,md}\"",
     "fmt-check": "prettier --check \"**/*.{html,js,json,ts,md}\""
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "dependencies": {
+    "archiver": "^5.3.0"
+  },
   "devDependencies": {
     "@types/archiver": "^5.1.0",
     "@types/blue-tape": "^0.1.33",
@@ -41,8 +44,5 @@
   },
   "engines": {
     "node": ">=12"
-  },
-  "dependencies": {
-    "archiver": "^5.3.0"
   }
 }

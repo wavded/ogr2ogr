@@ -4,7 +4,6 @@
   "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
@@ -15,19 +14,9 @@
   "parserOptions": {
     "sourceType": "module",
     "project": "./tsconfig.json",
-    "ecmaVersion": 8
+    "ecmaVersion": 2019
   },
   "rules": {
-    "no-console": 0,
-    "prefer-const": 0,
-    "prefer-object-spread": 2,
-    "@typescript-eslint/no-empty-function": 0,
-    "@typescript-eslint/ban-ts-comment": 0,
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0,
-    "@typescript-eslint/explicit-member-accessibility": [
-      2,
-      {"accessibility": "no-public"}
-    ]
+    "prefer-const": 0
   }
 }

@@ -192,6 +192,6 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 }
 
-export default function ogr2ogr(input: Input, opts?: Options) {
+export default function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
   return new Ogr2ogr(input, opts)
 }
