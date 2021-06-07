@@ -2,7 +2,7 @@ import test from 'blue-tape'
 import ogr2ogr from './'
 import {createWriteStream, writeFileSync, statSync} from 'fs'
 
-let dir = __dirname + '/testdata/'
+let dir = __dirname + '/testdata'
 
 test(async (t) => {
   interface TT {
