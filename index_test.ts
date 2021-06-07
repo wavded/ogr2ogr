@@ -109,13 +109,10 @@ test(async (t) => {
         t.ok(res.text || res.stream, res.cmd)
         let fn = dir + 'output/r_' + tt.out + res.extname
 
-        // Node 16 GH actions currently has an issue writing out test files.
-        if (process.versions.node.split('.')[0] !== '16') {
-          if (res.stream) {
-            res.stream.pipe(createWriteStream(fn))
-          } else {
-            writeFileSync(fn, res.text)
-          }
+        if (res.stream) {
+          res.stream.pipe(createWriteStream(fn))
+        } else {
+          writeFileSync(fn, res.text)
         }
       }
       t.ok(tt.success)
