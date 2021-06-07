@@ -20,9 +20,11 @@ interface Result {
 }
 type Callback = (err: Error | null, res?: Result) => void
 interface Options {
+  command?: string
   format?: string
   options?: string[]
   destination?: string
+  env?: Record<string, string>
 }
 
 // Known /vsistdout/ support.
@@ -38,14 +40,18 @@ class Ogr2ogr implements PromiseLike<Result> {
   private outputPath: string
   private outputFormat: string
   private outputExt: string
+  private customCommand?: string
   private customOptions?: string[]
   private customDestination?: string
+  private customEnv: Record<string, string>
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
-    this.outputFormat = opts.format || 'GeoJSON'
+    this.outputFormat = opts.format ?? 'GeoJSON'
+    this.customCommand = opts.command
     this.customOptions = opts.options
     this.customDestination = opts.destination
+    this.customEnv = opts.env ?? {}
 
     let {path, ext} = this.newOutputPath(this.outputFormat)
     this.outputPath = path
@@ -131,7 +137,7 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 
   private async run() {
-    let command = 'ogr2ogr'
+    let command = this.customCommand ?? 'ogr2ogr'
     let args = [
       '-f',
       this.outputFormat,
@@ -142,10 +148,15 @@ class Ogr2ogr implements PromiseLike<Result> {
     if (this.customOptions) args.push(...this.customOptions)
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
-      let proc = execFile(command, args, (err, stdout, stderr) => {
-        if (err) rej(err)
-        res({stdout, stderr})
-      })
+      let proc = execFile(
+        command,
+        args,
+        {env: this.customEnv},
+        (err, stdout, stderr) => {
+          if (err) rej(err)
+          res({stdout, stderr})
+        }
+      )
       if (this.inputStream && proc.stdin) this.inputStream.pipe(proc.stdin)
     })
 

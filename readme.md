@@ -17,10 +17,10 @@ npm install ogr2ogr
 ogr2ogr takes either a path, a stream, or a GeoJSON object. The result of the transformation can be consumed via callback or stream:
 
 ```javascript
-var ogr2ogr = require('ogr2ogr')
-var ogr = ogr2ogr('/path/to/spatial/file')
+const ogr2ogr = require('ogr2ogr')
+let ogr = ogr2ogr('/path/to/spatial/file')
 
-ogr.exec(function (er, data) {
+ogr.exec(function (er, res) {
   if (er) console.error(er)
   console.log(data)
 })
@@ -32,7 +32,7 @@ ogr2.stream().pipe(writeStream)
 or awaited as a promise
 
 ```javascript
-var data = await ogr2ogr('/path/to/another/spatial/file').promise()
+var res = await ogr2ogr('/path/to/another/spatial/file')
 console.log(data)
 ```
 
