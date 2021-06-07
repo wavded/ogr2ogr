@@ -17,6 +17,7 @@ interface Result {
   stream?: Readable
   extname?: string
   details: string
+  timeout?: number
 }
 type Callback = (err: Error | null, res?: Result) => void
 interface Options {
@@ -25,6 +26,7 @@ interface Options {
   options?: string[]
   destination?: string
   env?: Record<string, string>
+  timeout?: number
 }
 
 // Known /vsistdout/ support.
@@ -43,7 +45,8 @@ class Ogr2ogr implements PromiseLike<Result> {
   private customCommand?: string
   private customOptions?: string[]
   private customDestination?: string
-  private customEnv: Record<string, string>
+  private customEnv?: Record<string, string>
+  private timeout?: number
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
@@ -51,7 +54,8 @@ class Ogr2ogr implements PromiseLike<Result> {
     this.customCommand = opts.command
     this.customOptions = opts.options
     this.customDestination = opts.destination
-    this.customEnv = opts.env ?? {}
+    this.customEnv = opts.env
+    this.timeout = opts.timeout
 
     let {path, ext} = this.newOutputPath(this.outputFormat)
     this.outputPath = path
@@ -113,7 +117,6 @@ class Ogr2ogr implements PromiseLike<Result> {
     }
 
     let path = join(tmpdir(), '/ogr_' + uniq++)
-    // let path = './ogr_' + uniq++
 
     switch (f.toLowerCase()) {
       case 'esri shapefile':
@@ -146,12 +149,14 @@ class Ogr2ogr implements PromiseLike<Result> {
       this.inputPath,
     ]
     if (this.customOptions) args.push(...this.customOptions)
+    let env = this.customEnv ? {...process.env, ...this.customEnv} : undefined
+    let timeout = this.timeout ?? 0
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
       let proc = execFile(
         command,
         args,
-        {env: this.customEnv},
+        {env, timeout},
         (err, stdout, stderr) => {
           if (err) rej(err)
           res({stdout, stderr})
