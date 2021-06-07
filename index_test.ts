@@ -2,7 +2,7 @@ import test from 'blue-tape'
 import ogr2ogr from './'
 import {createWriteStream, writeFileSync, statSync} from 'fs'
 
-let dir = __dirname + '/testdata'
+let dir = __dirname + '/testdata/'
 
 test(async (t) => {
   interface TT {
@@ -107,7 +107,7 @@ test(async (t) => {
         t.equal(res.data && res.data.type, 'FeatureCollection', res.cmd)
       } else {
         t.ok(res.text || res.stream, res.cmd)
-        let fn = dir + '/output/r_' + tt.out + res.extname
+        let fn = dir + 'output/r_' + tt.out + res.extname
 
         if (res.stream) {
           res.stream.pipe(createWriteStream(fn))
