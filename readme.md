@@ -1,42 +1,60 @@
 ![Build Status](https://github.com/wavded/ogr2ogr/workflows/build/badge.svg?branch=master) [![NPM](https://img.shields.io/npm/v/ogr2ogr.svg)](https://npmjs.com/package/ogr2ogr) ![NPM Downloads](https://img.shields.io/npm/dt/ogr2ogr.svg)
 
-ogr2ogr enables file conversion and re-projection of spatial data through the use of ogr2ogr (gdal) tool
+ogr2ogr wraps the `ogr2ogr` GDAL tool to enable file conversion and re-projection of spatial data in simplified friendly API.
 
-# Requirements
+## Installation
 
-ogr2ogr requires the command line tool _ogr2ogr_ - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries). We recommended using the latest stable version.
+1. [Install GDAL tools][1] (includes the `ogr2ogr` command line tool)
 
-# Installation
+2. Install package:
 
-```
+```sh
 npm install ogr2ogr
 ```
 
-# Usage
+## Usage
 
-ogr2ogr takes either a path, a stream, or a GeoJSON object. The result of the transformation can be consumed via callback or stream:
+ogr2ogr takes either a path, a stream, or a [GeoJSON][2] object. The result of the transformation will depend on the format returned.
 
 ```javascript
 const ogr2ogr = require('ogr2ogr')
-let ogr = ogr2ogr('/path/to/spatial/file')
 
-ogr.exec(function (er, res) {
-  if (er) console.error(er)
-  console.log(data)
-})
-
-var ogr2 = ogr2ogr('/path/to/another/spatial/file')
-ogr2.stream().pipe(writeStream)
+(async() {
+  // By default any input converts to GeoJSON.
+  let out = await ogr2ogr('/path/to/spatial/file')
+  console.log(out.data)
+})()
 ```
 
-or awaited as a promise
+## API
 
-```javascript
-var res = await ogr2ogr('/path/to/another/spatial/file')
-console.log(data)
-```
+### ogr2ogr(input, options?) -> output
 
-See `/examples` for usage examples and `/test/api.js`.
+The **`input`** may be one of:
+
+- A path (`string`). This includes file paths and network paths including HTTP endpoints.
+- A `ReadableStream`. An `inputFormat` should be supplied if something other than GeoJSON.
+- A [GeoJSON][2] object.
+
+The following **`options`** are available (none required):
+
+- `format` - Output format (default: `GeoJSON`)
+- `timeout` - Timeout before command forcibly terminated (default: `0`)
+- `options` - Custom ogr2ogr arguments (e.g. `['--config', 'SHAPE_RESTORE_SHX', 'TRUE']`)
+- `env` - Custom environmental variables (e.g. `{ATTRIBUTES_SKIP: 'YES'}`)
+- `destination` - Select another output than the **output** object (e.g. useful for writing to databases).
+
+The **`output`** object has the following properties:
+
+- `cmd` - The `ogr2ogr` command executed (useful for debugging).
+- `text` - Text output from drivers that support returning text (like GeoRSS or KML)
+- `data` - Parsed [GeoJSON][2] output if exists.
+- `stream` - A `ReadableStream` of the output. Used for drivers that do not support returning text.
+  - If a driver returns multiple files (like `ESRI Shapefile`), this will be a zip stream containing all the data.
+- `extname` - The file extension of the data returned.
+- `details` - Any text printed to `STDERR`. This includes any warnings reported by ogr2ogr when it ran.
+
+## Tips and tricks
 
 # Configuring the base ogr2ogr command
 
@@ -146,14 +164,5 @@ geojson.pipe(fs.createWriteStream('/lonely.json'))
 
 **Caveat**: ogr2ogr will do its best to infer the corresponding `shx`. However, there's no guarantee it will success.
 
-# License
-
-(The MIT License)
-
-Copyright (c) 2021 Marc Harter <wavded@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+[1]: http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries
+[2]: https://geojson.org

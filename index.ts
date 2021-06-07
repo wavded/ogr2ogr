@@ -17,7 +17,6 @@ interface Result {
   stream?: Readable
   extname?: string
   details: string
-  timeout?: number
 }
 type Callback = (err: Error | null, res?: Result) => void
 interface Options {
