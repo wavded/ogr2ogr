@@ -1,0 +1,92 @@
+<mapml>
+  <head />
+  <body>
+    <extent units="WGS84">
+      <input name="xmin" type="location" units="gcrs" axis="longitude" position="top-left" value="100.00000000" />
+      <input name="ymin" type="location" units="gcrs" axis="latitude" position="bottom-right" value="0.00000000" />
+      <input name="xmax" type="location" units="gcrs" axis="longitude" position="bottom-right" value="105.00000000" />
+      <input name="ymax" type="location" units="gcrs" axis="latitude" position="top-left" value="1.00000000" />
+      <input name="projection" type="hidden" value="WGS84" />
+    </extent>
+    <feature id="sample.1" class="sample">
+      <properties>
+        <div class="table-container" aria-labelledby="caption-sample.1">
+          <table>
+            <caption id="caption-sample.1">Feature properties</caption>
+            <tbody>
+              <tr>
+                <th role="columnheader" scope="col">Property name</th>
+                <th role="columnheader" scope="col">Property value</th>
+              </tr>
+              <tr>
+                <th scope="row">prop0</th>
+                <td itemprop="prop0">value0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </properties>
+      <geometry>
+        <point>
+          <coordinates>102.00000000 0.50000000</coordinates>
+        </point>
+      </geometry>
+    </feature>
+    <feature id="sample.2" class="sample">
+      <properties>
+        <div class="table-container" aria-labelledby="caption-sample.2">
+          <table>
+            <caption id="caption-sample.2">Feature properties</caption>
+            <tbody>
+              <tr>
+                <th role="columnheader" scope="col">Property name</th>
+                <th role="columnheader" scope="col">Property value</th>
+              </tr>
+              <tr>
+                <th scope="row">prop0</th>
+                <td itemprop="prop0">value0</td>
+              </tr>
+              <tr>
+                <th scope="row">prop1</th>
+                <td itemprop="prop1">0.0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </properties>
+      <geometry>
+        <linestring>
+          <coordinates>102.00000000 0.00000000 103.00000000 1.00000000 104.00000000 0.00000000 105.00000000 1.00000000</coordinates>
+        </linestring>
+      </geometry>
+    </feature>
+    <feature id="sample.3" class="sample">
+      <properties>
+        <div class="table-container" aria-labelledby="caption-sample.3">
+          <table>
+            <caption id="caption-sample.3">Feature properties</caption>
+            <tbody>
+              <tr>
+                <th role="columnheader" scope="col">Property name</th>
+                <th role="columnheader" scope="col">Property value</th>
+              </tr>
+              <tr>
+                <th scope="row">prop0</th>
+                <td itemprop="prop0">value0</td>
+              </tr>
+              <tr>
+                <th scope="row">prop1</th>
+                <td itemprop="prop1">{ "this": "that" }</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </properties>
+      <geometry>
+        <polygon>
+          <coordinates>100.00000000 0.00000000 101.00000000 0.00000000 101.00000000 1.00000000 100.00000000 1.00000000 100.00000000 0.00000000</coordinates>
+        </polygon>
+      </geometry>
+    </feature>
+  </body>
+</mapml>

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<JCSDataFile xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance" >
+<JCSGMLInputTemplate>
+<CollectionElement>featureCollection</CollectionElement>
+<FeatureElement>feature</FeatureElement>
+<GeometryElement>geometry</GeometryElement>
+<CRSElement>boundedBy</CRSElement>
+<ColumnDefinitions>
+     <column>
+          <name>prop0</name>
+          <type>STRING</type>
+          <valueElement elementName="property" attributeName="name" attributeValue="prop0"/>
+          <valueLocation position="body"/>
+     </column>
+     <column>
+          <name>prop1</name>
+          <type>STRING</type>
+          <valueElement elementName="property" attributeName="name" attributeValue="prop1"/>
+          <valueLocation position="body"/>
+     </column>
+     <column>
+          <name>R_G_B</name>
+          <type>STRING</type>
+          <valueElement elementName="property" attributeName="name" attributeValue="R_G_B"/>
+          <valueLocation position="body"/>
+     </column>
+</ColumnDefinitions>
+</JCSGMLInputTemplate>
+<featureCollection>
+  <gml:boundedBy>
+    <gml:Box srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
+      <gml:coordinates decimal="." cs="," ts=" ">0.00,0.00 -1.00,-1.00</gml:coordinates>
+    </gml:Box>
+  </gml:boundedBy>
+     <feature>
+          <geometry>
+                <gml:Point srsName="EPSG:4326"><gml:coordinates>102.0,0.5</gml:coordinates></gml:Point>
+          </geometry>
+          <property name="prop0">value0</property>
+          <property name="prop1"></property>
+          <property name="R_G_B"></property>
+     </feature>
+     <feature>
+          <geometry>
+                <gml:LineString srsName="EPSG:4326"><gml:coordinates>102,0 103,1 104,0 105,1</gml:coordinates></gml:LineString>
+          </geometry>
+          <property name="prop0">value0</property>
+          <property name="prop1">0.0</property>
+          <property name="R_G_B"></property>
+     </feature>
+     <feature>
+          <geometry>
+                <gml:Polygon srsName="EPSG:4326"><gml:outerBoundaryIs><gml:LinearRing><gml:coordinates>100,0 101,0 101,1 100,1 100,0</gml:coordinates></gml:LinearRing></gml:outerBoundaryIs></gml:Polygon>
+          </geometry>
+          <property name="prop0">value0</property>
+          <property name="prop1">{ &quot;this&quot;: &quot;that&quot; }</property>
+          <property name="R_G_B"></property>
+     </feature>
+</featureCollection>
+</JCSDataFile>
