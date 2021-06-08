@@ -1,6 +1,12 @@
 import test from 'blue-tape'
 import ogr2ogr from './'
-import {createWriteStream, writeFileSync, statSync} from 'fs'
+import {
+  createWriteStream,
+  createReadStream,
+  writeFileSync,
+  statSync,
+  ReadStream,
+} from 'fs'
 
 let dir = __dirname + '/testdata/'
 
@@ -11,6 +17,7 @@ test(async (t) => {
     out?: string
     opts?: string[]
     dest?: string
+    stream?: boolean
     success: boolean
   }
   let table: TT[] = [
@@ -83,6 +90,19 @@ test(async (t) => {
     {file: 'sample.json', success: true, out: 'vdv'},
     {file: 'sample.json', success: true, out: 'xlsx'},
 
+    // Stream conversions.
+    {file: 'sample.csv', stream: true, success: false},
+    {file: 'sample.json', stream: true, success: true},
+    {file: 'sample.rss', stream: true, success: true},
+    {file: 'sample.gml', stream: true, success: true},
+    {file: 'sample.gmt', stream: true, success: true},
+    {file: 'sample.gpx', stream: true, success: true},
+    {file: 'sample.jml', stream: true, success: true},
+    {file: 'sample.kml', stream: true, success: true},
+    {file: 'sample.mapml', stream: true, success: true},
+    {file: 'sample.pdf', stream: true, success: true},
+    {file: 'sample.vdv', stream: true, success: true},
+
     // Custom destinations. (e.g. database)
     {
       file: 'sample.json',
@@ -93,8 +113,12 @@ test(async (t) => {
 
   for (let tt of table) {
     try {
-      let path = tt.url ? tt.url : dir + tt.file
-      let res = await ogr2ogr(path, {
+      let input: string | ReadStream = tt.url ? tt.url : dir + tt.file
+      if (tt.stream) {
+        input = createReadStream(input)
+      }
+
+      let res = await ogr2ogr(input, {
         format: tt.out,
         options: tt.opts,
         destination: tt.dest,
@@ -122,3 +146,20 @@ test(async (t) => {
     }
   }
 })
+
+// test(async (t) => {
+//   let url =
+//     'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss'
+
+//   let out = await ogr2ogr(url)
+//   let geojson = out.data
+//   if (!geojson) return t.fail()
+
+//   out = await ogr2ogr(geojson, {format: 'ESRI Shapefile'})
+//   let rstream = out.stream
+//   if (!rstream) return t.fail()
+
+//   out = await ogr2ogr(rstream, {format: 'KML'})
+//   console.log(out.text)
+//   t.pass()
+// })

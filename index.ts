@@ -89,6 +89,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     switch (ext) {
       case '.zip':
       case '.kmz':
+      case '.shz':
         path = '/vsizip/'
         break
       case '.gz':
@@ -119,6 +120,8 @@ class Ogr2ogr implements PromiseLike<Result> {
 
     switch (f.toLowerCase()) {
       case 'esri shapefile':
+        path += '.shz'
+        break
       case 'mapinfo file':
       case 'flatgeobuf':
         ext = '.zip'
