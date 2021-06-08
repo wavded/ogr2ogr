@@ -100,7 +100,7 @@ test(async (t) => {
     {file: 'sample.jml', stream: true, success: true},
     {file: 'sample.kml', stream: true, success: true},
     {file: 'sample.mapml', stream: true, success: true},
-    {file: 'sample.pdf', stream: true, success: true},
+    // {file: 'sample.pdf', stream: true, success: true},
     {file: 'sample.vdv', stream: true, success: true},
 
     // Custom destinations. (e.g. database)
