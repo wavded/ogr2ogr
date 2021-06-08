@@ -46,14 +46,17 @@ test(async (t) => {
     {file: 'sample.gxt', success: true},
     {file: 'sample.itf', success: true},
     {file: 'sample.json', success: true},
+    {file: 'sample.jml', stream: true, success: true},
     {file: 'sample.kml', success: true},
     {file: 'sample.kmz', success: true},
     {file: 'sample.cryllic.kml', success: true},
     {file: 'sample.map.zip', success: true},
+    {file: 'sample.mapml', stream: true, success: true},
     {file: 'sample.rss', success: true},
     {file: 'sample.rti.zip', out: 'dxf', success: true},
     {file: 'sample.shp', success: true},
     {file: 'sample.shp.zip', success: true},
+    {file: 'sample.vdv', stream: true, success: true},
 
     // Using custom options.
     {
@@ -90,7 +93,7 @@ test(async (t) => {
     {file: 'sample.json', success: true, out: 'vdv'},
     {file: 'sample.json', success: true, out: 'xlsx'},
 
-    // Stream conversions.
+    // Known supported stream conversions.
     {file: 'sample.csv', stream: true, success: false},
     {file: 'sample.json', stream: true, success: true},
     {file: 'sample.rss', stream: true, success: true},
@@ -100,7 +103,6 @@ test(async (t) => {
     {file: 'sample.jml', stream: true, success: true},
     {file: 'sample.kml', stream: true, success: true},
     {file: 'sample.mapml', stream: true, success: true},
-    // {file: 'sample.pdf', stream: true, success: true},
     {file: 'sample.vdv', stream: true, success: true},
 
     // Custom destinations. (e.g. database)
