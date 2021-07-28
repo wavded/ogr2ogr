@@ -1,0 +1,15 @@
+mod; DD.MM.YYYY; HH:MM:SS; free
+src; "UNKNOWN"; "08.06.2021"; "13.29.07"
+chs; "ISO8859-1"
+ver; "1.4"
+ifv; "1.4"
+dve; "1.4"
+fft; ""
+tbl; sample
+atr; prop0; prop1
+frm; char[80]; char[80]
+rec; "value0"; NULL
+rec; "value0"; "0.0"
+rec; "value0"; "{ ""this"": ""that"" }"
+end; 3
+eof; 1
