@@ -41,7 +41,7 @@ ogr2ogr('/path/to/spatial/file').exec((err, {data}) => {
 
 ## Formats
 
-ogr2ogr has varying support for format input and output. Consult the particular driver you are interested in for more details. It is highly recommend to run the latest version of GDAL to get the best support. This project attempts to cast the widest net for support. Here are some notables:
+ogr2ogr has varying support for format input and output. Consult the particular [driver][3] you are interested in for more details. It is highly recommend to run the latest version of GDAL to get the best support. This project attempts to cast the widest net for support. Here are some notables:
 
 | Drivers                                               | Output   | Notes                                       |
 | ----------------------------------------------------- | -------- | ------------------------------------------- |
