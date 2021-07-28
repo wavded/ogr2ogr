@@ -1,5 +1,7 @@
 ![Build Status](https://github.com/wavded/ogr2ogr/workflows/build/badge.svg?branch=master) [![NPM](https://img.shields.io/npm/v/ogr2ogr.svg)](https://npmjs.com/package/ogr2ogr) ![NPM Downloads](https://img.shields.io/npm/dt/ogr2ogr.svg)
 
+Looking for V2 documentation? [Click here][9].
+
 ogr2ogr wraps the `ogr2ogr` GDAL tool to enable file conversion and re-projection of spatial data in simplified friendly API.
 
 ## Installation
@@ -124,3 +126,4 @@ ogr2ogr('/path/to/file.csv', {
 [6]: https://github.com/OSGeo/gdal/tree/master/gdal/docker
 [7]: https://trac.osgeo.org/gdal/wiki/ConfigOptions#CPL_DEBUG
 [8]: https://gdal.org/drivers/vector/csv.html#open-options
+[9]: https://github.com/wavded/ogr2ogr/tree/v2
