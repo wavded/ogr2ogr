@@ -19,24 +19,39 @@ ogr2ogr takes either a path, a stream, or a [GeoJSON][2] object. The result of t
 ```javascript
 const ogr2ogr = require('ogr2ogr')
 
+// Promise API
 (async() {
-  // By default any input converts to GeoJSON
-  let out = await ogr2ogr('/path/to/spatial/file')
-  let geojson = out.data
+  // Convert path to GeoJSON.
+  let {data} = await ogr2ogr('/path/to/spatial/file')
+  console.log(data)
 
-  // Convert GeoJSON to ESRI Shapefile format
-  out = await ogr2ogr(geojson, {format: 'ESRI Shapefile'})
-  let rstream = out.stream
+  // Convert GeoJSON object to ESRI Shapefile stream.
+  let {stream} = await ogr2ogr(data, {format: 'ESRI Shapefile'})
 
-  // Stream ESRI Shapefile, output KML
-  out = await ogr2ogr(rstream, {format: 'KML'})
-  console.log(out.text)
+  // Convert ESRI Shapefile stream to KML text.
+  let {text} = await ogr2ogr(stream, {format: 'KML'})
+  console.log(text)
 })()
+
+// Callback API
+ogr2ogr('/path/to/spatial/file').exec((err, {data}) => {
+  console.log(data)
+})
 ```
+
+## Formats
+
+ogr2ogr has varying support for format input and output. Consult the particular driver you are interested in for more details. It is highly recommend to run the latest version of GDAL to get the best support. This project attempts to cast the widest net for support. Here are some notables:
+
+| Drivers                                               | Output   | Notes                                       |
+| ----------------------------------------------------- | -------- | ------------------------------------------- |
+| GeoJSON                                               | `data`   | Default format returned when none specified |
+| CSV, GeoRSS, GML, GMT, GPX, JML, KML, MapML, PDF, VDV | `text`   | Drivers supporting `/vsidout/` return text  |
+| Other                                                 | `stream` | All other drivers return a file stream      |
 
 ## API
 
-### ogr2ogr(input, options?) -> output
+### ogr2ogr(input, options?) -> Promise\<output\>
 
 The **`input`** may be one of:
 
@@ -56,14 +71,18 @@ The following **`options`** are available (none required):
 The **`output`** object has the following properties:
 
 - `cmd` - The `ogr2ogr` command executed (useful for debugging).
-- `text` - Text output from [drivers][3] that support returning text (like GeoRSS or KML)
+- `text` - Text output from [drivers][3] that support `/vsistdout/` (see [formats](#formats) above)
 - `data` - Parsed [GeoJSON][2] output (used when `format` is `GeoJSON`)
-- `stream` - A `ReadableStream` of the output. Used for [drivers][3] that do not support returning text.
+- `stream` - A `ReadableStream` of the output. Used for [drivers][3] that do not support `/vsistdout/`.
   - If a driver generates more than one file (like `ESRI Shapefile`), this will be a zip stream containing all the data.
 - `extname` - The file extension of the data returned.
 - `details` - Any text printed to `STDERR`. This includes any warnings reported by ogr2ogr when it ran.
 
-## Community tips and tricks
+### ogr2ogr(input, options?).exec((err, output))
+
+The callback API supports the same options as above but in a NodeJS style callback format.
+
+## Tips and tricks
 
 Running `ogr2ogr` in a [Docker container][6]:
 
@@ -89,6 +108,14 @@ ogr2ogr('/path/to/file.shp', {
 })
 ```
 
+Parsing custom geometry fields in a CSV. Use [CSV driver options][8], like:
+
+```javascript
+ogr2ogr('/path/to/file.csv', {
+  options: ['-oo', 'GEOM_POSSIBLE_NAMES=the_geom'],
+})
+```
+
 [1]: https://gdal.org/download.html
 [2]: https://geojson.org
 [3]: https://gdal.org/drivers/vector/index.html
@@ -96,3 +123,4 @@ ogr2ogr('/path/to/file.shp', {
 [5]: https://gdal.org/drivers/vector/csv.html#open-options
 [6]: https://github.com/OSGeo/gdal/tree/master/gdal/docker
 [7]: https://trac.osgeo.org/gdal/wiki/ConfigOptions#CPL_DEBUG
+[8]: https://gdal.org/drivers/vector/csv.html#open-options
