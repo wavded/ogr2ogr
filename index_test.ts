@@ -1,12 +1,12 @@
 import test from 'blue-tape'
-import ogr2ogr from './'
 import {
-  createWriteStream,
   createReadStream,
-  writeFileSync,
-  statSync,
+  createWriteStream,
   ReadStream,
+  statSync,
+  writeFileSync,
 } from 'fs'
+import ogr2ogr from './'
 
 let dir = __dirname + '/testdata/'
 
