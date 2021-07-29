@@ -121,6 +121,14 @@ ogr2ogr('/path/to/file.csv', {
 })
 ```
 
+Re-project geometry:
+
+```javascript
+ogr2ogr('/path/to/file.shp', {
+  options: ['-t_srs', 'EPSG:4326'],
+})
+```
+
 [1]: https://gdal.org/download.html
 [2]: https://geojson.org
 [3]: https://gdal.org/drivers/vector/index.html

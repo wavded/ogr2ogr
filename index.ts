@@ -1,10 +1,9 @@
-import {Stream, Readable} from 'stream'
-import {extname} from 'path'
+import archiver from 'archiver'
 import {execFile} from 'child_process'
 import {createReadStream} from 'fs'
-import archiver from 'archiver'
 import {tmpdir} from 'os'
-import {join} from 'path'
+import {extname, join} from 'path'
+import {Readable, Stream} from 'stream'
 
 type JSONLike = Record<string, unknown>
 type RunOutput = {stdout: string; stderr: string}
@@ -121,6 +120,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     switch (f.toLowerCase()) {
       case 'esri shapefile':
         path += '.shz'
+        ext = '.shz'
         break
       case 'mapinfo file':
       case 'flatgeobuf':
