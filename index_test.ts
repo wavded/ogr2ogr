@@ -148,20 +148,3 @@ test(async (t) => {
     }
   }
 })
-
-// test(async (t) => {
-//   let url =
-//     'https://gist.github.com/wavded/7376428/raw/971548233e441615a426794c766223488492ddb9/test.georss'
-
-//   let out = await ogr2ogr(url)
-//   let geojson = out.data
-//   if (!geojson) return t.fail()
-
-//   out = await ogr2ogr(geojson, {format: 'ESRI Shapefile'})
-//   let rstream = out.stream
-//   if (!rstream) return t.fail()
-
-//   out = await ogr2ogr(rstream, {format: 'KML'})
-//   console.log(out.text)
-//   t.pass()
-// })
