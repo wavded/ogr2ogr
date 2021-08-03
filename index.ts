@@ -25,6 +25,7 @@ interface Options {
   destination?: string
   env?: Record<string, string>
   timeout?: number
+  maxBuffer?: number
 }
 
 // Known /vsistdout/ support.
@@ -44,7 +45,8 @@ class Ogr2ogr implements PromiseLike<Result> {
   private customOptions?: string[]
   private customDestination?: string
   private customEnv?: Record<string, string>
-  private timeout?: number
+  private timeout: number
+  private maxBuffer: number
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
@@ -53,7 +55,8 @@ class Ogr2ogr implements PromiseLike<Result> {
     this.customOptions = opts.options
     this.customDestination = opts.destination
     this.customEnv = opts.env
-    this.timeout = opts.timeout
+    this.timeout = opts.timeout ?? 0
+    this.maxBuffer = opts.maxBuffer ?? 1024 * 1024 * 50
 
     let {path, ext} = this.newOutputPath(this.outputFormat)
     this.outputPath = path
@@ -152,13 +155,12 @@ class Ogr2ogr implements PromiseLike<Result> {
     ]
     if (this.customOptions) args.push(...this.customOptions)
     let env = this.customEnv ? {...process.env, ...this.customEnv} : undefined
-    let timeout = this.timeout ?? 0
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
       let proc = execFile(
         command,
         args,
-        {env, timeout},
+        {env, timeout: this.timeout, maxBuffer: this.maxBuffer},
         (err, stdout, stderr) => {
           if (err) rej(err)
           res({stdout, stderr})
