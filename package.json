@@ -21,8 +21,8 @@
     "build": "tsc",
     "test": "nyc ts-node node_modules/.bin/blue-tape \"**/*_test.ts\"",
     "lint": "tsc --noEmit && eslint --ext ts .",
-    "fmt": "prettier --write \"**/*.{html,js,json,ts,md}\"",
-    "fmt-check": "prettier --check \"**/*.{html,js,json,ts,md}\""
+    "fmt": "prettier --write .",
+    "fmt-check": "prettier --check ."
   },
   "dependencies": {
     "archiver": "^5.3.0"
