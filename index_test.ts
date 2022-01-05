@@ -134,11 +134,6 @@ test(async (t) => {
       } else {
         t.ok(res.text || res.stream, res.cmd)
 
-        // Do not write out files when running in GitHub
-        if (process.env["GITHUB_ACTIONS"] === "true") {
-          continue
-        }
-
         let fn = dir + "output/r_" + tt.out + res.extname
         if (res.stream) {
           res.stream.pipe(createWriteStream(fn))
