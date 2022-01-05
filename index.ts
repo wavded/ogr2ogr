@@ -1,9 +1,9 @@
-import archiver from 'archiver'
-import {execFile} from 'child_process'
-import {createReadStream} from 'fs'
-import {tmpdir} from 'os'
-import {extname, join} from 'path'
-import {Readable, Stream} from 'stream'
+import archiver from "archiver"
+import {execFile} from "child_process"
+import {createReadStream} from "fs"
+import {tmpdir} from "os"
+import {extname, join} from "path"
+import {Readable, Stream} from "stream"
 
 type JSONLike = Record<string, unknown>
 type RunOutput = {stdout: string; stderr: string}
@@ -30,8 +30,8 @@ interface Options {
 
 // Known /vsistdout/ support.
 const stdoutRe = /csv|geojson|georss|gml|gmt|gpx|jml|kml|mapml|pdf|vdv/i
-const vsiStdIn = '/vsistdin/'
-const vsiStdOut = '/vsistdout/'
+const vsiStdIn = "/vsistdin/"
+const vsiStdOut = "/vsistdout/"
 
 let uniq = Date.now()
 
@@ -50,7 +50,7 @@ class Ogr2ogr implements PromiseLike<Result> {
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
-    this.outputFormat = opts.format ?? 'GeoJSON'
+    this.outputFormat = opts.format ?? "GeoJSON"
     this.customCommand = opts.command
     this.customOptions = opts.options
     this.customDestination = opts.destination
@@ -64,7 +64,7 @@ class Ogr2ogr implements PromiseLike<Result> {
 
     if (input instanceof Readable) {
       this.inputStream = input
-    } else if (typeof input === 'string') {
+    } else if (typeof input === "string") {
       this.inputPath = this.newInputPath(input)
     } else {
       this.inputStream = Readable.from([JSON.stringify(input)])
@@ -85,25 +85,25 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 
   private newInputPath(p: string): string {
-    let path = ''
+    let path = ""
     let ext = extname(p)
 
     switch (ext) {
-      case '.zip':
-      case '.kmz':
-      case '.shz':
-        path = '/vsizip/'
+      case ".zip":
+      case ".kmz":
+      case ".shz":
+        path = "/vsizip/"
         break
-      case '.gz':
-        path = '/vsigzip/'
+      case ".gz":
+        path = "/vsigzip/"
         break
-      case '.tar':
-        path = '/vsitar/'
+      case ".tar":
+        path = "/vsitar/"
         break
     }
 
     if (/^(http|ftp)/.test(p)) {
-      path += '/vsicurl/' + p
+      path += "/vsicurl/" + p
       return path
     }
 
@@ -112,22 +112,22 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 
   private newOutputPath(f: string) {
-    let ext = '.' + f.toLowerCase()
+    let ext = "." + f.toLowerCase()
 
     if (stdoutRe.test(this.outputFormat)) {
       return {path: vsiStdOut, ext}
     }
 
-    let path = join(tmpdir(), '/ogr_' + uniq++)
+    let path = join(tmpdir(), "/ogr_" + uniq++)
 
     switch (f.toLowerCase()) {
-      case 'esri shapefile':
-        path += '.shz'
-        ext = '.shz'
+      case "esri shapefile":
+        path += ".shz"
+        ext = ".shz"
         break
-      case 'mapinfo file':
-      case 'flatgeobuf':
-        ext = '.zip'
+      case "mapinfo file":
+      case "flatgeobuf":
+        ext = ".zip"
         break
       default:
         path += ext
@@ -137,19 +137,19 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 
   private createZipStream(p: string) {
-    let archive = archiver('zip')
+    let archive = archiver("zip")
     archive.directory(p, false)
-    archive.on('error', console.error)
+    archive.on("error", console.error)
     archive.finalize()
     return archive
   }
 
   private async run() {
-    let command = this.customCommand ?? 'ogr2ogr'
+    let command = this.customCommand ?? "ogr2ogr"
     let args = [
-      '-f',
+      "-f",
       this.outputFormat,
-      '-skipfailures',
+      "-skipfailures",
       this.customDestination || this.outputPath,
       this.inputPath,
     ]
@@ -170,7 +170,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     })
 
     let res: Result = {
-      cmd: command + args.join(' '),
+      cmd: command + args.join(" "),
       text: stdout,
       details: stderr,
       extname: this.outputExt,
@@ -185,7 +185,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     }
 
     if (!this.customDestination && this.outputPath !== vsiStdOut) {
-      if (this.outputExt === '.zip') {
+      if (this.outputExt === ".zip") {
         res.stream = this.createZipStream(this.outputPath)
       } else {
         res.stream = createReadStream(this.outputPath)
