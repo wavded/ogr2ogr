@@ -21,4 +21,4 @@ jobs:
       - run: npm install
       - run: npm run fmt-check
       - run: npm run lint
-      - run: sudo npm run test
+      - run: npm run test

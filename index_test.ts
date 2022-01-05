@@ -136,8 +136,10 @@ test(async (t) => {
         let fn = dir + "output/r_" + tt.out + res.extname
 
         if (res.stream) {
+          console.log("stream")
           res.stream.pipe(createWriteStream(fn))
         } else {
+          console.log("file")
           writeFileSync(fn, res.text)
         }
       }
