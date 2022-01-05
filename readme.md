@@ -93,40 +93,40 @@ The callback API supports the same options as above but in a NodeJS style callba
 Running `ogr2ogr` in a [Docker container][6]:
 
 ```javascript
-ogr2ogr('/home/.../path/to/spatial/file', {
-  command: 'docker run -v /home/:/home --rm osgeo/gdal ogr2ogr',
+ogr2ogr("/home/.../path/to/spatial/file", {
+  command: "docker run -v /home/:/home --rm osgeo/gdal ogr2ogr",
 })
 ```
 
 Converting an isolated `.shp` file:
 
 ```javascript
-ogr2ogr('/path/to/file.shp', {
-  options: ['--config', 'SHAPE_RESTORE_SHX', 'TRUE'],
+ogr2ogr("/path/to/file.shp", {
+  options: ["--config", "SHAPE_RESTORE_SHX", "TRUE"],
 })
 ```
 
 Getting more debug information by using the [`CPL_DEBUG`][7] option. Debug info added to `details` on the **`output`** object.
 
 ```javascript
-ogr2ogr('/path/to/file.shp', {
-  options: ['--config', 'CPL_DEBUG', 'TRUE'],
+ogr2ogr("/path/to/file.shp", {
+  options: ["--config", "CPL_DEBUG", "TRUE"],
 })
 ```
 
 Parsing custom geometry fields in a CSV. Use [CSV driver options][8], like:
 
 ```javascript
-ogr2ogr('/path/to/file.csv', {
-  options: ['-oo', 'GEOM_POSSIBLE_NAMES=the_geom'],
+ogr2ogr("/path/to/file.csv", {
+  options: ["-oo", "GEOM_POSSIBLE_NAMES=the_geom"],
 })
 ```
 
 Re-project geometry:
 
 ```javascript
-ogr2ogr('/path/to/file.shp', {
-  options: ['-t_srs', 'EPSG:4326'],
+ogr2ogr("/path/to/file.shp", {
+  options: ["-t_srs", "EPSG:4326"],
 })
 ```
 
