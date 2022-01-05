@@ -133,10 +133,10 @@ test(async (t) => {
         t.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
       } else {
         t.ok(res.text || res.stream, res.cmd)
+        console.log(process.env)
 
         // Do not write out files when running in GitHub
         if (process.env["GITHUB_ACTIONS"] === "true") {
-          console.log("skipping")
           continue
         }
 
