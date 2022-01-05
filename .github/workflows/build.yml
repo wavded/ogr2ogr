@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: osgeo/gdal:ubuntu-small-latest
-      options: --user root
     strategy:
       matrix:
         node: ["12", "14", "16"]
@@ -22,4 +21,4 @@ jobs:
       - run: npm install
       - run: npm run fmt-check
       - run: npm run lint
-      - run: npm run test
+      - run: sudo npm run test
