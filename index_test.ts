@@ -133,13 +133,17 @@ test(async (t) => {
         t.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
       } else {
         t.ok(res.text || res.stream, res.cmd)
-        let fn = dir + "output/r_" + tt.out + res.extname
 
+        // Do not write out files when running in GitHub
+        if (process.env["GITHUB_ACTIONS"] === "true") {
+          console.log("skipping")
+          continue
+        }
+
+        let fn = dir + "output/r_" + tt.out + res.extname
         if (res.stream) {
-          console.log("stream")
           res.stream.pipe(createWriteStream(fn))
         } else {
-          console.log("file")
           writeFileSync(fn, res.text)
         }
       }
