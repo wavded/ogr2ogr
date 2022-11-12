@@ -56,6 +56,7 @@ test(async (t) => {
     {file: "sample.rti.zip", out: "dxf", success: true},
     {file: "sample.shp", success: true},
     {file: "sample.shp.zip", success: true},
+    {file: "sample.large.shp.zip", success: true},
     {file: "sample.vdv", stream: true, success: true},
 
     // Using custom options.
@@ -124,6 +125,7 @@ test(async (t) => {
         format: tt.out,
         options: tt.opts,
         destination: tt.dest,
+        maxBuffer: 1024 * 1024 * 1024,
       })
 
       if (tt.dest) {
