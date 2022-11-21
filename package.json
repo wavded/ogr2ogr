@@ -14,15 +14,15 @@
     "url": "http://github.com/wavded/ogr2ogr.git"
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
-  "main": "dist/esm/index.js",
+  "main": "./dist/esm/index.js",
   "exports": {
     ".": {
-      "import": "dist/esm/index.js",
-      "require": "dist/cjs/index.js",
-      "default": "dist/esm/index.js"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
     }
   },
-  "types": "dist/esm/index.d.ts",
+  "types": "./dist/esm/index.d.ts",
   "scripts": {
     "prepublishOnly": "rm -rf dist && tsc & tsc --project tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
     "build": "npm run prepublishOnly",
