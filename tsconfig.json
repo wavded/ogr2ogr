@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "es2020",
+    "module": "commonjs",
     "isolatedModules": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -10,7 +10,7 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "declaration": true,
-    "outDir": "./dist/esm",
+    "outDir": "./dist/cjs",
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
