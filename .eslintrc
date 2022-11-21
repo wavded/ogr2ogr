@@ -14,7 +14,7 @@
   "parserOptions": {
     "sourceType": "module",
     "project": "./tsconfig.json",
-    "ecmaVersion": 2019
+    "ecmaVersion": 2020
   },
   "rules": {
     "prefer-const": 0
