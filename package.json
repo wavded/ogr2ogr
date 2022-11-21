@@ -14,11 +14,18 @@
     "url": "http://github.com/wavded/ogr2ogr.git"
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "dist/esm/index.js",
+      "require": "dist/cjs/index.js",
+      "default": "dist/esm/index.js"
+    }
+  },
+  "types": "dist/esm/index.d.ts",
   "scripts": {
-    "prepublishOnly": "tsc",
-    "build": "tsc",
+    "prepublishOnly": "rm -rf dist && tsc & tsc --project tsconfig.cjs.json",
+    "build": "rm -rf dist && tsc & tsc --project tsconfig.cjs.json",
     "test": "nyc ts-node node_modules/blue-tape/bin/blue-tape \"**/*_test.ts\"",
     "lint": "tsc --noEmit && eslint --ext ts .",
     "fmt": "prettier --write .",
