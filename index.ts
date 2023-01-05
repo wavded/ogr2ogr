@@ -170,7 +170,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     })
 
     let res: Result = {
-      cmd: command + args.join(" "),
+      cmd: [command, ...args].join(" "),
       text: stdout,
       details: stderr,
       extname: this.outputExt,
