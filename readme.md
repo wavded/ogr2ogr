@@ -67,7 +67,7 @@ The **`input`** may be one of:
 The following **`options`** are available (none required):
 
 - `format` - Output format (default: `GeoJSON`)
-- `timeout` - Timeout before command forcibly terminated (default: `0`)
+- `timeout` - Timeout, in milliseconds, before command forcibly terminated (default: `0`)
 - `maxBuffer` - Max output size in bytes for stdout/stderr (default: `1024 * 1024 * 50`)
 - `options` - Custom [ogr2ogr arguments][4] and [driver options][5] (e.g. `['--config', 'SHAPE_RESTORE_SHX', 'TRUE']`)
 - `env` - Custom environmental variables (e.g. `{ATTRIBUTES_SKIP: 'YES'}`)
