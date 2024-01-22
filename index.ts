@@ -79,7 +79,7 @@ class Ogr2ogr implements PromiseLike<Result> {
 
   then<TResult1 = Result, TResult2 = never>(
     onfulfilled?: (value: Result) => TResult1 | PromiseLike<TResult1>,
-    onrejected?: (reason: string) => TResult2 | PromiseLike<TResult2>
+    onrejected?: (reason: string) => TResult2 | PromiseLike<TResult2>,
   ): PromiseLike<TResult1 | TResult2> {
     return this.run().then(onfulfilled, onrejected)
   }
@@ -164,7 +164,7 @@ class Ogr2ogr implements PromiseLike<Result> {
         (err, stdout, stderr) => {
           if (err) rej(err)
           res({stdout, stderr})
-        }
+        },
       )
       if (this.inputStream && proc.stdin) this.inputStream.pipe(proc.stdin)
     })
