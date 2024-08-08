@@ -88,6 +88,17 @@ The **`output`** object has the following properties:
 
 The callback API supports the same options as above but in a NodeJS style callback format.
 
+### ogr2ogr.version() -> Promise\<string\>
+
+Retrieve the version of `ogr2ogr` that will be called by default by this library (same as calling `ogr2ogr --version` from command line).
+
+```javascript
+const version = await ogr2ogr.version()
+console.log(version)
+
+// GDAL X.X.X, released XXXX/XX/XX
+```
+
 ## Tips and tricks
 
 Running `ogr2ogr` in a [Docker container][6]:

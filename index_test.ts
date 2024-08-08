@@ -11,6 +11,9 @@ import ogr2ogr from "./"
 let dir = __dirname + "/testdata/"
 
 test(async (t) => {
+  const vers = await ogr2ogr.version()
+  t.match(vers, /^GDAL /)
+
   interface TT {
     file?: string
     url?: string
