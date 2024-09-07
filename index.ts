@@ -195,6 +195,18 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 }
 
-export default function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
+function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
   return new Ogr2ogr(input, opts)
 }
+
+ogr2ogr.version = async () => {
+  let vers = await new Promise<string>((res, rej) => {
+    execFile("ogr2ogr", ["--version"], {}, (err, stdout) => {
+      if (err) rej(err)
+      res(stdout)
+    })
+  })
+  return vers.trim()
+}
+
+export default ogr2ogr
