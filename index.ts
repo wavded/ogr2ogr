@@ -26,6 +26,7 @@ interface Options {
   env?: Record<string, string>
   timeout?: number
   maxBuffer?: number
+  skipFailures?: boolean
 }
 
 // Known /vsistdout/ support.
@@ -47,6 +48,7 @@ class Ogr2ogr implements PromiseLike<Result> {
   private customEnv?: Record<string, string>
   private timeout: number
   private maxBuffer: number
+  private skipFailures: boolean
 
   constructor(input: Input, opts: Options = {}) {
     this.inputPath = vsiStdIn
@@ -57,6 +59,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     this.customEnv = opts.env
     this.timeout = opts.timeout ?? 0
     this.maxBuffer = opts.maxBuffer ?? 1024 * 1024 * 50
+    this.skipFailures = opts.skipFailures ?? true
 
     let {path, ext} = this.newOutputPath(this.outputFormat)
     this.outputPath = path
@@ -146,13 +149,9 @@ class Ogr2ogr implements PromiseLike<Result> {
 
   private async run() {
     let command = this.customCommand ?? "ogr2ogr"
-    let args = [
-      "-f",
-      this.outputFormat,
-      "-skipfailures",
-      this.customDestination || this.outputPath,
-      this.inputPath,
-    ]
+    let args = ["-f", this.outputFormat]
+    if (this.skipFailures) args.push("-skipfailures")
+    args.push(this.customDestination || this.outputPath, this.inputPath)
     if (this.customOptions) args.push(...this.customOptions)
     let env = this.customEnv ? {...process.env, ...this.customEnv} : undefined
 
