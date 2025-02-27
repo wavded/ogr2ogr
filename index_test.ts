@@ -1,4 +1,3 @@
-import test from "blue-tape"
 import {
   createReadStream,
   createWriteStream,
@@ -6,13 +5,14 @@ import {
   statSync,
   writeFileSync,
 } from "fs"
+import {assert, test} from "vitest"
 import ogr2ogr from "./"
 
 let dir = __dirname + "/testdata/"
 
-test(async (t) => {
-  const vers = await ogr2ogr.version()
-  t.match(vers, /^GDAL /)
+test("ogr2ogr", async () => {
+  let vers = await ogr2ogr.version()
+  assert.match(vers, /^GDAL /)
 
   interface TT {
     file?: string
@@ -133,11 +133,11 @@ test(async (t) => {
 
       if (tt.dest) {
         statSync(tt.dest)
-        t.pass()
+        assert.ok(true)
       } else if (!tt.out) {
-        t.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
+        assert.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
       } else {
-        t.ok(res.text || res.stream, res.cmd)
+        assert(res.text || res.stream, res.cmd)
 
         let fn = dir + "output/r_" + tt.out + res.extname
         if (res.stream) {
@@ -146,10 +146,10 @@ test(async (t) => {
           writeFileSync(fn, res.text)
         }
       }
-      t.ok(tt.success)
+      assert(tt.success)
     } catch (err) {
       console.log(err)
-      t.notOk(tt.success)
+      assert.notOk(tt.success)
     }
   }
 })

@@ -93,7 +93,6 @@ class Ogr2ogr implements PromiseLike<Result> {
 
     switch (ext) {
       case ".zip":
-      case ".kmz":
       case ".shz":
         path = "/vsizip/"
         break
@@ -178,7 +177,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     if (/^geojson$/i.test(this.outputFormat)) {
       try {
         res.data = JSON.parse(stdout)
-      } catch (err) {
+      } catch (_err) {
         // ignore error
       }
     }
