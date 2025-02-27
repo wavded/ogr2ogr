@@ -139,7 +139,6 @@ test("ogr2ogr", async () => {
         assert.ok(true)
       } else if (!tt.out) {
         assert.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
-        console.log("res.data: %o", res.data)
       } else {
         assert(res.text || res.stream, res.cmd)
 

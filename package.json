@@ -33,7 +33,7 @@
   "scripts": {
     "prepublishOnly": "vite build",
     "build": "vite build",
-    "test": "vitest run --coverage",
+    "test": "vitest run --silent --coverage",
     "lint": "tsc --noEmit && eslint .",
     "fmt": "prettier --write .",
     "fmt-check": "prettier --check ."
