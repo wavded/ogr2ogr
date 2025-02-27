@@ -7,13 +7,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: "index.ts",
-      name: "connect-redis",
+      name: "ogr2ogr",
       formats: ["es", "cjs"],
     },
     emptyOutDir: true,
     minify: false,
     rollupOptions: {
-      external: ["express-session"],
+      external: ["ogr2ogr"],
       treeshake: false,
     },
     target: "node18",
@@ -24,7 +24,7 @@ export default defineConfig({
       rollupTypes: true,
       insertTypesEntry: true,
       afterBuild: () => {
-        copyFileSync("dist/connect-redis.d.ts", "dist/connect-redis.d.cts")
+        copyFileSync("dist/ogr2ogr.d.ts", "dist/ogr2ogr.d.cts")
       },
     }),
   ],
