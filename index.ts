@@ -21,6 +21,7 @@ type Callback = (err: Error | null, res?: Result) => void
 interface Options {
   command?: string
   format?: string
+  inputFormat?: string
   options?: string[]
   destination?: string
   env?: Record<string, string>
@@ -39,6 +40,7 @@ let uniq = Date.now()
 class Ogr2ogr implements PromiseLike<Result> {
   private inputStream?: Readable
   private inputPath: string
+  private inputFormat?: string
   private outputPath: string
   private outputFormat: string
   private outputExt: string
@@ -51,7 +53,9 @@ class Ogr2ogr implements PromiseLike<Result> {
   private skipFailures: boolean
 
   constructor(input: Input, opts: Options = {}) {
-    this.inputPath = vsiStdIn
+    this.inputPath = opts.inputFormat
+      ? opts.inputFormat + ":" + vsiStdIn
+      : vsiStdIn
     this.outputFormat = opts.format ?? "GeoJSON"
     this.customCommand = opts.command
     this.customOptions = opts.options
@@ -153,6 +157,9 @@ class Ogr2ogr implements PromiseLike<Result> {
     args.push(this.customDestination || this.outputPath, this.inputPath)
     if (this.customOptions) args.push(...this.customOptions)
     let env = this.customEnv ? {...process.env, ...this.customEnv} : undefined
+
+    console.log("command: %o", command)
+    console.log("args: %o", args)
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
       let proc = execFile(

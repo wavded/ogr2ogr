@@ -17,6 +17,7 @@ test("ogr2ogr", async () => {
   interface TT {
     file?: string
     url?: string
+    in?: string
     out?: string
     opts?: string[]
     dest?: string
@@ -98,7 +99,8 @@ test("ogr2ogr", async () => {
     {file: "sample.json", success: true, out: "xlsx"},
 
     // Known supported stream conversions.
-    {file: "sample.csv", stream: true, success: false},
+    {file: "sample.csv", stream: true, in: "csv", success: true},
+    {file: "sample.wkt.csv", stream: true, in: "csv", success: true},
     {file: "sample.json", stream: true, success: true},
     {file: "sample.rss", stream: true, success: true},
     {file: "sample.gml", stream: true, success: true},
@@ -125,6 +127,7 @@ test("ogr2ogr", async () => {
       }
 
       let res = await ogr2ogr(input, {
+        inputFormat: tt.in,
         format: tt.out,
         options: tt.opts,
         destination: tt.dest,
@@ -136,6 +139,7 @@ test("ogr2ogr", async () => {
         assert.ok(true)
       } else if (!tt.out) {
         assert.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
+        console.log("res.data: %o", res.data)
       } else {
         assert(res.text || res.stream, res.cmd)
 

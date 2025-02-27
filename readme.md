@@ -67,6 +67,7 @@ The **`input`** may be one of:
 The following **`options`** are available (none required):
 
 - `format` - Output format (default: `GeoJSON`)
+- `inputFormat` - Optional input stream format (e.g. `CSV`)
 - `timeout` - Timeout, in milliseconds, before command forcibly terminated (default: `0`)
 - `maxBuffer` - Max output size in bytes for stdout/stderr (default: `1024 * 1024 * 50`)
 - `skipFailures` - the `-skipfailures` switch is not included when false (default: true).
