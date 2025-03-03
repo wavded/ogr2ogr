@@ -60,6 +60,7 @@ test("ogr2ogr", async () => {
     {file: "sample.rti.zip", out: "dxf", success: true},
     {file: "sample.shp", success: true},
     {file: "sample.shp.zip", success: true},
+    {file: "sample.shz", success: true},
     {file: "sample.large.shp.zip", success: true},
     {file: "sample.vdv", stream: true, success: true},
 

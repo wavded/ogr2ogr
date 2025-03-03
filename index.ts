@@ -97,7 +97,6 @@ class Ogr2ogr implements PromiseLike<Result> {
 
     switch (ext) {
       case ".zip":
-      case ".shz":
         path = "/vsizip/"
         break
       case ".gz":
