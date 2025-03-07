@@ -1,6 +1,6 @@
 {
   "name": "ogr2ogr",
-  "version": "5.1.0",
+  "version": "6.0.0",
   "description": "ogr2ogr wrapper w/ multiple format support",
   "keywords": [
     "ogr2ogr",
@@ -14,44 +14,46 @@
     "url": "http://github.com/wavded/ogr2ogr.git"
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
-  "main": "./dist/esm/index.js",
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "default": "./dist/esm/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
-  "types": "./dist/esm/index.d.ts",
   "scripts": {
-    "prepublishOnly": "rm -rf dist && tsc & tsc --project tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
-    "build": "npm run prepublishOnly",
-    "test": "nyc ts-node node_modules/blue-tape/bin/blue-tape \"**/*_test.ts\"",
-    "lint": "tsc --noEmit && eslint --ext ts .",
+    "prepublishOnly": "pnpm build",
+    "build": "tsup index.ts --format esm,cjs --dts --clean",
+    "test": "vitest run --silent",
+    "lint": "tsc --noEmit && eslint .",
     "fmt": "prettier --write .",
     "fmt-check": "prettier --check ."
   },
   "dependencies": {
-    "archiver": "^6.0.1"
+    "archiver": "^7.0.1"
   },
   "devDependencies": {
-    "@types/archiver": "^6.0.2",
-    "@types/blue-tape": "^0.1.36",
-    "@types/geojson": "^7946.0.13",
-    "@types/node": "^20.11.5",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "blue-tape": "^1.0.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-prettier-config": "^1.0.1",
-    "nyc": "^15.1.0",
-    "prettier": "^3.2.4",
-    "prettier-plugin-organize-imports": "^3.2.4",
+    "@eslint/js": "^9.21.0",
+    "@types/archiver": "^6.0.3",
+    "@types/node": "^22.13.9",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "tsup": "^8.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
+    "vitest": "^3.0.8"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }

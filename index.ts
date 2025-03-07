@@ -21,6 +21,7 @@ type Callback = (err: Error | null, res?: Result) => void
 interface Options {
   command?: string
   format?: string
+  inputFormat?: string
   options?: string[]
   destination?: string
   env?: Record<string, string>
@@ -51,7 +52,10 @@ class Ogr2ogr implements PromiseLike<Result> {
   private skipFailures: boolean
 
   constructor(input: Input, opts: Options = {}) {
-    this.inputPath = vsiStdIn
+    this.inputPath = opts.inputFormat
+      ? opts.inputFormat + ":" + vsiStdIn
+      : vsiStdIn
+
     this.outputFormat = opts.format ?? "GeoJSON"
     this.customCommand = opts.command
     this.customOptions = opts.options
@@ -93,8 +97,6 @@ class Ogr2ogr implements PromiseLike<Result> {
 
     switch (ext) {
       case ".zip":
-      case ".kmz":
-      case ".shz":
         path = "/vsizip/"
         break
       case ".gz":
@@ -178,7 +180,7 @@ class Ogr2ogr implements PromiseLike<Result> {
     if (/^geojson$/i.test(this.outputFormat)) {
       try {
         res.data = JSON.parse(stdout)
-      } catch (err) {
+      } catch (_err) {
         // ignore error
       }
     }
@@ -195,7 +197,7 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 }
 
-function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
+export function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
   return new Ogr2ogr(input, opts)
 }
 
@@ -208,5 +210,3 @@ ogr2ogr.version = async () => {
   })
   return vers.trim()
 }
-
-export default ogr2ogr

@@ -1,4 +1,3 @@
-import test from "blue-tape"
 import {
   createReadStream,
   createWriteStream,
@@ -6,17 +5,19 @@ import {
   statSync,
   writeFileSync,
 } from "fs"
-import ogr2ogr from "./"
+import {assert, test} from "vitest"
+import {ogr2ogr} from "./"
 
 let dir = __dirname + "/testdata/"
 
-test(async (t) => {
-  const vers = await ogr2ogr.version()
-  t.match(vers, /^GDAL /)
+test("ogr2ogr", async () => {
+  let vers = await ogr2ogr.version()
+  assert.match(vers, /^GDAL /)
 
   interface TT {
     file?: string
     url?: string
+    in?: string
     out?: string
     opts?: string[]
     dest?: string
@@ -59,6 +60,7 @@ test(async (t) => {
     {file: "sample.rti.zip", out: "dxf", success: true},
     {file: "sample.shp", success: true},
     {file: "sample.shp.zip", success: true},
+    {file: "sample.shz", success: true},
     {file: "sample.large.shp.zip", success: true},
     {file: "sample.vdv", stream: true, success: true},
 
@@ -98,7 +100,8 @@ test(async (t) => {
     {file: "sample.json", success: true, out: "xlsx"},
 
     // Known supported stream conversions.
-    {file: "sample.csv", stream: true, success: false},
+    {file: "sample.csv", stream: true, in: "csv", success: true},
+    {file: "sample.wkt.csv", stream: true, in: "csv", success: true},
     {file: "sample.json", stream: true, success: true},
     {file: "sample.rss", stream: true, success: true},
     {file: "sample.gml", stream: true, success: true},
@@ -125,6 +128,7 @@ test(async (t) => {
       }
 
       let res = await ogr2ogr(input, {
+        inputFormat: tt.in,
         format: tt.out,
         options: tt.opts,
         destination: tt.dest,
@@ -133,11 +137,11 @@ test(async (t) => {
 
       if (tt.dest) {
         statSync(tt.dest)
-        t.pass()
+        assert.ok(true)
       } else if (!tt.out) {
-        t.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
+        assert.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
       } else {
-        t.ok(res.text || res.stream, res.cmd)
+        assert(res.text || res.stream, res.cmd)
 
         let fn = dir + "output/r_" + tt.out + res.extname
         if (res.stream) {
@@ -146,10 +150,10 @@ test(async (t) => {
           writeFileSync(fn, res.text)
         }
       }
-      t.ok(tt.success)
+      assert(tt.success)
     } catch (err) {
       console.log(err)
-      t.notOk(tt.success)
+      assert.notOk(tt.success)
     }
   }
 })
