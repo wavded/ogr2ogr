@@ -210,3 +210,11 @@ ogr2ogr.version = async () => {
   })
   return vers.trim()
 }
+
+// Deprecated: To be removed in a future release.
+export default function (input: Input, opts?: Options): Ogr2ogr {
+  console.log(
+    "deprecation warning: use `import {ogr2ogr} from 'ogr2ogr'` instead of `import ogr2ogr from 'ogr2ogr'`",
+  )
+  return ogr2ogr(input, opts)
+}

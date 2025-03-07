@@ -1,6 +1,6 @@
 {
   "name": "ogr2ogr",
-  "version": "6.0.0-rc.1",
+  "version": "5.1.0",
   "description": "ogr2ogr wrapper w/ multiple format support",
   "keywords": [
     "ogr2ogr",
@@ -15,18 +15,18 @@
   },
   "homepage": "http://github.com/wavded/ogr2ogr",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/ogr2ogr.cjs",
+  "module": "./dist/ogr2ogr.js",
   "types": "./dist/ogr2ogr.d.ts",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/ogr2ogr.d.ts",
-        "default": "./dist/index.js"
+        "default": "./dist/ogr2ogr.js"
       },
       "require": {
         "types": "./dist/ogr2ogr.d.cts",
-        "default": "./dist/index.cjs"
+        "default": "./dist/ogr2ogr.cjs"
       }
     }
   },

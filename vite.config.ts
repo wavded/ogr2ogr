@@ -4,9 +4,7 @@ import {defineConfig} from "vitest/config"
 
 // https://vitest.dev/config/
 export default defineConfig({
-  ssr: {noExternal: true},
   build: {
-    ssr: true,
     lib: {
       entry: "index.ts",
       name: "ogr2ogr",
