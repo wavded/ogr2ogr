@@ -197,7 +197,7 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 }
 
-function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
+export function ogr2ogr(input: Input, opts?: Options): Ogr2ogr {
   return new Ogr2ogr(input, opts)
 }
 
@@ -211,4 +211,10 @@ ogr2ogr.version = async () => {
   return vers.trim()
 }
 
-export default ogr2ogr
+// Deprecated: To be removed in a future release.
+export default function (input: Input, opts?: Options): Ogr2ogr {
+  console.log(
+    "deprecation warning: use `import {ogr2ogr} from 'ogr2ogr'` instead of `import ogr2ogr from 'ogr2ogr'`",
+  )
+  return ogr2ogr(input, opts)
+}

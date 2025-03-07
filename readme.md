@@ -19,10 +19,10 @@ npm install ogr2ogr
 ogr2ogr takes either a path, a stream, or a [GeoJSON][2] object. The result of the transformation will depend on the format returned.
 
 ```javascript
+// Using ESM or Typescript
+import {ogr2ogr} from 'ogr2ogr'
 // Using CommonJS modules
-const ogr2ogr = require('ogr2ogr').default
-// Using ECMAScript modules or Typescript
-import ogr2ogr from 'ogr2ogr'
+const {ogr2ogr} = require('ogr2ogr')
 
 // Promise API
 (async() {

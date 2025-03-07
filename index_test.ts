@@ -6,7 +6,7 @@ import {
   writeFileSync,
 } from "fs"
 import {assert, test} from "vitest"
-import ogr2ogr from "./"
+import {ogr2ogr} from "./"
 
 let dir = __dirname + "/testdata/"
 
