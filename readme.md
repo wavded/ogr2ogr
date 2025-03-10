@@ -1,6 +1,4 @@
-![Build Status](https://github.com/wavded/ogr2ogr/workflows/build/badge.svg?branch=master) [![NPM](https://img.shields.io/npm/v/ogr2ogr.svg)](https://npmjs.com/package/ogr2ogr) ![NPM Downloads](https://img.shields.io/npm/dt/ogr2ogr.svg)
-
-Looking for V2 documentation? [Click here][9].
+[![build](https://github.com/wavded/ogr2ogr/actions/workflows/build.yml/badge.svg)](https://github.com/wavded/ogr2ogr/actions/workflows/build.yml) [![NPM](https://img.shields.io/npm/v/ogr2ogr.svg)](https://npmjs.com/package/ogr2ogr) ![NPM Downloads](https://img.shields.io/npm/dt/ogr2ogr.svg)
 
 ogr2ogr wraps the `ogr2ogr` GDAL tool to enable file conversion and re-projection of spatial data in simplified friendly API.
 
