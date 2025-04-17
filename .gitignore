@@ -8,3 +8,4 @@ yarn.lock
 testdata/sample.no-shx.shx
 dist
 pnpm-lock.yaml
+pnpm-workspace.yaml
