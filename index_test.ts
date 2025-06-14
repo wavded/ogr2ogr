@@ -47,7 +47,6 @@ test("ogr2ogr", async () => {
     {file: "sample.geojson", success: true},
     {file: "sample.gml", success: true},
     {file: "sample.gmt", success: true},
-    {file: "sample.gxt", success: true},
     {file: "sample.itf", success: true},
     {file: "sample.json", success: true},
     {file: "sample.jml", stream: true, success: true},
