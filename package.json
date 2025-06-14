@@ -25,7 +25,7 @@
   "scripts": {
     "prepublishOnly": "pnpm build",
     "build": "tsup index.ts --format esm,cjs --dts --clean",
-    "test": "vitest run --silent",
+    "test": "vitest run",
     "lint": "tsc --noEmit && biome check .",
     "fix": "biome check --write ."
   },
