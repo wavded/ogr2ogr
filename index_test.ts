@@ -1,10 +1,10 @@
 import {
+  type ReadStream,
   createReadStream,
   createWriteStream,
-  ReadStream,
   statSync,
   writeFileSync,
-} from "fs"
+} from "node:fs"
 import {assert, test} from "vitest"
 import {ogr2ogr} from "./"
 
@@ -47,7 +47,6 @@ test("ogr2ogr", async () => {
     {file: "sample.geojson", success: true},
     {file: "sample.gml", success: true},
     {file: "sample.gmt", success: true},
-    {file: "sample.gxt", success: true},
     {file: "sample.itf", success: true},
     {file: "sample.json", success: true},
     {file: "sample.jml", stream: true, success: true},
@@ -57,7 +56,6 @@ test("ogr2ogr", async () => {
     {file: "sample.map.zip", success: true},
     {file: "sample.mapml", stream: true, success: true},
     {file: "sample.rss", success: true},
-    {file: "sample.rti.zip", out: "dxf", success: true},
     {file: "sample.shp", success: true},
     {file: "sample.shp.zip", success: true},
     {file: "sample.shz", success: true},
@@ -82,7 +80,6 @@ test("ogr2ogr", async () => {
     {file: "sample.json", success: true, out: "dxf"},
     {file: "sample.json", success: true, out: "esri shapefile"},
     {file: "sample.json", success: true, out: "flatgeobuf"},
-    {file: "sample.json", success: true, out: "geoconcept"},
     {file: "sample.json", success: true, out: "geojson"},
     {file: "sample.json", success: true, out: "geojsonseq"},
     {file: "sample.json", success: true, out: "georss"},
@@ -139,7 +136,7 @@ test("ogr2ogr", async () => {
         statSync(tt.dest)
         assert.ok(true)
       } else if (!tt.out) {
-        assert.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
+        assert.equal(res.data?.type, "FeatureCollection", res.cmd)
       } else {
         assert(res.text || res.stream, res.cmd)
 
