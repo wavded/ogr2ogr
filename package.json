@@ -2,12 +2,7 @@
   "name": "ogr2ogr",
   "version": "6.0.0",
   "description": "ogr2ogr wrapper w/ multiple format support",
-  "keywords": [
-    "ogr2ogr",
-    "stream",
-    "proj4",
-    "gdal"
-  ],
+  "keywords": ["ogr2ogr", "stream", "proj4", "gdal"],
   "author": "Marc Harter <wavded@gmail.com>",
   "repository": {
     "type": "git",
@@ -31,26 +26,19 @@
     "prepublishOnly": "pnpm build",
     "build": "tsup index.ts --format esm,cjs --dts --clean",
     "test": "vitest run --silent",
-    "lint": "tsc --noEmit && eslint .",
-    "fmt": "prettier --write .",
-    "fmt-check": "prettier --check ."
+    "lint": "tsc --noEmit && biome check .",
+    "fix": "biome check --write ."
   },
   "dependencies": {
     "archiver": "^7.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.24.0",
+    "@biomejs/biome": "^1.9.4",
     "@types/archiver": "^6.0.3",
-    "@types/node": "^22.14.1",
-    "eslint": "^9.24.0",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3",
-    "prettier-plugin-organize-imports": "^4.1.0",
+    "@types/node": "^24.0.1",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.30.1",
     "vitest": "^3.1.1"
   },
   "engines": {

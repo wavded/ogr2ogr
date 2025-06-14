@@ -1,10 +1,10 @@
 import {
+  type ReadStream,
   createReadStream,
   createWriteStream,
-  ReadStream,
   statSync,
   writeFileSync,
-} from "fs"
+} from "node:fs"
 import {assert, test} from "vitest"
 import {ogr2ogr} from "./"
 
@@ -139,7 +139,7 @@ test("ogr2ogr", async () => {
         statSync(tt.dest)
         assert.ok(true)
       } else if (!tt.out) {
-        assert.equal(res.data && res.data.type, "FeatureCollection", res.cmd)
+        assert.equal(res.data?.type, "FeatureCollection", res.cmd)
       } else {
         assert(res.text || res.stream, res.cmd)
 
