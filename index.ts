@@ -1,9 +1,9 @@
+import {execFile} from "node:child_process"
+import {createReadStream} from "node:fs"
+import {tmpdir} from "node:os"
+import {extname, join} from "node:path"
+import {Readable, type Stream} from "node:stream"
 import archiver from "archiver"
-import {execFile} from "child_process"
-import {createReadStream} from "fs"
-import {tmpdir} from "os"
-import {extname, join} from "path"
-import {Readable, Stream} from "stream"
 
 type JSONLike = Record<string, unknown>
 type RunOutput = {stdout: string; stderr: string}
