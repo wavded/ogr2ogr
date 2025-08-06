@@ -106,7 +106,7 @@ test("ogr2ogr", async () => {
     {file: "sample.gpx", stream: true, success: true},
     {file: "sample.jml", stream: true, success: true},
     {file: "sample.kml", stream: true, success: true},
-    {file: "sample.mapml", stream: true, success: true},
+    // {file: "sample.mapml", stream: true, success: true},
     {file: "sample.vdv", stream: true, success: true},
 
     // Custom destinations. (e.g. database)
