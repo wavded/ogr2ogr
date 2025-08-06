@@ -54,7 +54,7 @@ test("ogr2ogr", async () => {
     {file: "sample.kmz", success: true},
     {file: "sample.cryllic.kml", success: true},
     {file: "sample.map.zip", success: true},
-    {file: "sample.mapml", stream: true, success: true},
+    {file: "sample.mapml", success: true},
     {file: "sample.rss", success: true},
     {file: "sample.shp", success: true},
     {file: "sample.shp.zip", success: true},
@@ -106,7 +106,7 @@ test("ogr2ogr", async () => {
     {file: "sample.gpx", stream: true, success: true},
     {file: "sample.jml", stream: true, success: true},
     {file: "sample.kml", stream: true, success: true},
-    // {file: "sample.mapml", stream: true, success: true},
+    {file: "sample.mapml", stream: true, success: true},
     {file: "sample.vdv", stream: true, success: true},
 
     // Custom destinations. (e.g. database)
@@ -150,7 +150,7 @@ test("ogr2ogr", async () => {
       assert(tt.success, tt.url || tt.file)
     } catch (err) {
       console.log(err)
-      assert.notOk(tt.success, tt.url || tt.file)
+      assert.notOk(tt.success, JSON.stringify(tt))
     }
   }
 })
