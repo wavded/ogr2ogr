@@ -134,7 +134,7 @@ test("ogr2ogr", async () => {
 
       if (tt.dest) {
         statSync(tt.dest)
-        assert.ok(true)
+        assert.ok(true, tt.url || tt.file)
       } else if (!tt.out) {
         assert.equal(res.data?.type, "FeatureCollection", res.cmd)
       } else {
@@ -147,10 +147,10 @@ test("ogr2ogr", async () => {
           writeFileSync(fn, res.text)
         }
       }
-      assert(tt.success)
+      assert(tt.success, tt.url || tt.file)
     } catch (err) {
       console.log(err)
-      assert.notOk(tt.success)
+      assert.notOk(tt.success, tt.url || tt.file)
     }
   }
 })
