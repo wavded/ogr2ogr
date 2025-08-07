@@ -54,7 +54,8 @@ test("ogr2ogr", async () => {
     {file: "sample.kmz", success: true},
     {file: "sample.cryllic.kml", success: true},
     {file: "sample.map.zip", success: true},
-    {file: "sample.mapml", success: true},
+    // Format unstable as still being defined.
+    // {file: "sample.mapml", success: true},
     {file: "sample.rss", success: true},
     {file: "sample.shp", success: true},
     {file: "sample.shp.zip", success: true},
@@ -89,7 +90,7 @@ test("ogr2ogr", async () => {
     {file: "sample.json", success: true, out: "gpx"},
     {file: "sample.json", success: true, out: "jml"},
     {file: "sample.json", success: true, out: "kml"},
-    {file: "sample.json", success: true, out: "mapml"},
+    // {file: "sample.json", success: true, out: "mapml"},
     {file: "sample.json", success: true, out: "mapinfo file"},
     {file: "sample.json", success: true, out: "ods"},
     {file: "sample.json", success: true, out: "pdf"},
@@ -106,7 +107,7 @@ test("ogr2ogr", async () => {
     {file: "sample.gpx", stream: true, success: true},
     {file: "sample.jml", stream: true, success: true},
     {file: "sample.kml", stream: true, success: true},
-    {file: "sample.mapml", stream: true, success: true},
+    // {file: "sample.mapml", stream: true, success: true},
     {file: "sample.vdv", stream: true, success: true},
 
     // Custom destinations. (e.g. database)
