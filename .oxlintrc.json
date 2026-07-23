@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["dist/**", "coverage/**", "testdata/**"],
+  "rules": {
+    "no-else-return": "error",
+    "no-fallthrough": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "fix": {
+          "imports": "safe-fix"
+        }
+      }
+    ],
+    "prefer-const": "off",
+    "prefer-template": "off",
+    "unicorn/no-thenable": "off"
+  }
+}
