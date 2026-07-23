@@ -6,7 +6,7 @@ import {
   writeFileSync,
 } from "node:fs"
 import {assert, test} from "vitest"
-import {ogr2ogr} from "./"
+import {ogr2ogr} from "./index"
 
 let dir = __dirname + "/testdata/"
 
