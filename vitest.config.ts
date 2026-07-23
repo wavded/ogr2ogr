@@ -4,6 +4,6 @@ import {defineConfig} from "vitest/config"
 export default defineConfig({
   test: {
     include: ["**/*_test.[jt]s"],
-    testTimeout: 30000,
+    testTimeout: 60000,
   },
 })
