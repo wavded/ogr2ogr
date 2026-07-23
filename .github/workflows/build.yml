@@ -22,5 +22,7 @@ jobs:
       - run: npm install -g npm@latest
       - run: npm install
       - run: npm run build
+      - name: Test CommonJS export
+        run: node -e 'require("ogr2ogr")'
       - run: npm run lint
       - run: npm run test
