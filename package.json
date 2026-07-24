@@ -3,17 +3,17 @@
   "version": "6.0.1",
   "description": "ogr2ogr wrapper w/ multiple format support",
   "keywords": [
+    "gdal",
     "ogr2ogr",
-    "stream",
     "proj4",
-    "gdal"
+    "stream"
   ],
+  "homepage": "http://github.com/wavded/ogr2ogr",
   "author": "Marc Harter <wavded@gmail.com>",
   "repository": {
     "type": "git",
     "url": "http://github.com/wavded/ogr2ogr.git"
   },
-  "homepage": "http://github.com/wavded/ogr2ogr",
   "type": "module",
   "exports": {
     ".": {
@@ -29,24 +29,34 @@
   },
   "scripts": {
     "prepublishOnly": "pnpm build",
-    "build": "tsup index.ts --format esm,cjs --dts --clean",
+    "build": "tsdown",
     "test": "vitest run",
-    "lint": "tsc --noEmit && biome check .",
-    "fix": "biome check --write ."
+    "lint": "tsc --noEmit && oxlint . && oxfmt --check .",
+    "fix": "oxlint --fix . && oxfmt ."
   },
   "dependencies": {
-    "archiver": "^7.0.1"
+    "archiver": "^8.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.1.3",
-    "@types/archiver": "^6.0.3",
-    "@types/node": "^24.2.0",
+    "@types/archiver": "^8.0.0",
+    "@types/node": "^26.1.1",
+    "oxfmt": "^0.60.0",
+    "oxlint": "^1.75.0",
     "ts-node": "^10.9.2",
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "tsdown": "^0.22.14",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  },
+  "tsdown": {
+    "dts": true,
+    "entry": "index.ts",
+    "fixedExtension": false,
+    "format": [
+      "esm",
+      "cjs"
+    ]
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.12 <23 || >=24 <25 || >=26 <27"
   }
 }

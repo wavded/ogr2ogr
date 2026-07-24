@@ -3,7 +3,8 @@ import {createReadStream} from "node:fs"
 import {tmpdir} from "node:os"
 import {extname, join} from "node:path"
 import {Readable, type Stream} from "node:stream"
-import archiver from "archiver"
+
+import {ZipArchive} from "archiver"
 
 type JSONLike = Record<string, unknown>
 type RunOutput = {stdout: string; stderr: string}
@@ -142,7 +143,7 @@ class Ogr2ogr implements PromiseLike<Result> {
   }
 
   private createZipStream(p: string) {
-    let archive = archiver("zip")
+    let archive = new ZipArchive()
     archive.directory(p, false)
     archive.on("error", console.error)
     archive.finalize()
