@@ -39,13 +39,13 @@
   },
   "devDependencies": {
     "@types/archiver": "^8.0.0",
-    "@types/node": "^26.1.1",
-    "oxfmt": "^0.60.0",
-    "oxlint": "^1.75.0",
+    "@types/node": "^26.5.0",
+    "oxfmt": "^0.67.0",
+    "oxlint": "^1.82.0",
     "ts-node": "^10.9.2",
-    "tsdown": "^0.22.14",
+    "tsdown": "^0.23.0",
     "typescript": "^7.0.2",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "tsdown": {
     "dts": true,
