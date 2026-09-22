@@ -159,35 +159,63 @@ class Ogr2ogr implements PromiseLike<Result> {
     let env = this.customEnv ? {...process.env, ...this.customEnv} : undefined
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
-      let proc = execFile(
-        command,
-        args,
-        {env, timeout: this.timeout, maxBuffer: this.maxBuffer},
-        (err, stdout, stderr) => {
-          if (err) rej(err)
-          res({stdout, stderr})
+      let inputError: Error | undefined
+      let inputDone = Promise.resolve()
+      let procDone = new Promise<RunOutput>((resolve, reject) => {
+        let proc = execFile(
+          command,
+          args,
+          {env, timeout: this.timeout, maxBuffer: this.maxBuffer},
+          (err, stdout, stderr) => {
+            if (err) reject(err)
+            else resolve({stdout, stderr})
+          },
+        )
+
+        if (this.inputStream && proc.stdin) {
+          let stdinError = false
+          let onInputError = (err: Error) => {
+            if (stdinError && (err as NodeJS.ErrnoException).code === "EPIPE")
+              return
+            inputError = err
+            proc.kill()
+          }
+          let onStdinError = () => {
+            stdinError = true
+          }
+          this.inputStream.once("error", onInputError)
+          proc.stdin.once("error", onStdinError)
+          inputDone = new Promise((resolve, reject) => {
+            pipeline(this.inputStream!, proc.stdin!, (err) => {
+              this.inputStream?.removeListener("error", onInputError)
+              proc.stdin?.removeListener("error", onStdinError)
+              if (err) reject(err)
+              else resolve()
+            })
+          })
+        }
+      })
+
+      Promise.allSettled([procDone, inputDone]).then(
+        ([procResult, inputResult]) => {
+          if (
+            inputError &&
+            !(
+              procResult.status === "rejected" &&
+              (inputError as NodeJS.ErrnoException).code ===
+                "ERR_STREAM_PREMATURE_CLOSE"
+            )
+          ) {
+            rej(inputError)
+          } else if (procResult.status === "rejected") {
+            rej(procResult.reason)
+          } else if (inputResult.status === "rejected") {
+            rej(inputResult.reason)
+          } else {
+            res(procResult.value)
+          }
         },
       )
-      if (this.inputStream && proc.stdin) {
-        let inputError: Error | undefined
-        let stdinError = false
-        let onInputError = (err: Error) => {
-          if (!stdinError) inputError = err
-        }
-        let onStdinError = () => {
-          stdinError = true
-        }
-        this.inputStream.once("error", onInputError)
-        proc.stdin.once("error", onStdinError)
-        pipeline(this.inputStream, proc.stdin, (err) => {
-          this.inputStream?.removeListener("error", onInputError)
-          proc.stdin?.removeListener("error", onStdinError)
-          if (err && inputError) {
-            proc.kill()
-            rej(inputError)
-          }
-        })
-      }
     })
 
     let res: Result = {
