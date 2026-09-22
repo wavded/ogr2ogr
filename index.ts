@@ -159,20 +159,61 @@ class Ogr2ogr implements PromiseLike<Result> {
     let env = this.customEnv ? {...process.env, ...this.customEnv} : undefined
 
     let {stdout, stderr} = await new Promise<RunOutput>((res, rej) => {
+      let inputError: Error | undefined
+      let processError: Error | undefined
+      let pipelineError: Error | undefined
+      let procDone = false
+      let inputDone = !this.inputStream
+      let processStdout = ""
+      let processStderr = ""
+      let settled = false
+
+      let done = () => {
+        if (settled || !procDone || !inputDone) return
+        settled = true
+
+        if (
+          inputError &&
+          !(
+            processError &&
+            (inputError as NodeJS.ErrnoException).code ===
+              "ERR_STREAM_PREMATURE_CLOSE"
+          )
+        ) {
+          rej(inputError)
+          return
+        }
+        if (processError) {
+          rej(processError)
+          return
+        }
+        if (pipelineError) {
+          rej(pipelineError)
+          return
+        }
+        res({stdout: processStdout, stderr: processStderr})
+      }
+
       let proc = execFile(
         command,
         args,
         {env, timeout: this.timeout, maxBuffer: this.maxBuffer},
         (err, stdout, stderr) => {
-          if (err) rej(err)
-          res({stdout, stderr})
+          if (err) processError = err
+          processStdout = stdout
+          processStderr = stderr
+          procDone = true
+          done()
         },
       )
+
       if (this.inputStream && proc.stdin) {
-        let inputError: Error | undefined
         let stdinError = false
         let onInputError = (err: Error) => {
-          if (!stdinError) inputError = err
+          if (stdinError && (err as NodeJS.ErrnoException).code === "EPIPE")
+            return
+          inputError = err
+          proc.kill()
         }
         let onStdinError = () => {
           stdinError = true
@@ -182,11 +223,13 @@ class Ogr2ogr implements PromiseLike<Result> {
         pipeline(this.inputStream, proc.stdin, (err) => {
           this.inputStream?.removeListener("error", onInputError)
           proc.stdin?.removeListener("error", onStdinError)
-          if (err && inputError) {
-            proc.kill()
-            rej(inputError)
-          }
+          if (err) pipelineError = err
+          inputDone = true
+          done()
         })
+      } else {
+        inputDone = true
+        done()
       }
     })
 
