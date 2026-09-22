@@ -43,6 +43,28 @@ test("passes an input stream error to the callback", async () => {
   expect(input.destroyed).toBe(true)
 })
 
+test("preserves a child process error when it exits before reading all input", async () => {
+  let input = Readable.from(
+    (async function* () {
+      for (let i = 0; i < 100; i++) {
+        yield Buffer.alloc(1024 * 1024)
+        await new Promise((resolve) => setTimeout(resolve, 1))
+      }
+    })(),
+  )
+
+  await expect(
+    Promise.resolve(
+      ogr2ogr(input, {
+        command: "/bin/sh",
+        destination: "exit 2",
+        format: "-c",
+        skipFailures: false,
+      }),
+    ),
+  ).rejects.toMatchObject({code: 2})
+})
+
 test("ogr2ogr", async () => {
   let vers = await ogr2ogr.version()
   assert.match(vers, /^GDAL /)

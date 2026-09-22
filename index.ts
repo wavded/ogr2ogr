@@ -169,10 +169,22 @@ class Ogr2ogr implements PromiseLike<Result> {
         },
       )
       if (this.inputStream && proc.stdin) {
+        let inputError: Error | undefined
+        let stdinError = false
+        let onInputError = (err: Error) => {
+          if (!stdinError) inputError = err
+        }
+        let onStdinError = () => {
+          stdinError = true
+        }
+        this.inputStream.once("error", onInputError)
+        proc.stdin.once("error", onStdinError)
         pipeline(this.inputStream, proc.stdin, (err) => {
-          if (err) {
+          this.inputStream?.removeListener("error", onInputError)
+          proc.stdin?.removeListener("error", onStdinError)
+          if (err && inputError) {
             proc.kill()
-            rej(err)
+            rej(inputError)
           }
         })
       }
