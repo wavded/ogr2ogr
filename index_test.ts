@@ -5,12 +5,65 @@ import {
   statSync,
   writeFileSync,
 } from "node:fs"
+import {join} from "node:path"
+import {Readable} from "node:stream"
 
-import {assert, test} from "vitest"
+import {assert, expect, test} from "vitest"
 
 import {ogr2ogr} from "./index"
 
 let dir = __dirname + "/testdata/"
+
+test("rejects when an input file stream cannot be opened", async () => {
+  let path = join(dir, "missing-input.geojson")
+  let input = createReadStream(path)
+
+  await expect(
+    Promise.resolve(ogr2ogr(input, {timeout: 1000})),
+  ).rejects.toMatchObject({code: "ENOENT", path})
+})
+
+test("passes an input stream error to the callback", async () => {
+  let error = new Error("input read failed")
+  let input = Readable.from(
+    (async function* () {
+      yield '{"type":"FeatureCollection","features":['
+      throw error
+    })(),
+  )
+
+  let result = await new Promise<{err: Error | null; res: unknown}>(
+    (resolve) => {
+      ogr2ogr(input, {timeout: 1000}).exec((err, res) => resolve({err, res}))
+    },
+  )
+
+  expect(result.err).toBe(error)
+  expect(result.res).toBeUndefined()
+  expect(input.destroyed).toBe(true)
+})
+
+test("preserves a child process error when it exits before reading all input", async () => {
+  let input = Readable.from(
+    (async function* () {
+      for (let i = 0; i < 100; i++) {
+        yield Buffer.alloc(1024 * 1024)
+        await new Promise((resolve) => setTimeout(resolve, 1))
+      }
+    })(),
+  )
+
+  await expect(
+    Promise.resolve(
+      ogr2ogr(input, {
+        command: "/bin/sh",
+        destination: "exit 2",
+        format: "-c",
+        skipFailures: false,
+      }),
+    ),
+  ).rejects.toMatchObject({code: 2})
+})
 
 test("ogr2ogr", async () => {
   let vers = await ogr2ogr.version()

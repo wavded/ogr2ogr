@@ -2,7 +2,7 @@ import {execFile} from "node:child_process"
 import {createReadStream} from "node:fs"
 import {tmpdir} from "node:os"
 import {extname, join} from "node:path"
-import {Readable, type Stream} from "node:stream"
+import {pipeline, Readable, type Stream} from "node:stream"
 
 import {ZipArchive} from "archiver"
 
@@ -168,7 +168,26 @@ class Ogr2ogr implements PromiseLike<Result> {
           res({stdout, stderr})
         },
       )
-      if (this.inputStream && proc.stdin) this.inputStream.pipe(proc.stdin)
+      if (this.inputStream && proc.stdin) {
+        let inputError: Error | undefined
+        let stdinError = false
+        let onInputError = (err: Error) => {
+          if (!stdinError) inputError = err
+        }
+        let onStdinError = () => {
+          stdinError = true
+        }
+        this.inputStream.once("error", onInputError)
+        proc.stdin.once("error", onStdinError)
+        pipeline(this.inputStream, proc.stdin, (err) => {
+          this.inputStream?.removeListener("error", onInputError)
+          proc.stdin?.removeListener("error", onStdinError)
+          if (err && inputError) {
+            proc.kill()
+            rej(inputError)
+          }
+        })
+      }
     })
 
     let res: Result = {
