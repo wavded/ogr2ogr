@@ -21,10 +21,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
@@ -42,7 +40,6 @@
     "@types/bun": "^1.4.4",
     "@types/node": "^26.5.0",
     "oxlint": "^1.82.0",
-    "ts-node": "^10.9.2",
     "typescript": "^7.0.2"
   },
   "engines": {

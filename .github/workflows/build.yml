@@ -26,9 +26,16 @@ jobs:
       - run: bun run lint
       - run: bun run test
       - run: npm pack
-      - name: Test package exports
+      - name: Test packaged conversion on Node.js
         run: |
           mkdir /tmp/ogr2ogr-smoke
           cd /tmp/ogr2ogr-smoke
           npm install "$GITHUB_WORKSPACE"/ogr2ogr-*.tgz
-          node --input-type=module -e 'await import("ogr2ogr")'
+          node --input-type=module <<'JS'
+          import assert from "node:assert/strict"
+          import {ogr2ogr} from "ogr2ogr"
+
+          let input = {type: "FeatureCollection", features: []}
+          let result = await ogr2ogr(input)
+          assert.deepEqual(result.data, input)
+          JS
