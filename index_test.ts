@@ -1,3 +1,5 @@
+import {expect, test} from "bun:test"
+import assert from "node:assert/strict"
 import {
   createReadStream,
   createWriteStream,
@@ -7,8 +9,6 @@ import {
 } from "node:fs"
 import {join} from "node:path"
 import {Readable} from "node:stream"
-
-import {assert, expect, test} from "vitest"
 
 import {ogr2ogr} from "./index"
 
@@ -190,7 +190,7 @@ test("ogr2ogr", async () => {
 
       if (tt.dest) {
         statSync(tt.dest)
-        assert.ok(true, tt.url || tt.file)
+        assert.ok(true, tt.url || tt.file || "")
       } else if (!tt.out) {
         assert.equal(res.data?.type, "FeatureCollection", res.cmd)
       } else {
@@ -203,10 +203,10 @@ test("ogr2ogr", async () => {
           writeFileSync(fn, res.text)
         }
       }
-      assert(tt.success, tt.url || tt.file)
+      assert(tt.success, tt.url || tt.file || "")
     } catch (err) {
       console.log(err)
-      assert.notOk(tt.success, JSON.stringify(tt))
+      assert.ok(!tt.success, JSON.stringify(tt))
     }
   }
-})
+}, 60000)

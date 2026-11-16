@@ -15,14 +15,28 @@ jobs:
         node: ["22", "24", "26"]
     name: Node v${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install -g npm@latest
-      - run: npm install
-      - run: npm run build
-      - name: Test CommonJS export
-        run: node -e 'require("ogr2ogr")'
-      - run: npm run lint
-      - run: npm run test
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - run: bun run test
+      - run: npm pack
+      - name: Test packaged conversion on Node.js
+        run: |
+          mkdir /tmp/ogr2ogr-smoke
+          cd /tmp/ogr2ogr-smoke
+          npm install "$GITHUB_WORKSPACE"/ogr2ogr-*.tgz
+          node --input-type=module <<'JS'
+          import assert from "node:assert/strict"
+          import {ogr2ogr} from "ogr2ogr"
+
+          let input = {type: "FeatureCollection", features: []}
+          let result = await ogr2ogr(input)
+          assert.equal(result.data.type, input.type)
+          assert.deepEqual(result.data.features, input.features)
+          JS
