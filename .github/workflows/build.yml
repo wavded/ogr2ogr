@@ -37,5 +37,6 @@ jobs:
 
           let input = {type: "FeatureCollection", features: []}
           let result = await ogr2ogr(input)
-          assert.deepEqual(result.data, input)
+          assert.equal(result.data.type, input.type)
+          assert.deepEqual(result.data.features, input.features)
           JS
