@@ -12,15 +12,25 @@ ogr2ogr wraps the `ogr2ogr` GDAL tool to enable file conversion and re-projectio
 npm install ogr2ogr
 ```
 
+## Development
+
+Install GDAL, then run:
+
+```sh
+bun install
+bun run lint
+bun test
+bun run build
+```
+
+Run `npm pack` to build and package the library for Node.js.
+
 ## Usage
 
 ogr2ogr takes either a path, a stream, or a [GeoJSON][2] object. The result of the transformation will depend on the format returned.
 
 ```javascript
-// Using ESM or Typescript
 import {ogr2ogr} from 'ogr2ogr'
-// Using CommonJS modules
-const {ogr2ogr} = require('ogr2ogr')
 
 // Promise API
 (async() {
